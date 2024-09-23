@@ -1,11 +1,12 @@
 // src/app/api/users/route.js
 import { query } from '../../../../lib/db';
 
-export async function GET(request) {
+export async function GET() {
   try {
     const users = await query('SELECT * FROM users');
     return new Response(JSON.stringify(users), { status: 200 });
   } catch (error) {
+    console.error('Error fetching users:', error);
     return new Response(JSON.stringify({ message: 'Database error', error }), { status: 500 });
   }
 }
@@ -22,6 +23,7 @@ export async function POST(request) {
     const result = await query('INSERT INTO users (name, email) VALUES (?, ?)', [name, email]);
     return new Response(JSON.stringify({ message: 'User added', id: result.insertId }), { status: 201 });
   } catch (error) {
+    console.error('Error inserting user:', error);
     return new Response(JSON.stringify({ message: 'Database error', error }), { status: 500 });
   }
 }
@@ -38,6 +40,7 @@ export async function PUT(request) {
     const result = await query('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, id]);
     return new Response(JSON.stringify({ message: 'User updated' }), { status: 200 });
   } catch (error) {
+    console.error('Error updating user:', error);
     return new Response(JSON.stringify({ message: 'Database error', error }), { status: 500 });
   }
 }
@@ -54,6 +57,7 @@ export async function DELETE(request) {
     await query('DELETE FROM users WHERE id = ?', [id]);
     return new Response(JSON.stringify({ message: 'User deleted' }), { status: 200 });
   } catch (error) {
+    console.error('Error deleting user:', error);
     return new Response(JSON.stringify({ message: 'Database error', error }), { status: 500 });
   }
 }

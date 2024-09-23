@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "mariadb": "^3.3.2",
+    "mysql2": "^3.11.3",
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18"
