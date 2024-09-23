@@ -11,10 +11,10 @@ import mariadb from 'mariadb';
 //   connectionLimit: 5,
 // });
 const pool = mariadb.createPool({
-  host: localhost,
-  user: fddashboard,
-  password: fd9096390,
-  database: ast,
+  host: "localhost",
+  user: "fddashboard",
+  password: "fd9096390",
+  database: "ast",
   port: 3306,
   connectionLimit: 5,
 });
