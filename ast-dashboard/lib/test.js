@@ -2,9 +2,9 @@ const mysql = require('mysql2');
 
 // Create a connection to MariaDB
 const connection = mysql.createConnection({
-  host: 'localhost',   // replace with your MariaDB host
-  user: 'fddashboard', // replace with your MariaDB username
-  password: 'fd9096390', // replace with your MariaDB password
+  host: '127.0.0.1',   // replace with your MariaDB host
+  user: 'astrobot34', // replace with your MariaDB username
+  password: 'ast150831', // replace with your MariaDB password
   database: 'ast', // replace with your MariaDB database name
   port: 3306             // Default MariaDB/MySQL port
 });
