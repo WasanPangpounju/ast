@@ -3,9 +3,9 @@ const mysql = require('mysql2');
 // Create a connection to MariaDB
 const connection = mysql.createConnection({
   host: 'localhost',   // replace with your MariaDB host
-  user: 'yourUsername', // replace with your MariaDB username
-  password: 'yourPassword', // replace with your MariaDB password
-  database: 'yourDatabaseName' // replace with your MariaDB database name
+  user: 'fddashboard', // replace with your MariaDB username
+  password: 'fd9096390', // replace with your MariaDB password
+  database: 'ast' // replace with your MariaDB database name
 });
 
 // Connect to the database
@@ -19,7 +19,7 @@ connection.connect((err) => {
 
 
 // Query the database
-connection.query('SELECT * FROM yourTable', (err, results, fields) => {
+connection.query('SELECT * FROM users', (err, results, fields) => {
   if (err) {
     console.error('Error executing query: ', err);
     return;
