@@ -3,7 +3,6 @@
 'use client'; // For client-side behavior
 
 import { useEffect, useState } from 'react';
-// import Sidebar from '../../../components/Sidebar'; // Correct path to Sidebar
 
 export default function UsersPage() {
     const [users, setUsers] = useState([]);
@@ -32,7 +31,6 @@ export default function UsersPage() {
 
     return (
         <div className="dashboard-container">
-            {/* <Sidebar /> Sidebar is included here */}
             <div className="dashboard-content">
                 <h1>Users Management</h1>
                 {loading && <div>Loading users...</div>}
