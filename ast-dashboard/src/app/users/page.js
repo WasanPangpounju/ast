@@ -3,7 +3,7 @@
 'use client'; // For client-side behavior
 
 import { useEffect, useState } from 'react';
-import Sidebar from '../../components/Sidebar'; // Import Sidebar from the shared components folder
+import Sidebar from '../components/Sidebar'; // Import Sidebar from the shared components folder
 
 export default function UsersPage() {
     const [users, setUsers] = useState([]);
