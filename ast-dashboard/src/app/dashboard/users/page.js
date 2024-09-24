@@ -3,7 +3,7 @@
 'use client'; // For client-side behavior
 
 import { useEffect, useState } from 'react';
-import Sidebar from '../../../components/Sidebar'; // Correct path to Sidebar
+// import Sidebar from '../../../components/Sidebar'; // Correct path to Sidebar
 
 export default function UsersPage() {
     const [users, setUsers] = useState([]);
