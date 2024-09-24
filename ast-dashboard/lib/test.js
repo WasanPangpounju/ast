@@ -18,22 +18,22 @@ connection.connect((err) => {
 });
 
 
-// Query the database
-connection.query('SELECT * FROM users', (err, results, fields) => {
-  if (err) {
-    console.error('Error executing query: ', err);
-    return;
-  }
-  console.log('Query Results:', results);
-});
+// // Query the database
+// connection.query('SELECT * FROM users', (err, results, fields) => {
+//   if (err) {
+//     console.error('Error executing query: ', err);
+//     return;
+//   }
+//   console.log('Query Results:', results);
+// });
 
-connection.end((err) => {
-  if (err) {
-    console.error('Error ending the connection: ', err);
-    return;
-  }
-  console.log('Connection closed');
-});
+// connection.end((err) => {
+//   if (err) {
+//     console.error('Error ending the connection: ', err);
+//     return;
+//   }
+//   console.log('Connection closed');
+// });
 
-// Export connection for use in other parts of your application
-// module.exports = connection;
+// // Export connection for use in other parts of your application
+// // module.exports = connection;
