@@ -2,13 +2,10 @@
 
 'use client'; // This is required for Client-side behavior
 
-import { useState, useEffect } from 'react';
-
 import Sidebar from './components/Sidebar';
 import DashboardContent from './components/DashboardContent';
 
-    export default function DashboardPage() {
-
+export default function DashboardPage() {
     return (
         <div className="dashboard-container">
             <Sidebar />
