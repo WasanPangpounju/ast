@@ -1,13 +1,9 @@
 // src/app/dashboard/page.js
-
-import Sidebar from './components/Sidebar';
-import DashboardContent from './components/DashboardContent';
-
-export default function Dashboard() {
+export default function DashboardPage() {
     return (
-        <div className="dashboard-container">
-            <Sidebar />
-            <DashboardContent />
+        <div>
+            <h1>Dashboard</h1>
+            <p>Welcome to the dashboard!</p>
         </div>
     );
 }
