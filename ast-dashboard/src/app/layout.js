@@ -2,7 +2,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Sidebar from "./dashboard/components/Sidebar";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",

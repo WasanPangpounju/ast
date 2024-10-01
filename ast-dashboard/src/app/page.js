@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Sidebar from "./dashboard/components/Sidebar";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useEffect } from 'react';
 
 export default function Home() {
   return (
