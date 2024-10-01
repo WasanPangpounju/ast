@@ -3,10 +3,10 @@
 export default function Users() {
   return (
     <div>
-      {/* <h1>User Management</h1>
-          <p>Manage all users from this section.</p> */}
+      <h1>User Management</h1>
+          <p>Manage all users from this section.</p>
 
-      <div class="content-wrapper">
+      {/* <div class="content-wrapper">
         <div class="">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -39,7 +39,7 @@ export default function Users() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
