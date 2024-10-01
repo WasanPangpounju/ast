@@ -1,6 +1,7 @@
 // src/app/dashboard/home/page.js
 
 export default function Home() {
+  console.log("heeeeeello");
   return (
       <div>
           <h1>Dashboard Home</h1>
