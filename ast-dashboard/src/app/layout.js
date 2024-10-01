@@ -23,8 +23,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Sidebar/>
-          {children}
+        {/* <Sidebar/>
+          {children} */}
+        <div className="layout-container">
+          <Sidebar />
+          <main className="content">{children}</main>
+        </div>
       </body>
     </html>
   );
