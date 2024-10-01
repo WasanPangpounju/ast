@@ -40,7 +40,7 @@ export default function Users() {
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="yarntype">ชนิดด้าย</label>
-                      <select name="yarnType" class="form-control">
+                      {/* <select name="yarnType" class="form-control">
                         <option disabled selected value="">
                           เลือกชนิดได้
                         </option>
@@ -48,14 +48,14 @@ export default function Users() {
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
-                      </select>
+                      </select> */}
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="supplier">บริษัท</label>
 
-                      <select name="supplier" class="form-control">
+                      {/* <select name="supplier" class="form-control">
                         <option disabled selected value="">
                           เลือกบริษัท
                         </option>
@@ -63,7 +63,7 @@ export default function Users() {
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
-                      </select>
+                      </select> */}
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -76,7 +76,6 @@ export default function Users() {
                         class="btn btn-etc"
                         style="margin-top:2em;"
                       >
-                        {" "}
                         <i class="fas fa-folder"></i> ค้นหา
                       </button>
                     </div>
