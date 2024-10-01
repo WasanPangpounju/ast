@@ -20,9 +20,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  useEffect(() => {
-    import('bootstrap/dist/js/bootstrap.bundle.min.js'); // Ensure Bootstrap JS is loaded after DOM is ready
-  }, []);
+  // useEffect(() => {
+  //   import('bootstrap/dist/js/bootstrap.bundle.min.js'); // Ensure Bootstrap JS is loaded after DOM is ready
+  // }, []);
   return (
     <html lang="en">
       <body
