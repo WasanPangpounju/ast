@@ -40,6 +40,7 @@
 .layout-container {
     display: flex;
     min-height: 100vh; /* Full height */
+    padding: 20px;
   }
   
   /* Sidebar styles */
