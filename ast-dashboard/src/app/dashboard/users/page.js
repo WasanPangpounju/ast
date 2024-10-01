@@ -32,7 +32,7 @@ export default function UsersPage() {
 
     return (
         <div className="dashboard-container">
-            <Sidebar /> 
+            {/* <Sidebar />  */}
             {/* Sidebar is included here */}
             <div className="dashboard-content">
                 <h1>Users Management</h1>
