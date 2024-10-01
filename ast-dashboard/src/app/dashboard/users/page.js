@@ -32,9 +32,10 @@ export default function UsersPage() {
 
     return (
         <div className="dashboard-container">
-            {/* <Sidebar /> Sidebar is included here */}
+            <Sidebar /> 
+            {/* Sidebar is included here */}
             <div className="dashboard-content">
-                <h1>Users Management55555555555555555555</h1>
+                <h1>Users Management</h1>
                 {loading && <div>Loading users...</div>}
                 {error && <div>Error fetching users: {error}</div>}
                 {users.length > 0 ? (
