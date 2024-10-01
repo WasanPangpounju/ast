@@ -32,7 +32,7 @@ export default function Users() {
           </div>
         </div>
 
-        <div class="content">
+        {/* <div class="content">
           <div class="box-from">
             <div class="">
               <form method="post">
@@ -85,7 +85,7 @@ export default function Users() {
               </form>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
