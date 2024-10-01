@@ -32,7 +32,7 @@ export default function Users() {
           </div>
         </div>
 
-        {/* <div class="content">
+        <div class="content">
           <div class="box-from">
             <div class="">
               <form method="post">
@@ -45,9 +45,9 @@ export default function Users() {
                           เลือกชนิดได้
                         </option>
 
-                        <option value="{{ $key }}">1</option>
-                        <option value="{{ $key }}">2</option>
-                        <option value="{{ $key }}">3</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
                       </select>
                     </div>
                   </div>
@@ -60,9 +60,9 @@ export default function Users() {
                           เลือกบริษัท
                         </option>
 
-                        <option value="{{ $key }}">1</option>
-                        <option value="{{ $key }}">2</option>
-                        <option value="{{ $key }}">3</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
                       </select>
                     </div>
                   </div>
@@ -85,7 +85,7 @@ export default function Users() {
               </form>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import Sidebar from "./dashboard/components/Sidebar";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useEffect } from 'react';
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -18,6 +20,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  useEffect(() => {
+    import('bootstrap/dist/js/bootstrap.bundle.min.js'); // Ensure Bootstrap JS is loaded after DOM is ready
+  }, []);
   return (
     <html lang="en">
       <body
