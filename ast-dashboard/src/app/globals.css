@@ -34,3 +34,32 @@
     flex-grow: 1;
     padding: 20px;
 }
+/* globals.css */
+
+/* Flex container for sidebar and content */
+.layout-container {
+    display: flex;
+    min-height: 100vh; /* Full height */
+  }
+  
+  /* Sidebar styles */
+  .sidebar {
+    width: 250px; /* Sidebar width */
+    background-color: #2C3E50; /* Dark blue */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    color: white; /* Make text white to contrast the dark background */
+    height: 100vh; /* Make the sidebar span the full height of the page */
+    position: fixed; /* Fix the sidebar to the left */
+    top: 0;
+    left: 0;
+  }
+  
+  /* Main content */
+  .content {
+    flex-grow: 1;
+    margin-left: 250px; /* Ensure the content is pushed to the right of the sidebar */
+    padding: 20px;
+    background-color: #fff;
+  }
+  
