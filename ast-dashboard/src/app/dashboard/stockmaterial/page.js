@@ -205,6 +205,9 @@ export default function Users() {
       materialsSpoolSum + materialstoreSpoolSum + materialOutsidesSpoolSum;
 
     setSpoolSum(totalSpoolSum);
+    console.log("materialsSpoolSum", materialsSpoolSum);
+    console.log("materialstoreSpoolSum", materialstoreSpoolSum);
+    console.log("materialOutsidesSpoolSum", materialOutsidesSpoolSum);
   }, [materials, materialstore, materialOutsides]);
   console.log("spoolSum", spoolSum);
   return (
