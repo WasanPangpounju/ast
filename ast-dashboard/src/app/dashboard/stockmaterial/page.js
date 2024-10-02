@@ -116,6 +116,8 @@ export default function Users() {
     }
   }, [materials, loading]);
 
+  console.log('yarnSumList',yarnSumList);
+
   return (
     <div>
       {/* <h1>User Management</h1>
