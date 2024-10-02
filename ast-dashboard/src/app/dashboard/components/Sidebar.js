@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Sidebar() {
     return (
-        <div className="sidebar">
+        <div className="sidebar" style={{ backgroundColor: '#2160A2' }}>
             <h2>Dashboard</h2>
             <ul>
                 <li><Link href="/dashboard/home">หน้าแรก</Link></li>
