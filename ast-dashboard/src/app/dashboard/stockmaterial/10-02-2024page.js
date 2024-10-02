@@ -11,7 +11,7 @@ export default function Users() {
   
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [stockList, setStockList] = useState([]);
+  const [yarnSumList, setYarnSumList] = useState([]); // Final output
   
   // Fetch materials from the API on component mount
   useEffect(() => {
@@ -90,101 +90,75 @@ export default function Users() {
   console.log("spoolSum", spoolSum);
 
   useEffect(() => {
-    if (materials.length > 0) {
+    if (!loading && materials.length > 0) {
+      // Group by yarnType
       const stockYarns = materials.reduce((acc, material) => {
-        if (!acc[material.yarnType]) acc[material.yarnType] = [];
-        acc[material.yarnType].push(material);
+        const { yarnType } = material;
+        if (!acc[yarnType]) acc[yarnType] = [];
+        acc[yarnType].push(material);
         return acc;
       }, {});
 
+      // Group by supplierName
       const supplierList = materials.reduce((acc, material) => {
-        if (!acc[material.supplierName]) acc[material.supplierName] = [];
-        acc[material.supplierName].push(material);
+        const { supplierName } = material;
+        if (!acc[supplierName]) acc[supplierName] = [];
+        acc[supplierName].push(material);
         return acc;
       }, {});
 
-      const newStockList = [];
+      // Process yarn types and suppliers
+      const yarnSumList = [];
 
-      Object.keys(stockYarns).forEach((yarnType) => {
-        const yarnSumList = [];
-        Object.keys(supplierList).forEach((supplierName) => {
+      Object.keys(stockYarns).forEach((yarnTypeKey) => {
+        const yarnTypeMaterials = stockYarns[yarnTypeKey];
+
+        Object.keys(supplierList).forEach((supplierKey) => {
+          const supplierMaterials = supplierList[supplierKey];
+
+          // Filter by yarnType and supplierName
           const stockQuery = materials.filter(
             (material) =>
-              material.yarnType === yarnType &&
-              material.supplierName === supplierName
+              material.yarnType === yarnTypeKey &&
+              material.supplierName === supplierKey
           );
 
-          if (stockQuery.length >= 1) {
+          // If there's matching data
+          if (stockQuery.length > 0) {
             let spool = 0;
             let weight_p_net = 0;
             let weight_kg_net = 0;
+            let stockLatest = null;
 
-            stockQuery.forEach((item) => {
-              spool += item.spool;
-              weight_p_net += item.weight_p_net;
-              weight_kg_net += item.weight_kg_net;
+            // Calculate sum of spool and weights
+            stockQuery.forEach((material) => {
+              spool += parseFloat(material.spool) || 0;
+              weight_p_net += parseFloat(material.weight_p_net) || 0;
+              weight_kg_net += parseFloat(material.weight_kg_net) || 0;
+              // Get the latest creation date for the stock
+              if (!stockLatest || new Date(material.created_at) > new Date(stockLatest)) {
+                stockLatest = material.created_at;
+              }
             });
 
-            const average_p = spool > 0 ? weight_p_net / spool : 0;
-            const average_kg = spool > 0 ? weight_kg_net / spool : 0;
-
-            // Material stock calculation
-            const stockImport = {
-              yarnType: yarnType,
-              supplierName: supplierName,
-              spool: spool,
-              weight_p_net: weight_p_net,
-              weight_kg_net: weight_kg_net,
-              average_p: average_p,
-              average_kg: average_kg,
-            };
-
-            // Handle material withdraw (from store and outside)
-            const stockWithdraws = materialstore.filter(
-              (store) =>
-                store.yarnType === yarnType && store.supplierName === supplierName
-            );
-
-            if (stockWithdraws.length > 0) {
-              let spoolWithdraw = 0;
-              stockWithdraws.forEach((withdraw) => {
-                spoolWithdraw += withdraw.spool;
-              });
-
-              stockImport.spool -= spoolWithdraw;
-              stockImport.weight_p_net = stockImport.spool * average_p;
-              stockImport.weight_kg_net = stockImport.spool * average_kg;
-            }
-
-            const stockWithdrawsOutside = materialOutsides.filter(
-              (outside) =>
-                outside.yarnType === yarnType &&
-                outside.supplierName === supplierName
-            );
-
-            if (stockWithdrawsOutside.length > 0) {
-              let spoolOutside = 0;
-              stockWithdrawsOutside.forEach((outside) => {
-                spoolOutside += outside.spool;
-              });
-
-              stockImport.spool -= spoolOutside;
-              stockImport.weight_p_net = stockImport.spool * average_p;
-              stockImport.weight_kg_net = stockImport.spool * average_kg;
-            }
-
-            yarnSumList.push(stockImport);
+            // Push the result into yarnSumList
+            yarnSumList.push({
+              yarnType: yarnTypeKey,
+              supplierName: supplierKey,
+              spool,
+              weight_p_net,
+              weight_kg_net,
+              stockLatest: new Date(stockLatest).toLocaleDateString("en-GB"), // Format as 'dd-mm-yyyy'
+            });
           }
         });
-
-        newStockList.push(yarnSumList);
       });
 
-      setStockList(newStockList);
+      setYarnSumList(yarnSumList);
     }
-  }, [materials, materialstore, materialOutsides]);
+  }, [materials, loading]);
 
-  console.log('stockList',stockList);
+  console.log('yarnSumList',yarnSumList);
 
   return (
     <div>

@@ -1,0 +1,94 @@
+useEffect(() => {
+    if (materials.length > 0) {
+      const stockYarns = materials.reduce((acc, material) => {
+        if (!acc[material.yarnType]) acc[material.yarnType] = [];
+        acc[material.yarnType].push(material);
+        return acc;
+      }, {});
+
+      const supplierList = materials.reduce((acc, material) => {
+        if (!acc[material.supplierName]) acc[material.supplierName] = [];
+        acc[material.supplierName].push(material);
+        return acc;
+      }, {});
+
+      const newStockList = [];
+
+      Object.keys(stockYarns).forEach((yarnType) => {
+        const yarnSumList = [];
+        Object.keys(supplierList).forEach((supplierName) => {
+          const stockQuery = materials.filter(
+            (material) =>
+              material.yarnType === yarnType &&
+              material.supplierName === supplierName
+          );
+
+          if (stockQuery.length >= 1) {
+            let spool = 0;
+            let weight_p_net = 0;
+            let weight_kg_net = 0;
+
+            stockQuery.forEach((item) => {
+              spool += item.spool;
+              weight_p_net += item.weight_p_net;
+              weight_kg_net += item.weight_kg_net;
+            });
+
+            const average_p = spool > 0 ? weight_p_net / spool : 0;
+            const average_kg = spool > 0 ? weight_kg_net / spool : 0;
+
+            // Material stock calculation
+            const stockImport = {
+              yarnType: yarnType,
+              supplierName: supplierName,
+              spool: spool,
+              weight_p_net: weight_p_net,
+              weight_kg_net: weight_kg_net,
+              average_p: average_p,
+              average_kg: average_kg,
+            };
+
+            // Handle material withdraw (from store and outside)
+            const stockWithdraws = materialstore.filter(
+              (store) =>
+                store.yarnType === yarnType && store.supplierName === supplierName
+            );
+
+            if (stockWithdraws.length > 0) {
+              let spoolWithdraw = 0;
+              stockWithdraws.forEach((withdraw) => {
+                spoolWithdraw += withdraw.spool;
+              });
+
+              stockImport.spool -= spoolWithdraw;
+              stockImport.weight_p_net = stockImport.spool * average_p;
+              stockImport.weight_kg_net = stockImport.spool * average_kg;
+            }
+
+            const stockWithdrawsOutside = materialOutsides.filter(
+              (outside) =>
+                outside.yarnType === yarnType &&
+                outside.supplierName === supplierName
+            );
+
+            if (stockWithdrawsOutside.length > 0) {
+              let spoolOutside = 0;
+              stockWithdrawsOutside.forEach((outside) => {
+                spoolOutside += outside.spool;
+              });
+
+              stockImport.spool -= spoolOutside;
+              stockImport.weight_p_net = stockImport.spool * average_p;
+              stockImport.weight_kg_net = stockImport.spool * average_kg;
+            }
+
+            yarnSumList.push(stockImport);
+          }
+        });
+
+        newStockList.push(yarnSumList);
+      });
+
+      setStockList(newStockList);
+    }
+  }, [materials, materialstore, materialOutsides]);
