@@ -2,32 +2,33 @@
 
 'use client'; // For client-side behavior
 
+import { useState, useEffect } from 'react';
 
 export default function Users() {
 
-  const [materials, setMaterial] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [materials, setMaterials] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    // Fetch users from the API on component mount
-    useEffect(() => {
-        const fetchMaterials = async () => {
-            try {
-                const response = await fetch('/api/ast');
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch materials: ${response.status}`);
-                }
-                const data = await response.json();
-                setMaterial(data);
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
+  // Fetch materials from the API on component mount
+  useEffect(() => {
+    const fetchMaterials = async () => {
+      try {
+        const response = await fetch('/api/materials');
+        if (!response.ok) {
+          throw new Error(`Failed to fetch materials: ${response.status}`);
+        }
+        const data = await response.json();
+        setMaterials(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        fetchMaterials();
-    }, []);
+    fetchMaterials();
+  }, []);
     console.log('materials',materials);
 
   return (
