@@ -74,7 +74,6 @@ export default function Users() {
                         value="search"
                         id="search"
                         class="btn btn-etc"
-                        style="margin-top:2em;"
                       >
                         <i class="fas fa-folder"></i> ค้นหา
                       </button>
