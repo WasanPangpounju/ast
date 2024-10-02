@@ -20,52 +20,46 @@ export default function Sidebar() {
 <div class="wrapper">
 
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <!-- Left navbar links -->
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
                         class="fas fa-bars"></i></a>
             </li>
         </ul>
-        <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
-            <!-- fullscreen-->
             <li class="nav-item Fullscreen">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button"
+                {/* <a class="nav-link" data-widget="fullscreen" href="#" role="button"
                     style="letter-spacing: 1px;">
-                    ดูเต็มจอ <i class="fas fa-expand-arrows-alt"></i> </a>
+                    ดูเต็มจอ <i class="fas fa-expand-arrows-alt"></i> </a> */}
             </li>
             <li class="nav-item logout">
                 <a class="nav-link" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
-                    ออกจากระบบ &nbsp;<img src="<?php echo asset('assets/images/arrow-right-from-bracket-solid.png'); ?>" width="17"></i>
+                    ออกจากระบบ &nbsp;
+                    {/* <img src="<?php echo asset('assets/images/arrow-right-from-bracket-solid.png'); ?>" width="17"></i> */}
                 </a>
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
                 </form>
 
             </li>
         </ul>
     </nav>
 
-    <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
         <a href="index.php" class="brand-link">
-            <img src="<?php echo asset('assets/images/logo.png'); ?>" alt="Logo" class="brand-image" style="">
+            {/* <img src="<?php echo asset('assets/images/logo.png'); ?>" alt="Logo" class="brand-image" style=""> */}
             <span class="brand-text font-weight-light">ASIA TEXTILE CO., LTD.</span>
         </a>
-        <!-- Sidebar -->
         <div class="sidebar">
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="<?php echo asset('assets/images/admin.jpg'); ?>" class="img-circle" alt="User Image">
+                    {/* <img src="<?php echo asset('assets/images/admin.jpg'); ?>" class="img-circle" alt="User Image"> */}
                 </div>
                 <div class="info">
                     <a href="#" class="d-block">
-                        <p>{{ Auth::user()->name }}</p>{{ Auth::user()->user_type }}
+                        {/* <p>{{ Auth::user()->name }}</p>{{ Auth::user()->user_type }} */}
                     </a>
                 </div>
             </div>
@@ -188,41 +182,29 @@ export default function Sidebar() {
                         </a></li>
                 </ul>
             </nav>
-        </div><!-- /.sidebar -->
+        </div>
     </aside>
 
 
-    @yield('content')
 
 
 </div>
-<!-- /.content-wrapper -->
 
 <footer class="main-footer">
     Copyright © 2022 Asia Industrial Textile Co., Ltd. (AIT) All rights reserved.
 </footer>
 
-<!-- jQuery -->
 
 <script src="<?php echo asset('assets/js/jquery.min.js'); ?>"></script>
-<!-- Bootstrap 4 -->
 
-<!-- Select2 -->
 <script src="<?php echo asset('assets/js/select2.full.min.js'); ?>"></script>
-<!-- Bootstrap4 Duallistbox -->
 
-<!-- InputMask -->
 <script src="<?php echo asset('assets/js/moment.min.js'); ?>"></script>
 <script src="<?php echo asset('assets/js/jquery.inputmask.min.js'); ?>"></script>
-<!-- date-range-picker -->
 <script src="<?php echo asset('assets/js/daterangepicker.js'); ?>"></script>
-<!-- bootstrap color picker -->
 
-<!-- Tempusdominus Bootstrap 4 -->
 <script src="<?php echo asset('assets/js/tempusdominus-bootstrap-4.min.js'); ?>"></script>
-<!-- Bootstrap Switch -->
 
-<!-- AdminLTE App -->
 <script src="<?php echo asset('assets/js/adminlte.min.js'); ?>"></script>
 <script>
     $(function() {
@@ -231,29 +213,19 @@ export default function Sidebar() {
             'placeholder': 'dd/mm/yyyy'
         })
         //Datemask2 mm/dd/yyyy
-        $('#datemask2').inputmask('dd/mm/yyyy', {
-            'placeholder': 'dd/mm/yyyy'
-        })
+        // $('#datemask2').inputmask('dd/mm/yyyy', {
+        //     'placeholder': 'dd/mm/yyyy'
+        // })
         //Money Euro
-        $('[data-mask]').inputmask()
+        // $('[data-mask]').inputmask()
 
         //Date picker
-        $('#reservationdate').datetimepicker({
-            format: 'L'
-        });
+        // $('#reservationdate').datetimepicker({
+        //     format: 'L'
+        // });
     })
 </script>
-<script>
-    jQuery(function($) {
-        var path = window.location.href;
-        // because the 'href' property of the DOM element is the absolute path
-        $('ul li a').each(function() {
-            if (this.href === path) {
-                $(this).addClass('active');
-            }
-        });
-    });
-</script>
+
 
 </body>
         </div>
