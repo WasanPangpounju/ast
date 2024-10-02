@@ -76,20 +76,6 @@ export default function Users() {
   const [spoolSum, setSpoolSum] = useState(0); // State to store the sum
 
   useEffect(() => {
-    // Sum spools with the specific conditions, and convert to numbers
-    const sumSpools = materials
-      .filter(
-        (material) =>
-          material.yarnType === "C 10 OE" &&
-          material.supplierName === "บริษัท กังวาลเท็กซ์ไทล์ จำกัด"
-      )
-      .reduce((sum, material) => sum + (parseFloat(material.spool) || 0), 0);
-
-    setSpoolSum(sumSpools);
-  }, [materials]);
-  console.log("spoolSum", spoolSum);
-
-  useEffect(() => {
     if (materials.length > 0) {
       const stockYarns = materials.reduce((acc, material) => {
         if (!acc[material.yarnType]) acc[material.yarnType] = [];
@@ -184,9 +170,43 @@ export default function Users() {
       setStockList(newStockList);
     }
   }, [materials, materialstore, materialOutsides]);
-  
+
   console.log('stockList',stockList);
 
+
+  useEffect(() => {
+    // Define the yarnType and supplierName
+    const yarnType = "C 10 OE";
+    const supplierName = "บริษัท กังวาลเท็กซ์ไทล์ จำกัด";
+
+    // Filter and sum spools from materials
+    const materialsSpoolSum = materials
+      .filter(
+        (item) => item.yarnType === yarnType && item.supplierName === supplierName
+      )
+      .reduce((sum, item) => sum + Number(item.spool), 0);
+
+    // Filter and sum spools from materialstore
+    const materialstoreSpoolSum = materialstore
+      .filter(
+        (item) => item.yarnType === yarnType && item.supplierName === supplierName
+      )
+      .reduce((sum, item) => sum + Number(item.spool), 0);
+
+    // Filter and sum spools from materialOutsides
+    const materialOutsidesSpoolSum = materialOutsides
+      .filter(
+        (item) => item.yarnType === yarnType && item.supplierName === supplierName
+      )
+      .reduce((sum, item) => sum + Number(item.spool), 0);
+
+    // Total spool sum
+    const totalSpoolSum =
+      materialsSpoolSum + materialstoreSpoolSum + materialOutsidesSpoolSum;
+
+    setSpoolSum(totalSpoolSum);
+  }, [materials, materialstore, materialOutsides]);
+  console.log("spoolSum", spoolSum);
   return (
     <div>
       {/* <h1>User Management</h1>
