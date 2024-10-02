@@ -1,6 +1,35 @@
-// src/app/dashboard/users/page.js
+// src/app/dashboard/stockmaterial/page.js
+
+'use client'; // For client-side behavior
+
 
 export default function Users() {
+
+  const [materials, setMaterial] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Fetch users from the API on component mount
+    useEffect(() => {
+        const fetchMaterials = async () => {
+            try {
+                const response = await fetch('/api/ast');
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch materials: ${response.status}`);
+                }
+                const data = await response.json();
+                setMaterial(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchMaterials();
+    }, []);
+    console.log('materials',materials);
+
   return (
     <div>
       {/* <h1>User Management</h1>
@@ -88,7 +117,7 @@ export default function Users() {
         <div class="content">
           <div class="box-from">
             <div class="">
-              
+
             </div>
           </div>
         </div>
