@@ -1,11 +1,10 @@
 // src/app/dashboard/stockmaterial/page.js
 
-'use client'; // For client-side behavior
+"use client"; // For client-side behavior
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export default function Users() {
-
   const [materials, setMaterials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +13,7 @@ export default function Users() {
   useEffect(() => {
     const fetchMaterials = async () => {
       try {
-        const response = await fetch('/api/materials');
+        const response = await fetch("/api/materials");
         if (!response.ok) {
           throw new Error(`Failed to fetch materials: ${response.status}`);
         }
@@ -29,7 +28,23 @@ export default function Users() {
 
     fetchMaterials();
   }, []);
-    console.log('materials',materials);
+  console.log("materials", materials);
+
+  const [spoolSum, setSpoolSum] = useState(0); // State to store the sum
+
+  useEffect(() => {
+    // Sum spools with the specific conditions
+    const sumSpools = materials
+      .filter(
+        (material) =>
+          material.yarnType === "C 10 OE" &&
+          material.supplierName === "บริษัท กังวาลเท็กซ์ไทล์ จำกัด"
+      )
+      .reduce((sum, material) => sum + (material.spool || 0), 0);
+
+    setSpoolSum(sumSpools);
+  }, [materials]);
+  console.log("spoolSum", spoolSum);
 
   return (
     <div>
@@ -98,16 +113,19 @@ export default function Users() {
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <button
+                      {/* <button
                         type="submit"
                         name="submit"
                         value="search"
                         id="search"
                         class="btn btn-etc"
-                        style={{ marginTop: '2em' }}
+                        style={{ marginTop: "2em" }}
                       >
                         <i class="fas fa-folder"></i> ค้นหา
-                      </button>
+                      </button> */}
+                      <button class="btn b_save" >
+                          <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
+                        </button>
                     </div>
                   </div>
                 </div>
@@ -115,13 +133,17 @@ export default function Users() {
             </div>
           </div>
         </div>
-        <div class="content">
-          <div class="box-from">
-            <div class="">
+        <section class="Frame">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
 
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
