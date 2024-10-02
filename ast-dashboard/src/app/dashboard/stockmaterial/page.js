@@ -119,10 +119,11 @@ export default function Users() {
             let weight_p_net = 0;
             let weight_kg_net = 0;
 
+            // Ensure the values are treated as numbers
             stockQuery.forEach((item) => {
-              spool += item.spool;
-              weight_p_net += item.weight_p_net;
-              weight_kg_net += item.weight_kg_net;
+              spool += Number(item.spool) || 0; // Convert to number or default to 0
+              weight_p_net += Number(item.weight_p_net) || 0;
+              weight_kg_net += Number(item.weight_kg_net) || 0;
             });
 
             const average_p = spool > 0 ? weight_p_net / spool : 0;
@@ -148,7 +149,7 @@ export default function Users() {
             if (stockWithdraws.length > 0) {
               let spoolWithdraw = 0;
               stockWithdraws.forEach((withdraw) => {
-                spoolWithdraw += withdraw.spool;
+                spoolWithdraw += Number(withdraw.spool) || 0;
               });
 
               stockImport.spool -= spoolWithdraw;
@@ -165,7 +166,7 @@ export default function Users() {
             if (stockWithdrawsOutside.length > 0) {
               let spoolOutside = 0;
               stockWithdrawsOutside.forEach((outside) => {
-                spoolOutside += outside.spool;
+                spoolOutside += Number(outside.spool) || 0;
               });
 
               stockImport.spool -= spoolOutside;
@@ -183,7 +184,7 @@ export default function Users() {
       setStockList(newStockList);
     }
   }, [materials, materialstore, materialOutsides]);
-
+  
   console.log('stockList',stockList);
 
   return (
