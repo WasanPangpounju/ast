@@ -8,6 +8,7 @@ export default function Users() {
   const [materials, setMaterials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [yarnSumList, setYarnSumList] = useState([]); // Final output
 
   // Fetch materials from the API on component mount
   useEffect(() => {
@@ -45,6 +46,75 @@ export default function Users() {
     setSpoolSum(sumSpools);
   }, [materials]);
   console.log("spoolSum", spoolSum);
+
+  useEffect(() => {
+    if (!loading && materials.length > 0) {
+      // Group by yarnType
+      const stockYarns = materials.reduce((acc, material) => {
+        const { yarnType } = material;
+        if (!acc[yarnType]) acc[yarnType] = [];
+        acc[yarnType].push(material);
+        return acc;
+      }, {});
+
+      // Group by supplierName
+      const supplierList = materials.reduce((acc, material) => {
+        const { supplierName } = material;
+        if (!acc[supplierName]) acc[supplierName] = [];
+        acc[supplierName].push(material);
+        return acc;
+      }, {});
+
+      // Process yarn types and suppliers
+      const yarnSumList = [];
+
+      Object.keys(stockYarns).forEach((yarnTypeKey) => {
+        const yarnTypeMaterials = stockYarns[yarnTypeKey];
+
+        Object.keys(supplierList).forEach((supplierKey) => {
+          const supplierMaterials = supplierList[supplierKey];
+
+          // Filter by yarnType and supplierName
+          const stockQuery = materials.filter(
+            (material) =>
+              material.yarnType === yarnTypeKey &&
+              material.supplierName === supplierKey
+          );
+
+          // If there's matching data
+          if (stockQuery.length > 0) {
+            let spool = 0;
+            let weight_p_net = 0;
+            let weight_kg_net = 0;
+            let stockLatest = null;
+
+            // Calculate sum of spool and weights
+            stockQuery.forEach((material) => {
+              spool += material.spool || 0;
+              weight_p_net += material.weight_p_net || 0;
+              weight_kg_net += material.weight_kg_net || 0;
+              // Get the latest creation date for the stock
+              if (!stockLatest || new Date(material.created_at) > new Date(stockLatest)) {
+                stockLatest = material.created_at;
+              }
+            });
+
+            // Push the result into yarnSumList
+            yarnSumList.push({
+              yarnType: yarnTypeKey,
+              supplierName: supplierKey,
+              spool,
+              weight_p_net,
+              weight_kg_net,
+              stockLatest: new Date(stockLatest).toLocaleDateString("en-GB"), // Format as 'dd-mm-yyyy'
+            });
+          }
+        });
+      });
+
+      setYarnSumList(yarnSumList);
+    }
+  }, [materials, loading]);
 
   return (
     <div>
