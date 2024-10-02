@@ -28,6 +28,7 @@ export default function UsersPage() {
 
         fetchUsers();
     }, []);
+    console.log('users',users);
 
     return (
         <div className="dashboard-container">

@@ -74,6 +74,7 @@ export default function Users() {
                         value="search"
                         id="search"
                         class="btn btn-etc"
+                        style={{ marginTop: '2em' }}
                       >
                         <i class="fas fa-folder"></i> ค้นหา
                       </button>
@@ -86,7 +87,9 @@ export default function Users() {
         </div>
         <div class="content">
           <div class="box-from">
-            <div class=""></div>
+            <div class="">
+              
+            </div>
           </div>
         </div>
       </div>
