@@ -33,14 +33,14 @@ export default function Users() {
   const [spoolSum, setSpoolSum] = useState(0); // State to store the sum
 
   useEffect(() => {
-    // Sum spools with the specific conditions
+    // Sum spools with the specific conditions, and convert to numbers
     const sumSpools = materials
       .filter(
         (material) =>
           material.yarnType === "C 10 OE" &&
           material.supplierName === "บริษัท กังวาลเท็กซ์ไทล์ จำกัด"
       )
-      .reduce((sum, material) => sum + (material.spool || 0), 0);
+      .reduce((sum, material) => sum + (parseFloat(material.spool) || 0), 0);
 
     setSpoolSum(sumSpools);
   }, [materials]);
