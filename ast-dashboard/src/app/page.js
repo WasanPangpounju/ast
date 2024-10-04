@@ -1,3 +1,5 @@
+"use client"; // For client-side behavior
+
 import Image from "next/image";
 import Sidebar from "./dashboard/components/Sidebar";
 import 'bootstrap/dist/css/bootstrap.min.css';
