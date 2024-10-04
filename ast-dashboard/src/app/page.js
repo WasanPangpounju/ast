@@ -5,10 +5,15 @@ import Sidebar from "./dashboard/components/Sidebar";
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import { useEffect } from 'react';
 import { useState, useEffect } from "react";
+import 'globals.css';
 
 export default function Home() {
   useEffect(() => {
-    import('bootstrap/dist/js/bootstrap.bundle.min.js'); // Import Bootstrap JS
+    // Dynamically import Bootstrap JS from the public folder
+    const bootstrapScript = document.createElement('script');
+    bootstrapScript.src = '/bootstrap/js/bootstrap.bundle.min.js';
+    bootstrapScript.async = true;
+    document.body.appendChild(bootstrapScript);
   }, []);
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
