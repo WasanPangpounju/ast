@@ -1,4 +1,7 @@
 /* src/app/globals.css (or add a local CSS file) */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+
 .dashboard-container {
     display: flex;
     min-height: 100vh;
