@@ -21,7 +21,29 @@ export default function Users() {
   const [error, setError] = useState(null);
   const [stockList, setStockList] = useState([]);
 
+  const [totalPallet, setTotalPallet] = useState(0);
+  const [totalBox, setTotalBox] = useState(0);
+  const [totalSack, setTotalSack] = useState(0);
+
   // Fetch materials from the API on component mount
+  // useEffect(() => {
+  //   const fetchMaterials = async () => {
+  //     try {
+  //       const response = await fetch("/api/materials");
+  //       if (!response.ok) {
+  //         throw new Error(`Failed to fetch materials: ${response.status}`);
+  //       }
+  //       const data = await response.json();
+  //       setMaterials(data);
+  //     } catch (error) {
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchMaterials();
+  // }, []);
   useEffect(() => {
     const fetchMaterials = async () => {
       try {
@@ -31,6 +53,16 @@ export default function Users() {
         }
         const data = await response.json();
         setMaterials(data);
+
+        // Sum pallet, box, and sack
+        const palletSum = data.reduce((acc, material) => acc + (Number(material.pallet) || 0), 0);
+        const boxSum = data.reduce((acc, material) => acc + (Number(material.box) || 0), 0);
+        const sackSum = data.reduce((acc, material) => acc + (Number(material.sack) || 0), 0);
+
+        setTotalPallet(palletSum);
+        setTotalBox(boxSum);
+        setTotalSack(sackSum);
+
       } catch (error) {
         setError(error.message);
       } finally {
@@ -310,6 +342,7 @@ export default function Users() {
           </div>
         </div>
         <section class="Frame">
+          <h2>ตรวจสอบวัตถุดิบ</h2>
           <div class="row">
             <div class="col-md-5"></div>
             <div class="col-md-2">
@@ -332,12 +365,15 @@ export default function Users() {
         </section>
         <br/>
         <section class="Frame">
+        <h2>ตรวจสอบบรรจุภัณต์</h2>
           <div class="row">
             <div class="col-md-5"></div>
             <div class="col-md-2">
               <div class="row">
                 <div class="col-md-12">
-                  ด้าย<a> {spoolSum} </a>ลูก
+                พาเลท<a> {totalPallet} </a><br/>
+                กล่อง<a> {totalBox} </a><br/>
+                กระสอบ<a> {totalSack} </a><br/>
                 </div>
               </div>
               <br />
