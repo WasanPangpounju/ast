@@ -8,11 +8,11 @@ export default function Users() {
   const [materials, setMaterials] = useState([]);
   const [materialOutsides, setMaterialOutsides] = useState([]);
   const [materialstore, setMaterialstore] = useState([]);
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [stockList, setStockList] = useState([]);
-  
+
   // Fetch materials from the API on component mount
   useEffect(() => {
     const fetchMaterials = async () => {
@@ -129,7 +129,8 @@ export default function Users() {
             // Handle material withdraw (from store and outside)
             const stockWithdraws = materialstore.filter(
               (store) =>
-                store.yarnType === yarnType && store.supplierName === supplierName
+                store.yarnType === yarnType &&
+                store.supplierName === supplierName
             );
 
             if (stockWithdraws.length > 0) {
@@ -171,8 +172,7 @@ export default function Users() {
     }
   }, [materials, materialstore, materialOutsides]);
 
-  console.log('stockList',stockList);
-
+  console.log("stockList", stockList);
 
   useEffect(() => {
     // Define the yarnType and supplierName
@@ -182,21 +182,24 @@ export default function Users() {
     // Filter and sum spools from materials
     const materialsSpoolSum = materials
       .filter(
-        (item) => item.yarnType === yarnType && item.supplierName === supplierName
+        (item) =>
+          item.yarnType === yarnType && item.supplierName === supplierName
       )
       .reduce((sum, item) => sum + Number(item.spool), 0);
 
     // Filter and sum spools from materialstore
     const materialstoreSpoolSum = materialstore
       .filter(
-        (item) => item.yarnType === yarnType && item.supplierName === supplierName
+        (item) =>
+          item.yarnType === yarnType && item.supplierName === supplierName
       )
       .reduce((sum, item) => sum + Number(item.spool), 0);
 
     // Filter and sum spools from materialOutsides
     const materialOutsidesSpoolSum = materialOutsides
       .filter(
-        (item) => item.yarnType === yarnType && item.supplierName === supplierName
+        (item) =>
+          item.yarnType === yarnType && item.supplierName === supplierName
       )
       .reduce((sum, item) => sum + Number(item.spool), 0);
 
@@ -287,9 +290,9 @@ export default function Users() {
                       >
                         <i class="fas fa-folder"></i> ค้นหา
                       </button> */}
-                      <button class="btn b_save" >
-                          <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
-                        </button>
+                      <button class="btn b_save">
+                        <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -302,7 +305,15 @@ export default function Users() {
             <div class="col-md-12">
               <div class="row">
                 <div class="col-md-12">
-
+                  ด้าย<a> {spoolSum} </a>ลูก
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-md-12">
+                <button class="btn b_save">
+                        <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
+                      </button>
                 </div>
               </div>
             </div>
