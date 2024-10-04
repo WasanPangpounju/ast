@@ -66,4 +66,10 @@
     padding: 20px;
     background-color: #fff;
   }
+  .Frame {
+    border: 2px solid #000; /* Black border */
+    padding: 16px; /* Add some padding inside the frame */
+    margin: 16px; /* Add some margin around the frame */
+    border-radius: 8px; /* Optional: to give the border rounded corners */
+  }
   

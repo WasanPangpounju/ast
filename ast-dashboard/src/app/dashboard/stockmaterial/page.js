@@ -3,13 +3,13 @@
 "use client"; // For client-side behavior
 
 import { useState, useEffect } from "react";
-import '../../globals.css';
+import "../../globals.css";
 
 export default function Users() {
   useEffect(() => {
     // Dynamically import Bootstrap JS from the public folder
-    const bootstrapScript = document.createElement('script');
-    bootstrapScript.src = '/bootstrap/js/bootstrap.bundle.min.js';
+    const bootstrapScript = document.createElement("script");
+    bootstrapScript.src = "/bootstrap/js/bootstrap.bundle.min.js";
     bootstrapScript.async = true;
     document.body.appendChild(bootstrapScript);
   }, []);
@@ -20,7 +20,6 @@ export default function Users() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [stockList, setStockList] = useState([]);
-  
 
   // Fetch materials from the API on component mount
   useEffect(() => {
@@ -311,27 +310,45 @@ export default function Users() {
         </div>
         <section class="Frame">
           <div class="row">
-          <div class="col-md-5">
-              
-            </div>
+            <div class="col-md-5"></div>
             <div class="col-md-2">
               <div class="row">
                 <div class="col-md-12">
                   ด้าย<a> {spoolSum} </a>ลูก
                 </div>
               </div>
-              <br/>
+              <br />
               <div class="row">
                 <div class="col-md-12">
-                <button class="btn b_save">
-                        <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
-                      </button>
+                  <button class="btn b_save">
+                    <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
+                  </button>
                 </div>
               </div>
             </div>
-            <div class="col-md-5">
-              
+            <div class="col-md-5"></div>
+          </div>
+        </section>
+        <br/>
+        <section class="Frame">
+          <div class="row">
+            <div class="col-md-5"></div>
+            <div class="col-md-2">
+              <div class="row">
+                <div class="col-md-12">
+                  ด้าย<a> {spoolSum} </a>ลูก
+                </div>
               </div>
+              <br />
+              <div class="row">
+                <div class="col-md-12">
+                  <button class="btn b_save">
+                    <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5"></div>
           </div>
         </section>
       </div>
