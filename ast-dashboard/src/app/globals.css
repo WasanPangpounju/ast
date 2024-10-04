@@ -66,10 +66,10 @@
     padding: 20px;
     background-color: #fff;
   }
-  .Frame {
-    border: 2px solid #000; /* Black border */
-    padding: 16px; /* Add some padding inside the frame */
-    margin: 16px; /* Add some margin around the frame */
-    border-radius: 8px; /* Optional: to give the border rounded corners */
-  }
-  
+  /* .Frame {
+    border: 2px solid #000; 
+    padding: 16px; 
+    margin: 16px; 
+    border-radius: 8px; 
+  } */
+  .Frame{padding: 30px 20px 20px;margin-bottom: 30px; border-radius: 10px;border:1px Solid #DCDBDB;}
