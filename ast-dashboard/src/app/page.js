@@ -5,7 +5,7 @@ import Sidebar from "./dashboard/components/Sidebar";
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import { useEffect } from 'react';
 import { useState, useEffect } from "react";
-import 'globals.css';
+import './globals.css';
 
 export default function Home() {
   useEffect(() => {
