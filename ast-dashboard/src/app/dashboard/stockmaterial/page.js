@@ -3,8 +3,16 @@
 "use client"; // For client-side behavior
 
 import { useState, useEffect } from "react";
+import '../../globals.css';
 
 export default function Users() {
+  useEffect(() => {
+    // Dynamically import Bootstrap JS from the public folder
+    const bootstrapScript = document.createElement('script');
+    bootstrapScript.src = '/bootstrap/js/bootstrap.bundle.min.js';
+    bootstrapScript.async = true;
+    document.body.appendChild(bootstrapScript);
+  }, []);
   const [materials, setMaterials] = useState([]);
   const [materialOutsides, setMaterialOutsides] = useState([]);
   const [materialstore, setMaterialstore] = useState([]);
@@ -12,6 +20,7 @@ export default function Users() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [stockList, setStockList] = useState([]);
+  
 
   // Fetch materials from the API on component mount
   useEffect(() => {
