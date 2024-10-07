@@ -114,6 +114,8 @@ export default function Users() {
   console.log("materialstore", materialstore);
 
   const [spoolSum, setSpoolSum] = useState(0); // State to store the sum
+  const [totalWeightPNet, setTotalWeightPNet] = useState(0);
+  const [totalWeightKgNet, setTotalWeightKgNet] = useState(0);
 
   useEffect(() => {
     if (materials.length > 0) {
@@ -215,43 +217,52 @@ export default function Users() {
   console.log("stockList", stockList);
 
   useEffect(() => {
-    // Define the yarnType and supplierName
     const yarnType = "C 10 OE";
     const supplierName = "บริษัท กังวาลเท็กซ์ไทล์ จำกัด";
 
-    // Filter and sum spools from materials
-    const materialsSpoolSum = materials
-      .filter(
-        (item) =>
-          item.yarnType === yarnType && item.supplierName === supplierName
-      )
-      .reduce((sum, item) => sum + Number(item.spool), 0);
+    // Get the current date and calculate the date for 1 year ago
+    const currentDate = new Date();
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
 
-    // Filter and sum spools from materialstore
-    const materialstoreSpoolSum = materialstore
-      .filter(
-        (item) =>
-          item.yarnType === yarnType && item.supplierName === supplierName
-      )
-      .reduce((sum, item) => sum + Number(item.spool), 0);
+    // Filter and sum spools and weights from materials
+    const filteredMaterials = materials.filter((item) => {
+      // Parse createDate assuming it's in format dd/mm/yyyy
+      const [day, month, year] = item.createDate.split("/");
+      const createDate = new Date(`${year}-${month}-${day}`);
 
-    // Filter and sum spools from materialOutsides
-    const materialOutsidesSpoolSum = materialOutsides
-      .filter(
-        (item) =>
-          item.yarnType === yarnType && item.supplierName === supplierName
-      )
-      .reduce((sum, item) => sum + Number(item.spool), 0);
+      // Check if the material matches yarnType, supplierName, and is within 1 year
+      return (
+        // item.yarnType === yarnType &&
+        // item.supplierName === supplierName &&
+        createDate >= oneYearAgo
+      );
+    });
 
-    // Total spool sum
-    const totalSpoolSum =
-      materialsSpoolSum + materialstoreSpoolSum + materialOutsidesSpoolSum;
+    // Calculate the sums for spools, weight_p_net, and weight_kg_net
+    const materialsSpoolSum = filteredMaterials.reduce(
+      (sum, item) => sum + Number(item.spool || 0), // Ensure it's a number
+      0
+    );
+    const weightPNetSum = filteredMaterials.reduce(
+      (sum, item) => sum + Number(item.weight_p_net || 0),
+      0
+    );
+    const weightKgNetSum = filteredMaterials.reduce(
+      (sum, item) => sum + Number(item.weight_kg_net || 0),
+      0
+    );
 
-    setSpoolSum(totalSpoolSum);
-    console.log("materialsSpoolSum", materialsSpoolSum);
-    console.log("materialstoreSpoolSum", materialstoreSpoolSum);
-    console.log("materialOutsidesSpoolSum", materialOutsidesSpoolSum);
-  }, [materials, materialstore, materialOutsides]);
+    // Update the state with the sums
+    setSpoolSum(materialsSpoolSum);
+    setTotalWeightPNet(weightPNetSum);
+    setTotalWeightKgNet(weightKgNetSum);
+
+    console.log("Filtered materials:", filteredMaterials);
+    console.log("Spool Sum:", materialsSpoolSum);
+    console.log("Weight P Net Sum:", weightPNetSum);
+    console.log("Weight Kg Net Sum:", weightKgNetSum);
+  }, [materials]);
   console.log("spoolSum", spoolSum);
   return (
     <div>
@@ -342,13 +353,16 @@ export default function Users() {
           </div>
         </div>
         <section class="Frame">
-          <h2>ตรวจสอบวัตถุดิบ</h2>
+          <h2>ตรวจสอบวัตถุดิบ น้ำหนักสุทธิ</h2>
+          <br/>
           <div class="row">
             <div class="col-md-5"></div>
             <div class="col-md-2">
               <div class="row">
                 <div class="col-md-12">
-                  ด้าย<a> {spoolSum} </a>ลูก
+                  ด้าย<a> {spoolSum} </a>ลูก<br/>
+                  ปอนด์<a> {totalWeightPNet} </a><br/>
+                  กิโลกรัม<a> {totalWeightKgNet} </a><br/>
                 </div>
               </div>
               <br />
@@ -366,6 +380,7 @@ export default function Users() {
         <br/>
         <section class="Frame">
         <h2>ตรวจสอบบรรจุภัณต์</h2>
+        <br/>
           <div class="row">
             <div class="col-md-5"></div>
             <div class="col-md-2">
