@@ -406,12 +406,19 @@ export default function Users() {
               <table className="table table-bordered">
                 <thead>
                   <tr>
-                    <th>Yarn Type</th>
-                    <th>Spool (Materials)</th>
-                    <th>Weight (Pounds) - Materials</th>
-                    <th>Weight (Kg) - Materials</th>
-                    <th>Weight (Pounds) - Material Outsides</th>
-                    <th>Weight (Kg) - Material Outsides</th>
+                    <th rowspan="2">ชนิดด้าย</th>
+                    <th rowspan="2">จำนวนลูก</th>
+                    <th colspan="2">นำเข้า </th>
+                    <th colspan="2">เบิกออก </th>
+                    <th colspan="2">คงเหลือ </th>
+                  </tr>
+                  <tr>
+                    <th>ปอนด์</th>
+                    <th>กิโลกรัม</th>
+                    <th>ปอนด์</th>
+                    <th>กิโลกรัม</th>
+                    <th>ปอนด์</th>
+                    <th>กิโลกรัม</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -423,6 +430,18 @@ export default function Users() {
                       <td>{item.materialsWeightKgNetSum.toFixed(2)}</td>
                       <td>{item.materialOutsidesWeightPNetSum.toFixed(2)}</td>
                       <td>{item.materialOutsidesWeightKgNetSum.toFixed(2)}</td>
+                      <td>
+                        {(
+                          item.materialsWeightPNetSum -
+                          item.materialOutsidesWeightPNetSum
+                        ).toFixed(2)}
+                      </td>
+                      <td>
+                        {(
+                          item.materialsWeightKgNetSum -
+                          item.materialOutsidesWeightKgNetSum
+                        ).toFixed(2)}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
