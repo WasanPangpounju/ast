@@ -318,6 +318,7 @@ export default function Users() {
   }, {});
 
   const groupedDataArray = Object.values(groupedData);
+  groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
 
   return (
     <div>
