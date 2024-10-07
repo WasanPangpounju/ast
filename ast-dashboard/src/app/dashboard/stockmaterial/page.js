@@ -25,6 +25,11 @@ export default function Users() {
   const [totalBox, setTotalBox] = useState(0);
   const [totalSack, setTotalSack] = useState(0);
 
+  const [spoolSum, setSpoolSum] = useState(0); // State to store the sum
+  const [totalWeightPNet, setTotalWeightPNet] = useState(0);
+  const [totalWeightKgNet, setTotalWeightKgNet] = useState(0);
+  const [filterOption, setFilterOption] = useState("lastYear");
+
   // Fetch materials from the API on component mount
   // useEffect(() => {
   //   const fetchMaterials = async () => {
@@ -55,14 +60,22 @@ export default function Users() {
         setMaterials(data);
 
         // Sum pallet, box, and sack
-        const palletSum = data.reduce((acc, material) => acc + (Number(material.pallet) || 0), 0);
-        const boxSum = data.reduce((acc, material) => acc + (Number(material.box) || 0), 0);
-        const sackSum = data.reduce((acc, material) => acc + (Number(material.sack) || 0), 0);
+        const palletSum = data.reduce(
+          (acc, material) => acc + (Number(material.pallet) || 0),
+          0
+        );
+        const boxSum = data.reduce(
+          (acc, material) => acc + (Number(material.box) || 0),
+          0
+        );
+        const sackSum = data.reduce(
+          (acc, material) => acc + (Number(material.sack) || 0),
+          0
+        );
 
         setTotalPallet(palletSum);
         setTotalBox(boxSum);
         setTotalSack(sackSum);
-
       } catch (error) {
         setError(error.message);
       } finally {
@@ -112,10 +125,6 @@ export default function Users() {
     fetchMaterialstore();
   }, []);
   console.log("materialstore", materialstore);
-
-  const [spoolSum, setSpoolSum] = useState(0); // State to store the sum
-  const [totalWeightPNet, setTotalWeightPNet] = useState(0);
-  const [totalWeightKgNet, setTotalWeightKgNet] = useState(0);
 
   useEffect(() => {
     if (materials.length > 0) {
@@ -220,28 +229,40 @@ export default function Users() {
     const yarnType = "C 10 OE";
     const supplierName = "บริษัท กังวาลเท็กซ์ไทล์ จำกัด";
 
-    // Get the current date and calculate the date for 1 year ago
+    // Get the current date
     const currentDate = new Date();
+
+    // Calculate dates for last year and last month
     const oneYearAgo = new Date();
     oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
 
-    // Filter and sum spools and weights from materials
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(currentDate.getMonth() - 1);
+
+    // Filter the materials based on the selected filter (last year or last month)
     const filteredMaterials = materials.filter((item) => {
-      // Parse createDate assuming it's in format dd/mm/yyyy
       const [day, month, year] = item.createDate.split("/");
       const createDate = new Date(`${year}-${month}-${day}`);
 
-      // Check if the material matches yarnType, supplierName, and is within 1 year
-      return (
-        // item.yarnType === yarnType &&
-        // item.supplierName === supplierName &&
-        createDate >= oneYearAgo
-      );
+      // Check the selected filter option
+      if (filterOption === "lastYear") {
+        return (
+          // item.yarnType === yarnType &&
+          // item.supplierName === supplierName &&
+          createDate >= oneYearAgo
+        );
+      } else if (filterOption === "lastMonth") {
+        return (
+          // item.yarnType === yarnType &&
+          // item.supplierName === supplierName &&
+          createDate >= oneMonthAgo
+        );
+      }
     });
 
-    // Calculate the sums for spools, weight_p_net, and weight_kg_net
+    // Sum the spools and weights
     const materialsSpoolSum = filteredMaterials.reduce(
-      (sum, item) => sum + Number(item.spool || 0), // Ensure it's a number
+      (sum, item) => sum + Number(item.spool || 0),
       0
     );
     const weightPNetSum = filteredMaterials.reduce(
@@ -262,8 +283,7 @@ export default function Users() {
     console.log("Spool Sum:", materialsSpoolSum);
     console.log("Weight P Net Sum:", weightPNetSum);
     console.log("Weight Kg Net Sum:", weightKgNetSum);
-  }, [materials]);
-  console.log("spoolSum", spoolSum);
+  }, [materials, filterOption]);
   return (
     <div>
       {/* <h1>User Management</h1>
@@ -330,7 +350,7 @@ export default function Users() {
                     </div>
                   </div>
                   <div class="col-md-4">
-                  <label for=""></label>
+                    <label for=""></label>
                     <div class="form-group">
                       {/* <button
                         type="submit"
@@ -354,15 +374,18 @@ export default function Users() {
         </div>
         <section class="Frame">
           <h2>ตรวจสอบวัตถุดิบ น้ำหนักสุทธิ</h2>
-          <br/>
+          <br />
           <div class="row">
             <div class="col-md-5"></div>
             <div class="col-md-2">
               <div class="row">
                 <div class="col-md-12">
-                  ด้าย<a> {spoolSum} </a>ลูก<br/>
-                  ปอนด์<a> {totalWeightPNet} </a><br/>
-                  กิโลกรัม<a> {totalWeightKgNet} </a><br/>
+                  ด้าย<a> {spoolSum} </a>ลูก
+                  <br />
+                  ปอนด์<a> {totalWeightPNet} </a>
+                  <br />
+                  กิโลกรัม<a> {totalWeightKgNet} </a>
+                  <br />
                 </div>
               </div>
               <br />
@@ -374,21 +397,32 @@ export default function Users() {
                 </div>
               </div>
             </div>
-            <div class="col-md-5"></div>
+            <div class="col-md-5">
+              <select
+                value={filterOption}
+                onChange={(e) => setFilterOption(e.target.value)}
+              >
+                <option value="lastYear">ปีล่าสุด</option>
+                <option value="lastMonth">เดือนล่าสุด</option>
+              </select>
+            </div>
           </div>
         </section>
-        <br/>
+        <br />
         <section class="Frame">
-        <h2>ตรวจสอบบรรจุภัณต์</h2>
-        <br/>
+          <h2>ตรวจสอบบรรจุภัณต์</h2>
+          <br />
           <div class="row">
             <div class="col-md-5"></div>
             <div class="col-md-2">
               <div class="row">
                 <div class="col-md-12">
-                พาเลท<a> {totalPallet} </a><br/>
-                กล่อง<a> {totalBox} </a><br/>
-                กระสอบ<a> {totalSack} </a><br/>
+                  พาเลท<a> {totalPallet} </a>
+                  <br />
+                  กล่อง<a> {totalBox} </a>
+                  <br />
+                  กระสอบ<a> {totalSack} </a>
+                  <br />
                 </div>
               </div>
               <br />
