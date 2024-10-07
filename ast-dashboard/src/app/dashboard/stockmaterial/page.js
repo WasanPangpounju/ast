@@ -385,7 +385,7 @@ export default function Users() {
                   {/* <button class="btn b_save">
                     <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
                   </button> */}
-                  <Link href="/stockmaterialUse">
+                  <Link href="/dashboard/stockmaterialUse">
                     <button type="button" className="btn btn-primary">
                       Go to Stock Material Use
                     </button>
