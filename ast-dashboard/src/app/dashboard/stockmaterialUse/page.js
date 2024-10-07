@@ -285,6 +285,40 @@ export default function Users() {
     console.log("Weight P Net Sum:", weightPNetSum);
     console.log("Weight Kg Net Sum:", weightKgNetSum);
   }, [materials, filterOption]);
+
+  // Group data by yarnType and sum relevant fields
+  const groupedData = materials.concat(materialOutsides).reduce((acc, item) => {
+    const { yarnType, spool = 0, weight_p_net = 0, weight_kg_net = 0 } = item;
+
+    if (!acc[yarnType]) {
+      acc[yarnType] = {
+        yarnType,
+        spoolSum: 0,
+        materialsWeightPNetSum: 0,
+        materialsWeightKgNetSum: 0,
+        materialOutsidesWeightPNetSum: 0,
+        materialOutsidesWeightKgNetSum: 0,
+      };
+    }
+
+    // Add sums for materials
+    acc[yarnType].spoolSum += Number(spool);
+    acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
+    acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
+
+    // If the item is from materialOutsides, add it to that part
+    if (
+      materialOutsides.some((outsideItem) => outsideItem.yarnType === yarnType)
+    ) {
+      acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
+      acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
+    }
+
+    return acc;
+  }, {});
+
+  const groupedDataArray = Object.values(groupedData);
+
   return (
     <div>
       {/* <h1>User Management</h1>
@@ -316,7 +350,7 @@ export default function Users() {
           </div>
         </div>
 
-        {/* <div class="content">
+        <div class="content">
           <div class="box-from">
             <div class="">
               <form method="post">
@@ -362,78 +396,40 @@ export default function Users() {
               </form>
             </div>
           </div>
-        </div> */}
+        </div>
         <section class="Frame">
           <h2>ตรวจสอบวัตถุดิบ น้ำหนักสุทธิ</h2>
           <br />
           <div class="row">
-            <div class="col-md-5"></div>
-            <div class="col-md-2">
-              <div class="row">
-                <div class="col-md-12">
-                  ด้าย<a> {spoolSum} </a>ลูก
-                  <br />
-                  ปอนด์<a> {totalWeightPNet.toFixed(2)} </a>
-                  <br />
-                  กิโลกรัม<a> {totalWeightKgNet.toFixed(2)} </a>
-                  <br />
-                </div>
-              </div>
-              <br />
-              <div class="row">
-                <div class="col-md-12">
-                  {/* <button class="btn b_save">
-                    <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
-                  </button> */}
-                  <Link href="/stockmaterial/stockmaterialUse">
-                    <button type="button" className="btn btn-primary">
-                      Go to Stock Material Use
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4"></div>
-            <div class="col-md-1">
-              <select
-                value={filterOption}
-                onChange={(e) => setFilterOption(e.target.value)}
-              >
-                <option value="lastYear">ปีล่าสุด</option>
-                <option value="lastMonth">เดือนล่าสุด</option>
-              </select>
+            <div class="col-md-12">
+              <table className="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Yarn Type</th>
+                    <th>Spool (Materials)</th>
+                    <th>Weight (Pounds) - Materials</th>
+                    <th>Weight (Kg) - Materials</th>
+                    <th>Weight (Pounds) - Material Outsides</th>
+                    <th>Weight (Kg) - Material Outsides</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {groupedDataArray.map((item) => (
+                    <tr key={item.yarnType}>
+                      <td>{item.yarnType}</td>
+                      <td>{item.spoolSum}</td>
+                      <td>{item.materialsWeightPNetSum.toFixed(2)}</td>
+                      <td>{item.materialsWeightKgNetSum.toFixed(2)}</td>
+                      <td>{item.materialOutsidesWeightPNetSum.toFixed(2)}</td>
+                      <td>{item.materialOutsidesWeightKgNetSum.toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </section>
         <br />
-        <section class="Frame">
-          <h2>ตรวจสอบบรรจุภัณต์</h2>
-          <br />
-          <div class="row">
-            <div class="col-md-5"></div>
-            <div class="col-md-2">
-              <div class="row">
-                <div class="col-md-12">
-                  พาเลท<a> {totalPallet} </a>
-                  <br />
-                  กล่อง<a> {totalBox} </a>
-                  <br />
-                  กระสอบ<a> {totalSack} </a>
-                  <br />
-                </div>
-              </div>
-              <br />
-              <div class="row">
-                <div class="col-md-12">
-                  <button class="btn b_save">
-                    <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-5"></div>
-          </div>
-        </section>
       </div>
     </div>
   );
