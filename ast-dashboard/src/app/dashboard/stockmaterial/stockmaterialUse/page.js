@@ -3,7 +3,7 @@
 "use client"; // For client-side behavior
 
 import { useState, useEffect } from "react";
-import "../../globals.css";
+import "../../../globals.css";
 import Link from "next/link";
 
 export default function Users() {
@@ -35,7 +35,7 @@ export default function Users() {
   // useEffect(() => {
   //   const fetchMaterials = async () => {
   //     try {
-  //       const response = await fetch("/api/materials");
+  //       const response = await fetch("../api/materials");
   //       if (!response.ok) {
   //         throw new Error(`Failed to fetch materials: ${response.status}`);
   //       }
@@ -53,7 +53,7 @@ export default function Users() {
   useEffect(() => {
     const fetchMaterials = async () => {
       try {
-        const response = await fetch("/api/materials");
+        const response = await fetch("../api/materials");
         if (!response.ok) {
           throw new Error(`Failed to fetch materials: ${response.status}`);
         }
@@ -90,7 +90,7 @@ export default function Users() {
   useEffect(() => {
     const fetchMaterialOutsides = async () => {
       try {
-        const response = await fetch("/api/material_outsides");
+        const response = await fetch("../api/material_outsides");
         if (!response.ok) {
           throw new Error(`Failed to fetch materials: ${response.status}`);
         }
@@ -110,7 +110,7 @@ export default function Users() {
   useEffect(() => {
     const fetchMaterialstore = async () => {
       try {
-        const response = await fetch("/api/materialstore");
+        const response = await fetch("../api/materialstore");
         if (!response.ok) {
           throw new Error(`Failed to fetch materials: ${response.status}`);
         }
