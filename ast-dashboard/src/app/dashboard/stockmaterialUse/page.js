@@ -18,6 +18,14 @@ export default function Users() {
   const [materialOutsides, setMaterialOutsides] = useState([]);
   const [materialstore, setMaterialstore] = useState([]);
 
+  const [filteredMaterials, setFilteredMaterials] = useState([]);
+  const [selectedYarnType, setSelectedYarnType] = useState("");
+  const [selectedSupplier, setSelectedSupplier] = useState("");
+  const [yarnTypeFilter, setYarnTypeFilter] = useState("");
+  const [supplierFilter, setSupplierFilter] = useState("");
+  const [groupedDataArray, setGroupedDataArray] = useState([]);
+
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [stockList, setStockList] = useState([]);
@@ -227,9 +235,6 @@ export default function Users() {
   console.log("stockList", stockList);
 
   useEffect(() => {
-    const yarnType = "C 10 OE";
-    const supplierName = "บริษัท กังวาลเท็กซ์ไทล์ จำกัด";
-
     // Get the current date
     const currentDate = new Date();
 
@@ -248,14 +253,10 @@ export default function Users() {
       // Check the selected filter option
       if (filterOption === "lastYear") {
         return (
-          // item.yarnType === yarnType &&
-          // item.supplierName === supplierName &&
           createDate >= oneYearAgo
         );
       } else if (filterOption === "lastMonth") {
         return (
-          // item.yarnType === yarnType &&
-          // item.supplierName === supplierName &&
           createDate >= oneMonthAgo
         );
       }
@@ -286,39 +287,47 @@ export default function Users() {
     console.log("Weight Kg Net Sum:", weightKgNetSum);
   }, [materials, filterOption]);
 
-  // Group data by yarnType and sum relevant fields
-  const groupedData = materials.concat(materialOutsides).reduce((acc, item) => {
-    const { yarnType, spool = 0, weight_p_net = 0, weight_kg_net = 0 } = item;
+  const handleFilterAndGroup = () => {
+    // Group data by yarnType and sum relevant fields
+    const filteredMaterials = materials.filter((item) => {
+      return (
+        (!yarnTypeFilter || item.yarnType === yarnTypeFilter) &&
+        (!supplierFilter || item.supplierName === supplierFilter)
+      );
+    });
 
-    if (!acc[yarnType]) {
-      acc[yarnType] = {
-        yarnType,
-        spoolSum: 0,
-        materialsWeightPNetSum: 0,
-        materialsWeightKgNetSum: 0,
-        materialOutsidesWeightPNetSum: 0,
-        materialOutsidesWeightKgNetSum: 0,
-      };
-    }
+    const groupedData = filteredMaterials.concat(materialOutsides).reduce((acc, item) => {
+      const { yarnType, spool = 0, weight_p_net = 0, weight_kg_net = 0 } = item;
 
-    // Add sums for materials
-    acc[yarnType].spoolSum += Number(spool);
-    acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
-    acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
+      if (!acc[yarnType]) {
+        acc[yarnType] = {
+          yarnType,
+          spoolSum: 0,
+          materialsWeightPNetSum: 0,
+          materialsWeightKgNetSum: 0,
+          materialOutsidesWeightPNetSum: 0,
+          materialOutsidesWeightKgNetSum: 0,
+        };
+      }
 
-    // If the item is from materialOutsides, add it to that part
-    if (
-      materialOutsides.some((outsideItem) => outsideItem.yarnType === yarnType)
-    ) {
-      acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
-      acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
-    }
+      // Add sums for materials
+      acc[yarnType].spoolSum += Number(spool);
+      acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
+      acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
 
-    return acc;
-  }, {});
+      // If the item is from materialOutsides, add it to that part
+      if (materialOutsides.some((outsideItem) => outsideItem.yarnType === yarnType)) {
+        acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
+        acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
+      }
 
-  const groupedDataArray = Object.values(groupedData);
-  groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
+      return acc;
+    }, {});
+
+    const groupedDataArray = Object.values(groupedData);
+    groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
+    setGroupedDataArray(groupedDataArray);
+  };
 
   return (
     <div>
@@ -359,30 +368,38 @@ export default function Users() {
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="yarntype">ชนิดด้าย</label>
-                      <select name="yarnType" class="form-control">
-                        <option disabled selected value="">
-                          เลือกชนิดได้
-                        </option>
-
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                      </select>
+                      <input
+            list="yarnTypeList"
+            name="yarnType"
+            className="form-control"
+            value={selectedYarnType}
+            onChange={(e) => setSelectedYarnType(e.target.value)}
+            placeholder="เลือกชนิดด้าย"
+          />
+          <datalist id="yarnTypeList">
+            {materials.map((item, index) => (
+              <option key={index} value={item.yarnType} />
+            ))}
+          </datalist>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="supplier">บริษัท</label>
 
-                      <select name="supplier" class="form-control">
-                        <option disabled selected value="">
-                          เลือกบริษัท
-                        </option>
-
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                      </select>
+                      <input
+            list="supplierList"
+            name="supplier"
+            className="form-control"
+            value={selectedSupplier}
+            onChange={(e) => setSelectedSupplier(e.target.value)}
+            placeholder="เลือกบริษัท"
+          />
+          <datalist id="supplierList">
+            {materials.map((item, index) => (
+              <option key={index} value={item.supplierName} />
+            ))}
+          </datalist>
                     </div>
                   </div>
                   <div class="col-md-4">
