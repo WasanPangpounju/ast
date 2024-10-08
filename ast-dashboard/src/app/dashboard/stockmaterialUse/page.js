@@ -405,9 +405,9 @@ export default function Users() {
                   <div class="col-md-4">
                     <label for=""></label>
                     <div class="form-group">
-                      <button class="btn b_save">
-                        <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
-                      </button>
+                    <button className="btn b_save" onClick={handleFilterAndGroup}>
+        <i className="nav-icon fas fa-search"></i> &nbsp; ค้นหา
+      </button>
                     </div>
                   </div>
                 </div>
