@@ -287,16 +287,8 @@ export default function Users() {
     console.log("Weight Kg Net Sum:", weightKgNetSum);
   }, [materials, filterOption]);
 
-  const handleFilterAndGroup = () => {
-    // Group data by yarnType and sum relevant fields
-    const filteredMaterials = materials.filter((item) => {
-      return (
-        (!yarnTypeFilter || item.yarnType === yarnTypeFilter) &&
-        (!supplierFilter || item.supplierName === supplierFilter)
-      );
-    });
-
-    const groupedData = filteredMaterials.concat(materialOutsides).reduce((acc, item) => {
+  const handleGroupData = (materialsToGroup, materialOutsidesToGroup) => {
+    const groupedData = materialsToGroup.concat(materialOutsidesToGroup).reduce((acc, item) => {
       const { yarnType, spool = 0, weight_p_net = 0, weight_kg_net = 0 } = item;
 
       if (!acc[yarnType]) {
@@ -327,6 +319,20 @@ export default function Users() {
     const groupedDataArray = Object.values(groupedData);
     groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
     setGroupedDataArray(groupedDataArray);
+  };
+
+  // Handle filter and grouping
+  const handleFilterAndGroup = () => {
+    // Filter the data based on the selected filters
+    const filteredMaterials = materials.filter((item) => {
+      return (
+        (!yarnTypeFilter || item.yarnType === yarnTypeFilter) &&
+        (!supplierFilter || item.supplierName === supplierFilter)
+      );
+    });
+
+    // Group and filter the data
+    handleGroupData(filteredMaterials, materialOutsides);
   };
 
   return (
