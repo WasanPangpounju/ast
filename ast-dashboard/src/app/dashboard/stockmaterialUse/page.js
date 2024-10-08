@@ -7,13 +7,13 @@ import "../../globals.css";
 import Link from "next/link";
 
 export default function Users() {
-  // useEffect(() => {
-  //   // Dynamically import Bootstrap JS from the public folder
-  //   const bootstrapScript = document.createElement("script");
-  //   bootstrapScript.src = "/bootstrap/js/bootstrap.bundle.min.js";
-  //   bootstrapScript.async = true;
-  //   document.body.appendChild(bootstrapScript);
-  // }, []);
+  useEffect(() => {
+    // Dynamically import Bootstrap JS from the public folder
+    const bootstrapScript = document.createElement("script");
+    bootstrapScript.src = "/bootstrap/js/bootstrap.bundle.min.js";
+    bootstrapScript.async = true;
+    document.body.appendChild(bootstrapScript);
+  }, []);
   const [materials, setMaterials] = useState([]);
   const [materialOutsides, setMaterialOutsides] = useState([]);
   const [materialstore, setMaterialstore] = useState([]);
@@ -21,9 +21,6 @@ export default function Users() {
   const [filteredMaterials, setFilteredMaterials] = useState([]);
   const [selectedYarnType, setSelectedYarnType] = useState("");
   const [selectedSupplier, setSelectedSupplier] = useState("");
-  const [yarnTypeFilter, setYarnTypeFilter] = useState("");
-  const [supplierFilter, setSupplierFilter] = useState("");
-  const [groupedDataArray, setGroupedDataArray] = useState([]);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -251,9 +248,13 @@ export default function Users() {
 
       // Check the selected filter option
       if (filterOption === "lastYear") {
-        return createDate >= oneYearAgo;
+        return (
+          createDate >= oneYearAgo
+        );
       } else if (filterOption === "lastMonth") {
-        return createDate >= oneMonthAgo;
+        return (
+          createDate >= oneMonthAgo
+        );
       }
     });
 
@@ -282,64 +283,39 @@ export default function Users() {
     console.log("Weight Kg Net Sum:", weightKgNetSum);
   }, [materials, filterOption]);
 
-  const handleGroupData = (materialsToGroup, materialOutsidesToGroup) => {
-    const groupedData = materialsToGroup
-      .concat(materialOutsidesToGroup)
-      .reduce((acc, item) => {
-        const {
-          yarnType,
-          spool = 0,
-          weight_p_net = 0,
-          weight_kg_net = 0,
-        } = item;
+  // Group data by yarnType and sum relevant fields
+  const groupedData = materials.concat(materialOutsides).reduce((acc, item) => {
+    const { yarnType, spool = 0, weight_p_net = 0, weight_kg_net = 0 } = item;
 
-        if (!acc[yarnType]) {
-          acc[yarnType] = {
-            yarnType,
-            spoolSum: 0,
-            materialsWeightPNetSum: 0,
-            materialsWeightKgNetSum: 0,
-            materialOutsidesWeightPNetSum: 0,
-            materialOutsidesWeightKgNetSum: 0,
-          };
-        }
+    if (!acc[yarnType]) {
+      acc[yarnType] = {
+        yarnType,
+        spoolSum: 0,
+        materialsWeightPNetSum: 0,
+        materialsWeightKgNetSum: 0,
+        materialOutsidesWeightPNetSum: 0,
+        materialOutsidesWeightKgNetSum: 0,
+      };
+    }
 
-        // Add sums for materials
-        acc[yarnType].spoolSum += Number(spool);
-        acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
-        acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
+    // Add sums for materials
+    acc[yarnType].spoolSum += Number(spool);
+    acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
+    acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
 
-        // If the item is from materialOutsides, add it to that part
-        if (
-          materialOutsides.some(
-            (outsideItem) => outsideItem.yarnType === yarnType
-          )
-        ) {
-          acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
-          acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
-        }
+    // If the item is from materialOutsides, add it to that part
+    if (
+      materialOutsides.some((outsideItem) => outsideItem.yarnType === yarnType)
+    ) {
+      acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
+      acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
+    }
 
-        return acc;
-      }, {});
+    return acc;
+  }, {});
 
-    const groupedDataArray = Object.values(groupedData);
-    groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
-    setGroupedDataArray(groupedDataArray);
-  };
-
-  // Handle filter and grouping
-  const handleFilterAndGroup = () => {
-    // Filter the data based on the selected filters
-    const filteredMaterials = materials.filter((item) => {
-      return (
-        (!yarnTypeFilter || item.yarnType === yarnTypeFilter) &&
-        (!supplierFilter || item.supplierName === supplierFilter)
-      );
-    });
-
-    // Group and filter the data
-    handleGroupData(filteredMaterials, materialOutsides);
-  };
+  const groupedDataArray = Object.values(groupedData);
+  groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
 
   return (
     <div>
@@ -381,18 +357,18 @@ export default function Users() {
                     <div class="form-group">
                       <label for="yarntype">ชนิดด้าย</label>
                       <input
-                        list="yarnTypeList"
-                        name="yarnType"
-                        className="form-control"
-                        value={selectedYarnType}
-                        onChange={(e) => setSelectedYarnType(e.target.value)}
-                        placeholder="เลือกชนิดด้าย"
-                      />
-                      <datalist id="yarnTypeList">
-                        {materials.map((item, index) => (
-                          <option key={index} value={item.yarnType} />
-                        ))}
-                      </datalist>
+            list="yarnTypeList"
+            name="yarnType"
+            className="form-control"
+            value={selectedYarnType}
+            onChange={(e) => setSelectedYarnType(e.target.value)}
+            placeholder="เลือกชนิดด้าย"
+          />
+          <datalist id="yarnTypeList">
+            {materials.map((item, index) => (
+              <option key={index} value={item.yarnType} />
+            ))}
+          </datalist>
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -400,28 +376,25 @@ export default function Users() {
                       <label for="supplier">บริษัท</label>
 
                       <input
-                        list="supplierList"
-                        name="supplier"
-                        className="form-control"
-                        value={selectedSupplier}
-                        onChange={(e) => setSelectedSupplier(e.target.value)}
-                        placeholder="เลือกบริษัท"
-                      />
-                      <datalist id="supplierList">
-                        {materials.map((item, index) => (
-                          <option key={index} value={item.supplierName} />
-                        ))}
-                      </datalist>
+            list="supplierList"
+            name="supplier"
+            className="form-control"
+            value={selectedSupplier}
+            onChange={(e) => setSelectedSupplier(e.target.value)}
+            placeholder="เลือกบริษัท"
+          />
+          <datalist id="supplierList">
+            {materials.map((item, index) => (
+              <option key={index} value={item.supplierName} />
+            ))}
+          </datalist>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <label for=""></label>
                     <div class="form-group">
-                      <button
-                        className="btn b_save"
-                        onClick={handleFilterAndGroup}
-                      >
-                        <i className="nav-icon fas fa-search"></i> &nbsp; ค้นหา
+                      <button class="btn b_save">
+                        <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
                       </button>
                     </div>
                   </div>
