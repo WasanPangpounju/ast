@@ -284,9 +284,9 @@ export default function Users() {
   }, [materials, filterOption]);
 
   // Group data by yarnType and sum relevant fields
-  const groupedData = materials.concat(materialOutsides).reduce((acc, item) => {
+  const groupedData = materials.concat(materialOutsides, materialstore).reduce((acc, item) => {
     const { yarnType, spool = 0, weight_p_net = 0, weight_kg_net = 0 } = item;
-
+  
     if (!acc[yarnType]) {
       acc[yarnType] = {
         yarnType,
@@ -295,14 +295,16 @@ export default function Users() {
         materialsWeightKgNetSum: 0,
         materialOutsidesWeightPNetSum: 0,
         materialOutsidesWeightKgNetSum: 0,
+        materialstoreWeightPNetSum: 0,     // Add this for materialstore
+        materialstoreWeightKgNetSum: 0,     // Add this for materialstore
       };
     }
-
+  
     // Add sums for materials
     acc[yarnType].spoolSum += Number(spool);
     acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
     acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
-
+  
     // If the item is from materialOutsides, add it to that part
     if (
       materialOutsides.some((outsideItem) => outsideItem.yarnType === yarnType)
@@ -310,12 +312,23 @@ export default function Users() {
       acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
       acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
     }
-
+  
+    // If the item is from materialstore, add it to that part
+    if (
+      materialstore.some((storeItem) => storeItem.yarnType === yarnType)
+    ) {
+      acc[yarnType].materialstoreWeightPNetSum += Number(weight_p_net);
+      acc[yarnType].materialstoreWeightKgNetSum += Number(weight_kg_net);
+    }
+  
     return acc;
   }, {});
-
+  
   const groupedDataArray = Object.values(groupedData);
+  
+  // Sort by yarnType
   groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
+  
 
   return (
     <div>
@@ -415,9 +428,12 @@ export default function Users() {
                     <th rowspan="2">จำนวนลูก</th>
                     <th colspan="2">นำเข้า </th>
                     <th colspan="2">เบิกออก </th>
+                    <th colspan="2">ทดสอบ </th>
                     <th colspan="2">คงเหลือ </th>
                   </tr>
                   <tr>
+                    <th>ปอนด์</th>
+                    <th>กิโลกรัม</th>
                     <th>ปอนด์</th>
                     <th>กิโลกรัม</th>
                     <th>ปอนด์</th>
@@ -435,6 +451,8 @@ export default function Users() {
                       <td>{item.materialsWeightKgNetSum.toFixed(2)}</td>
                       <td>{item.materialOutsidesWeightPNetSum.toFixed(2)}</td>
                       <td>{item.materialOutsidesWeightKgNetSum.toFixed(2)}</td>
+                      <td>{item.materialstoreWeightPNetSum.toFixed(2)}</td>
+                      <td>{item.materialstoreWeightKgNetSum.toFixed(2)}</td>
                       <td>
                         {(
                           item.materialsWeightPNetSum -
