@@ -17,10 +17,12 @@ export default function Users() {
   const [materials, setMaterials] = useState([]);
   const [materialOutsides, setMaterialOutsides] = useState([]);
   const [materialstore, setMaterialstore] = useState([]);
-
+  const [groupedData, setGroupedData] = useState([]);
+  
   const [filteredMaterials, setFilteredMaterials] = useState([]);
   const [selectedYarnType, setSelectedYarnType] = useState("");
   const [selectedSupplier, setSelectedSupplier] = useState("");
+  
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
