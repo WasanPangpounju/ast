@@ -343,8 +343,8 @@ export default function Users() {
   const uniqueSuppliers = [
     ...new Set(materials.map((item) => item.supplierName)),
   ];
-  console("uniqueYarnTypes", uniqueYarnTypes);
-  console("uniqueSuppliers", uniqueSuppliers);
+  console.log("uniqueYarnTypes", uniqueYarnTypes);
+  console.log("uniqueSuppliers", uniqueSuppliers);
 
   return (
     <div>
@@ -393,11 +393,11 @@ export default function Users() {
                         onChange={(e) => setSelectedYarnType(e.target.value)}
                         placeholder="เลือกชนิดด้าย"
                       />
-                      {/* <datalist id="yarnTypeList">
+                      <datalist id="yarnTypeList">
                         {uniqueYarnTypes.map((item, index) => (
                           <option key={index} value={item.yarnType} />
                         ))}
-                      </datalist> */}
+                      </datalist>
                       {/* <datalist id="yarnTypeList">
                         {uniqueYarnTypes.map((yarnType, index) => (
                           <option key={index} value={yarnType} />
@@ -417,11 +417,11 @@ export default function Users() {
                         onChange={(e) => setSelectedSupplier(e.target.value)}
                         placeholder="เลือกบริษัท"
                       />
-                      {/* <datalist id="supplierList">
+                      <datalist id="supplierList">
                         {uniqueSuppliers.map((item, index) => (
                           <option key={index} value={item.supplierName} />
                         ))}
-                      </datalist> */}
+                      </datalist>
                       {/* <datalist id="supplierList">
                         {uniqueSuppliers.map((supplier, index) => (
                           <option key={index} value={supplier} />
