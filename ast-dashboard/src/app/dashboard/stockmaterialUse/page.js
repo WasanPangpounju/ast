@@ -340,8 +340,11 @@ export default function Users() {
     return yarnTypeMatches && supplierMatches;
   });
   const uniqueYarnTypes = [...new Set(materials.map((item) => item.yarnType))];
-  const uniqueSuppliers = [...new Set(materials.map((item) => item.supplierName))];
-
+  const uniqueSuppliers = [
+    ...new Set(materials.map((item) => item.supplierName)),
+  ];
+  console("uniqueYarnTypes", uniqueYarnTypes);
+  console("uniqueSuppliers", uniqueSuppliers);
 
   return (
     <div>
@@ -390,9 +393,14 @@ export default function Users() {
                         onChange={(e) => setSelectedYarnType(e.target.value)}
                         placeholder="เลือกชนิดด้าย"
                       />
-                      <datalist id="yarnTypeList">
+                      {/* <datalist id="yarnTypeList">
                         {uniqueYarnTypes.map((item, index) => (
                           <option key={index} value={item.yarnType} />
+                        ))}
+                      </datalist> */}
+                      <datalist id="yarnTypeList">
+                        {uniqueYarnTypes.map((yarnType, index) => (
+                          <option key={index} value={yarnType} />
                         ))}
                       </datalist>
                     </div>
@@ -409,9 +417,14 @@ export default function Users() {
                         onChange={(e) => setSelectedSupplier(e.target.value)}
                         placeholder="เลือกบริษัท"
                       />
-                      <datalist id="supplierList">
+                      {/* <datalist id="supplierList">
                         {uniqueSuppliers.map((item, index) => (
                           <option key={index} value={item.supplierName} />
+                        ))}
+                      </datalist> */}
+                      <datalist id="supplierList">
+                        {uniqueSuppliers.map((supplier, index) => (
+                          <option key={index} value={supplier} />
                         ))}
                       </datalist>
                     </div>
@@ -480,17 +493,17 @@ export default function Users() {
                       </td>
                     </tr>
                   ))} */}
-                   {filteredData.map((item, index) => (
-            <tr key={index}>
-              <td>{item.yarnType}</td>
-              <td>{item.spoolSum}</td>
-              <td>{item.materialsWeightPNetSum.toFixed(2)}</td>
-              <td>{item.materialsWeightKgNetSum.toFixed(2)}</td>
-              <td>{item.materialOutsidesWeightPNetSum.toFixed(2)}</td>
-              <td>{item.materialOutsidesWeightKgNetSum.toFixed(2)}</td>
-              <td>{item.materialstoreWeightPNetSum.toFixed(2)}</td>
-              <td>{item.materialstoreWeightKgNetSum.toFixed(2)}</td>
-              <td>
+                  {filteredData.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.yarnType}</td>
+                      <td>{item.spoolSum}</td>
+                      <td>{item.materialsWeightPNetSum.toFixed(2)}</td>
+                      <td>{item.materialsWeightKgNetSum.toFixed(2)}</td>
+                      <td>{item.materialOutsidesWeightPNetSum.toFixed(2)}</td>
+                      <td>{item.materialOutsidesWeightKgNetSum.toFixed(2)}</td>
+                      <td>{item.materialstoreWeightPNetSum.toFixed(2)}</td>
+                      <td>{item.materialstoreWeightKgNetSum.toFixed(2)}</td>
+                      <td>
                         {(
                           item.materialsWeightPNetSum -
                           item.materialOutsidesWeightPNetSum
@@ -502,8 +515,8 @@ export default function Users() {
                           item.materialOutsidesWeightKgNetSum
                         ).toFixed(2)}
                       </td>
-            </tr>
-          ))}
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
