@@ -279,48 +279,86 @@ export default function Users() {
     console.log("Weight Kg Net Sum:", weightKgNetSum);
   }, [materials, filterOption]);
 
+  const isDateInRange = (createDate, range) => {
+    const now = new Date();
+    const date = new Date(createDate);
+
+    if (range === "lastYear") {
+      const oneYearAgo = new Date(
+        now.getFullYear() - 1,
+        now.getMonth(),
+        now.getDate()
+      );
+      return date >= oneYearAgo && date <= now;
+    }
+
+    if (range === "lastMonth") {
+      const oneMonthAgo = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      );
+      return date >= oneMonthAgo && date <= now;
+    }
+
+    return false; // Default to false if no valid range is provided
+  };
+
   // Group data by yarnType and sum relevant fields
-  const groupedData = materials
-    .concat(materialOutsides, materialstore)
-    .reduce((acc, item) => {
-      const { yarnType, spool = 0, weight_p_net = 0, weight_kg_net = 0 } = item;
-
-      if (!acc[yarnType]) {
-        acc[yarnType] = {
+  useEffect(() => {
+    const filteredData = materials
+      .concat(materialOutsides, materialstore)
+      .filter((item) => isDateInRange(item.createDate, filterOption)) // Apply filter based on createDate
+      .reduce((acc, item) => {
+        const {
           yarnType,
-          spoolSum: 0,
-          materialsWeightPNetSum: 0,
-          materialsWeightKgNetSum: 0,
-          materialOutsidesWeightPNetSum: 0,
-          materialOutsidesWeightKgNetSum: 0,
-          materialstoreWeightPNetSum: 0, // Add this for materialstore
-          materialstoreWeightKgNetSum: 0, // Add this for materialstore
-        };
-      }
+          spool = 0,
+          weight_p_net = 0,
+          weight_kg_net = 0,
+        } = item;
 
-      // Add sums for materials
-      acc[yarnType].spoolSum += Number(spool);
-      acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
-      acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
+        if (!acc[yarnType]) {
+          acc[yarnType] = {
+            yarnType,
+            spoolSum: 0,
+            materialsWeightPNetSum: 0,
+            materialsWeightKgNetSum: 0,
+            materialOutsidesWeightPNetSum: 0,
+            materialOutsidesWeightKgNetSum: 0,
+            materialstoreWeightPNetSum: 0,
+            materialstoreWeightKgNetSum: 0,
+          };
+        }
 
-      // If the item is from materialOutsides, add it to that part
-      if (
-        materialOutsides.some(
-          (outsideItem) => outsideItem.yarnType === yarnType
-        )
-      ) {
-        acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
-        acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
-      }
+        acc[yarnType].spoolSum += Number(spool);
+        acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
+        acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
 
-      // If the item is from materialstore, add it to that part
-      if (materialstore.some((storeItem) => storeItem.yarnType === yarnType)) {
-        acc[yarnType].materialstoreWeightPNetSum += Number(weight_p_net);
-        acc[yarnType].materialstoreWeightKgNetSum += Number(weight_kg_net);
-      }
+        if (
+          materialOutsides.some(
+            (outsideItem) => outsideItem.yarnType === yarnType
+          )
+        ) {
+          acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
+          acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
+        }
 
-      return acc;
-    }, {});
+        if (
+          materialstore.some((storeItem) => storeItem.yarnType === yarnType)
+        ) {
+          acc[yarnType].materialstoreWeightPNetSum += Number(weight_p_net);
+          acc[yarnType].materialstoreWeightKgNetSum += Number(weight_kg_net);
+        }
+
+        return acc;
+      }, {});
+
+    const groupedDataArray = Object.values(filteredData);
+    groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
+
+    // Set the filtered and sorted data
+    setGroupedData(groupedDataArray);
+  }, [materials, materialOutsides, materialstore, filterOption]); // Include filterOption in dependencies
 
   const groupedDataArray = Object.values(groupedData);
 
@@ -436,6 +474,14 @@ export default function Users() {
                       {/* <button class="btn b_save">
                         <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
                       </button> */}
+                      <select
+                        value={filterOption}
+                        onChange={(e) => setFilterOption(e.target.value)}
+                        className="form-control"
+                      >
+                        <option value="lastYear">ปีล่าสุด</option>
+                        <option value="lastMonth">เดือนล่าสุด</option>
+                      </select>
                     </div>
                   </div>
                 </div>
