@@ -339,6 +339,9 @@ export default function Users() {
       );
     return yarnTypeMatches && supplierMatches;
   });
+  const uniqueYarnTypes = [...new Set(materials.map((item) => item.yarnType))];
+  const uniqueSuppliers = [...new Set(materials.map((item) => item.supplierName))];
+
 
   return (
     <div>
@@ -388,7 +391,7 @@ export default function Users() {
                         placeholder="เลือกชนิดด้าย"
                       />
                       <datalist id="yarnTypeList">
-                        {materials.map((item, index) => (
+                        {uniqueYarnTypes.map((item, index) => (
                           <option key={index} value={item.yarnType} />
                         ))}
                       </datalist>
@@ -407,7 +410,7 @@ export default function Users() {
                         placeholder="เลือกบริษัท"
                       />
                       <datalist id="supplierList">
-                        {materials.map((item, index) => (
+                        {uniqueSuppliers.map((item, index) => (
                           <option key={index} value={item.supplierName} />
                         ))}
                       </datalist>
