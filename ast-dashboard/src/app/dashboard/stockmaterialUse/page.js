@@ -248,13 +248,9 @@ export default function Users() {
 
       // Check the selected filter option
       if (filterOption === "lastYear") {
-        return (
-          createDate >= oneYearAgo
-        );
+        return createDate >= oneYearAgo;
       } else if (filterOption === "lastMonth") {
-        return (
-          createDate >= oneMonthAgo
-        );
+        return createDate >= oneMonthAgo;
       }
     });
 
@@ -284,51 +280,65 @@ export default function Users() {
   }, [materials, filterOption]);
 
   // Group data by yarnType and sum relevant fields
-  const groupedData = materials.concat(materialOutsides, materialstore).reduce((acc, item) => {
-    const { yarnType, spool = 0, weight_p_net = 0, weight_kg_net = 0 } = item;
-  
-    if (!acc[yarnType]) {
-      acc[yarnType] = {
-        yarnType,
-        spoolSum: 0,
-        materialsWeightPNetSum: 0,
-        materialsWeightKgNetSum: 0,
-        materialOutsidesWeightPNetSum: 0,
-        materialOutsidesWeightKgNetSum: 0,
-        materialstoreWeightPNetSum: 0,     // Add this for materialstore
-        materialstoreWeightKgNetSum: 0,     // Add this for materialstore
-      };
-    }
-  
-    // Add sums for materials
-    acc[yarnType].spoolSum += Number(spool);
-    acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
-    acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
-  
-    // If the item is from materialOutsides, add it to that part
-    if (
-      materialOutsides.some((outsideItem) => outsideItem.yarnType === yarnType)
-    ) {
-      acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
-      acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
-    }
-  
-    // If the item is from materialstore, add it to that part
-    if (
-      materialstore.some((storeItem) => storeItem.yarnType === yarnType)
-    ) {
-      acc[yarnType].materialstoreWeightPNetSum += Number(weight_p_net);
-      acc[yarnType].materialstoreWeightKgNetSum += Number(weight_kg_net);
-    }
-  
-    return acc;
-  }, {});
-  
+  const groupedData = materials
+    .concat(materialOutsides, materialstore)
+    .reduce((acc, item) => {
+      const { yarnType, spool = 0, weight_p_net = 0, weight_kg_net = 0 } = item;
+
+      if (!acc[yarnType]) {
+        acc[yarnType] = {
+          yarnType,
+          spoolSum: 0,
+          materialsWeightPNetSum: 0,
+          materialsWeightKgNetSum: 0,
+          materialOutsidesWeightPNetSum: 0,
+          materialOutsidesWeightKgNetSum: 0,
+          materialstoreWeightPNetSum: 0, // Add this for materialstore
+          materialstoreWeightKgNetSum: 0, // Add this for materialstore
+        };
+      }
+
+      // Add sums for materials
+      acc[yarnType].spoolSum += Number(spool);
+      acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
+      acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
+
+      // If the item is from materialOutsides, add it to that part
+      if (
+        materialOutsides.some(
+          (outsideItem) => outsideItem.yarnType === yarnType
+        )
+      ) {
+        acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
+        acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
+      }
+
+      // If the item is from materialstore, add it to that part
+      if (materialstore.some((storeItem) => storeItem.yarnType === yarnType)) {
+        acc[yarnType].materialstoreWeightPNetSum += Number(weight_p_net);
+        acc[yarnType].materialstoreWeightKgNetSum += Number(weight_kg_net);
+      }
+
+      return acc;
+    }, {});
+
   const groupedDataArray = Object.values(groupedData);
-  
+
   // Sort by yarnType
   groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
-  
+
+  const filteredData = groupedDataArray.filter((item) => {
+    const yarnTypeMatches =
+      selectedYarnType === "" || item.yarnType === selectedYarnType;
+    const supplierMatches =
+      selectedSupplier === "" ||
+      materials.some(
+        (material) =>
+          material.yarnType === item.yarnType &&
+          material.supplierName === selectedSupplier
+      );
+    return yarnTypeMatches && supplierMatches;
+  });
 
   return (
     <div>
@@ -370,18 +380,18 @@ export default function Users() {
                     <div class="form-group">
                       <label for="yarntype">ชนิดด้าย</label>
                       <input
-            list="yarnTypeList"
-            name="yarnType"
-            className="form-control"
-            value={selectedYarnType}
-            onChange={(e) => setSelectedYarnType(e.target.value)}
-            placeholder="เลือกชนิดด้าย"
-          />
-          <datalist id="yarnTypeList">
-            {materials.map((item, index) => (
-              <option key={index} value={item.yarnType} />
-            ))}
-          </datalist>
+                        list="yarnTypeList"
+                        name="yarnType"
+                        className="form-control"
+                        value={selectedYarnType}
+                        onChange={(e) => setSelectedYarnType(e.target.value)}
+                        placeholder="เลือกชนิดด้าย"
+                      />
+                      <datalist id="yarnTypeList">
+                        {materials.map((item, index) => (
+                          <option key={index} value={item.yarnType} />
+                        ))}
+                      </datalist>
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -389,26 +399,26 @@ export default function Users() {
                       <label for="supplier">บริษัท</label>
 
                       <input
-            list="supplierList"
-            name="supplier"
-            className="form-control"
-            value={selectedSupplier}
-            onChange={(e) => setSelectedSupplier(e.target.value)}
-            placeholder="เลือกบริษัท"
-          />
-          <datalist id="supplierList">
-            {materials.map((item, index) => (
-              <option key={index} value={item.supplierName} />
-            ))}
-          </datalist>
+                        list="supplierList"
+                        name="supplier"
+                        className="form-control"
+                        value={selectedSupplier}
+                        onChange={(e) => setSelectedSupplier(e.target.value)}
+                        placeholder="เลือกบริษัท"
+                      />
+                      <datalist id="supplierList">
+                        {materials.map((item, index) => (
+                          <option key={index} value={item.supplierName} />
+                        ))}
+                      </datalist>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <label for=""></label>
                     <div class="form-group">
-                      <button class="btn b_save">
+                      {/* <button class="btn b_save">
                         <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>
@@ -443,7 +453,7 @@ export default function Users() {
                   </tr>
                 </thead>
                 <tbody>
-                  {groupedDataArray.map((item) => (
+                  {/* {groupedDataArray.map((item) => (
                     <tr key={item.yarnType}>
                       <td>{item.yarnType}</td>
                       <td>{item.spoolSum}</td>
@@ -466,7 +476,31 @@ export default function Users() {
                         ).toFixed(2)}
                       </td>
                     </tr>
-                  ))}
+                  ))} */}
+                   {filteredData.map((item, index) => (
+            <tr key={index}>
+              <td>{item.yarnType}</td>
+              <td>{item.spoolSum}</td>
+              <td>{item.materialsWeightPNetSum.toFixed(2)}</td>
+              <td>{item.materialsWeightKgNetSum.toFixed(2)}</td>
+              <td>{item.materialOutsidesWeightPNetSum.toFixed(2)}</td>
+              <td>{item.materialOutsidesWeightKgNetSum.toFixed(2)}</td>
+              <td>{item.materialstoreWeightPNetSum.toFixed(2)}</td>
+              <td>{item.materialstoreWeightKgNetSum.toFixed(2)}</td>
+              <td>
+                        {(
+                          item.materialsWeightPNetSum -
+                          item.materialOutsidesWeightPNetSum
+                        ).toFixed(2)}
+                      </td>
+                      <td>
+                        {(
+                          item.materialsWeightKgNetSum -
+                          item.materialOutsidesWeightKgNetSum
+                        ).toFixed(2)}
+                      </td>
+            </tr>
+          ))}
                 </tbody>
               </table>
             </div>
