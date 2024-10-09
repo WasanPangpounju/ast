@@ -395,9 +395,10 @@ export default function Users() {
                       />
                       <datalist id="yarnTypeList">
                         {uniqueYarnTypes.map((item, index) => (
-                          <option key={index} value={item.yarnType} />
+                          <option key={index} value={item} />
                         ))}
                       </datalist>
+
                       {/* <datalist id="yarnTypeList">
                         {uniqueYarnTypes.map((yarnType, index) => (
                           <option key={index} value={yarnType} />
@@ -419,7 +420,7 @@ export default function Users() {
                       />
                       <datalist id="supplierList">
                         {uniqueSuppliers.map((item, index) => (
-                          <option key={index} value={item.supplierName} />
+                          <option key={index} value={item} />
                         ))}
                       </datalist>
                       {/* <datalist id="supplierList">
