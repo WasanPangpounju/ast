@@ -18,7 +18,7 @@ export default function Users() {
   const [materialOutsides, setMaterialOutsides] = useState([]);
   const [materialstore, setMaterialstore] = useState([]);
   const [groupedData, setGroupedData] = useState([]);
-  
+
   const [filteredMaterials, setFilteredMaterials] = useState([]);
   const [selectedYarnType, setSelectedYarnType] = useState("");
   const [selectedSupplier, setSelectedSupplier] = useState("");
@@ -548,20 +548,20 @@ export default function Users() {
                       <td>{item.spoolSum}</td>
                       <td>{item.materialsWeightPNetSum.toFixed(2)}</td>
                       <td>{item.materialsWeightKgNetSum.toFixed(2)}</td>
-                      <td>{item.materialOutsidesWeightPNetSum.toFixed(2)}</td>
-                      <td>{item.materialOutsidesWeightKgNetSum.toFixed(2)}</td>
                       <td>{item.materialstoreWeightPNetSum.toFixed(2)}</td>
                       <td>{item.materialstoreWeightKgNetSum.toFixed(2)}</td>
+                      <td>{item.materialOutsidesWeightPNetSum.toFixed(2)}</td>
+                      <td>{item.materialOutsidesWeightKgNetSum.toFixed(2)}</td>
                       <td>
                         {(
                           item.materialsWeightPNetSum -
-                          item.materialOutsidesWeightPNetSum
+                          item.materialstoreWeightPNetSum
                         ).toFixed(2)}
                       </td>
                       <td>
                         {(
                           item.materialsWeightKgNetSum -
-                          item.materialOutsidesWeightKgNetSum
+                          item.materialstoreWeightKgNetSum
                         ).toFixed(2)}
                       </td>
                     </tr>
