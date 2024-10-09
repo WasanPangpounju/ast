@@ -322,7 +322,7 @@ export default function Users() {
           weight_p_net = 0,
           weight_kg_net = 0,
         } = item;
-  
+
         if (!acc[yarnType]) {
           acc[yarnType] = {
             yarnType,
@@ -335,43 +335,36 @@ export default function Users() {
             materialstoreWeightKgNetSum: 0,
           };
         }
-  
-        // Sum for materials
-        if (materials.some((materialItem) => materialItem.yarnType === yarnType)) {
-          acc[yarnType].spoolSum += Number(spool);
-          acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
-          acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
+
+        acc[yarnType].spoolSum += Number(spool);
+        acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
+        acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
+
+        if (
+          materialOutsides.some(
+            (outsideItem) => outsideItem.yarnType === yarnType
+          )
+        ) {
+          acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
+          acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
         }
-  
-        // Sum for materialOutsides
-        if (materialOutsides.some((outsideItem) => outsideItem.yarnType === yarnType)) {
-          const outsideItems = materialOutsides.filter((outsideItem) => outsideItem.yarnType === yarnType);
-          outsideItems.forEach((outsideItem) => {
-            acc[yarnType].materialOutsidesWeightPNetSum += Number(outsideItem.weight_p_net);
-            acc[yarnType].materialOutsidesWeightKgNetSum += Number(outsideItem.weight_kg_net);
-          });
+
+        if (
+          materialstore.some((storeItem) => storeItem.yarnType === yarnType)
+        ) {
+          acc[yarnType].materialstoreWeightPNetSum += Number(weight_p_net);
+          acc[yarnType].materialstoreWeightKgNetSum += Number(weight_kg_net);
         }
-  
-        // Sum for materialstore
-        if (materialstore.some((storeItem) => storeItem.yarnType === yarnType)) {
-          const storeItems = materialstore.filter((storeItem) => storeItem.yarnType === yarnType);
-          storeItems.forEach((storeItem) => {
-            acc[yarnType].materialstoreWeightPNetSum += Number(storeItem.weight_p_net);
-            acc[yarnType].materialstoreWeightKgNetSum += Number(storeItem.weight_kg_net);
-          });
-        }
-  
+
         return acc;
       }, {});
-  
+
     const groupedDataArray = Object.values(filteredData);
-  
-    // Sort by yarnType
     groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
-  
-    setGroupedData(groupedDataArray); // assuming you are storing it in state
-  }, [materials, materialOutsides, materialstore, filterOption]);
-  
+
+    // Set the filtered and sorted data
+    setGroupedData(groupedDataArray);
+  }, [materials, materialOutsides, materialstore, filterOption]); // Include filterOption in dependencies
 
   const groupedDataArray = Object.values(groupedData);
 
