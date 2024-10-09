@@ -22,7 +22,6 @@ export default function Users() {
   const [filteredMaterials, setFilteredMaterials] = useState([]);
   const [selectedYarnType, setSelectedYarnType] = useState("");
   const [selectedSupplier, setSelectedSupplier] = useState("");
-  
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -285,6 +284,11 @@ export default function Users() {
     const now = new Date();
     const date = new Date(createDate);
 
+    // Return true for the "all" option to include all records
+    if (range === "all") {
+      return true;
+    }
+
     if (range === "lastYear") {
       const oneYearAgo = new Date(
         now.getFullYear() - 1,
@@ -481,6 +485,7 @@ export default function Users() {
                         onChange={(e) => setFilterOption(e.target.value)}
                         className="form-control"
                       >
+                        <option value="all">ทั้งหมด</option>{" "}
                         <option value="lastYear">ปีล่าสุด</option>
                         <option value="lastMonth">เดือนล่าสุด</option>
                       </select>
