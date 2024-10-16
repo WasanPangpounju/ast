@@ -312,10 +312,9 @@ export default function Users() {
 
   // Group data by yarnType and sum relevant fields
   useEffect(() => {
-    // Combine all materials into one array and apply date filter
     const filteredData = materials
       .concat(materialOutsides, materialstore)
-      .filter((item) => isDateInRange(item.createDate, filterOption)) // Filter by date range
+      .filter((item) => isDateInRange(item.createDate, filterOption)) // Apply filter based on createDate
       .reduce((acc, item) => {
         const {
           yarnType,
@@ -323,8 +322,7 @@ export default function Users() {
           weight_p_net = 0,
           weight_kg_net = 0,
         } = item;
-
-        // Initialize the yarnType entry if it doesn't exist
+  
         if (!acc[yarnType]) {
           acc[yarnType] = {
             yarnType,
@@ -337,33 +335,41 @@ export default function Users() {
             materialstoreWeightKgNetSum: 0,
           };
         }
-
-        // Check which dataset the item belongs to and update the sums accordingly
+  
+        // Sum for materials
         if (materials.some((materialItem) => materialItem.yarnType === yarnType)) {
           acc[yarnType].spoolSum += Number(spool);
           acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
           acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
         }
-
+  
+        // Sum for materialOutsides
         if (materialOutsides.some((outsideItem) => outsideItem.yarnType === yarnType)) {
-          acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
-          acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
+          const outsideItems = materialOutsides.filter((outsideItem) => outsideItem.yarnType === yarnType);
+          outsideItems.forEach((outsideItem) => {
+            acc[yarnType].materialOutsidesWeightPNetSum += Number(outsideItem.weight_p_net);
+            acc[yarnType].materialOutsidesWeightKgNetSum += Number(outsideItem.weight_kg_net);
+          });
         }
-
+  
+        // Sum for materialstore
         if (materialstore.some((storeItem) => storeItem.yarnType === yarnType)) {
-          acc[yarnType].materialstoreWeightPNetSum += Number(weight_p_net);
-          acc[yarnType].materialstoreWeightKgNetSum += Number(weight_kg_net);
+          const storeItems = materialstore.filter((storeItem) => storeItem.yarnType === yarnType);
+          storeItems.forEach((storeItem) => {
+            acc[yarnType].materialstoreWeightPNetSum += Number(storeItem.weight_p_net);
+            acc[yarnType].materialstoreWeightKgNetSum += Number(storeItem.weight_kg_net);
+          });
         }
-
+  
         return acc;
       }, {});
-
+  
     const groupedDataArray = Object.values(filteredData);
-
+  
     // Sort by yarnType
     groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
-
-    setGroupedData(groupedDataArray); // Store the grouped data in state
+  
+    setGroupedData(groupedDataArray); // assuming you are storing it in state
   }, [materials, materialOutsides, materialstore, filterOption]);
   
 
