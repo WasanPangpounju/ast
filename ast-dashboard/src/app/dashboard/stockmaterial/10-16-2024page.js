@@ -243,25 +243,19 @@ export default function Users() {
     // Filter the materials based on the selected filter (last year or last month)
     const filteredMaterials = materials.filter((item) => {
       const [day, month, year] = item.createDate.split("/");
-      const createDate = new Date(`${year}-${month}-${day}`); // Create a Date object from the string
-    
-      // Get the current date
-      const now = new Date();
-    
-      // Calculate the dates for one month ago and one year ago
-      const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-      const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-    
-      // Filter based on the selected filter option
+      const createDate = new Date(`${year}-${month}-${day}`);
+
+      // Check the selected filter option
       if (filterOption === "lastYear") {
-        return createDate >= oneYearAgo && createDate <= now;
+        return (
+          createDate >= oneYearAgo
+        );
       } else if (filterOption === "lastMonth") {
-        return createDate >= oneMonthAgo && createDate <= now;
+        return (
+          createDate >= oneMonthAgo
+        );
       }
-    
-      return false; // Default case if no filter option matches
     });
-    
 
     // Sum the spools and weights
     const materialsSpoolSum = filteredMaterials.reduce(
