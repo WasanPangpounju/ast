@@ -346,20 +346,20 @@ export default function Users() {
         // Sum for materials
         if (filteredMaterials.some((materialItem) => materialItem.yarnType === yarnType)) {
           acc[yarnType].spoolSum += Number(spool);
-          acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
-          acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
+          acc[yarnType].materialsWeightPNetSum += Number(materials.weight_p_net);
+          acc[yarnType].materialsWeightKgNetSum += Number(materials.weight_kg_net);
         }
 
         // Sum for materialOutsides
         if (filteredMaterialOutsides.some((outsideItem) => outsideItem.yarnType === yarnType)) {
-          acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
-          acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
+          acc[yarnType].materialOutsidesWeightPNetSum += Number(materialOutsides.weight_p_net);
+          acc[yarnType].materialOutsidesWeightKgNetSum += Number(materialOutsides.weight_kg_net);
         }
 
         // Sum for materialstore
         if (filteredMaterialStore.some((storeItem) => storeItem.yarnType === yarnType)) {
-          acc[yarnType].materialstoreWeightPNetSum += Number(weight_p_net);
-          acc[yarnType].materialstoreWeightKgNetSum += Number(weight_kg_net);
+          acc[yarnType].materialstoreWeightPNetSum += Number(materialstore.weight_p_net);
+          acc[yarnType].materialstoreWeightKgNetSum += Number(materialstore.weight_kg_net);
         }
 
         return acc;
