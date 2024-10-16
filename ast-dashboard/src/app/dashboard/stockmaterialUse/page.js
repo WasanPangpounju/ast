@@ -396,12 +396,12 @@ export default function Users() {
     const filterAndSum = (data) => {
       const now = new Date(); // Current date
       const fiveMonthsAgo = new Date(); 
-      fiveMonthsAgo.setMonth(now.getMonth() - 5); // 5 months ago
+      fiveMonthsAgo.setMonth(now.getMonth() - 1); // 5 months ago
     
       const filtered = data.filter(item => {
         const itemDate = new Date(item.createDate); // Parse createDate
         return (
-          item.yarnType.includes('C 10/2 OE') && 
+          item.yarnType.includes('TC 45 COMPACK (65:35)') && 
           itemDate >= fiveMonthsAgo // Check if within the last 5 months
         );
       });
