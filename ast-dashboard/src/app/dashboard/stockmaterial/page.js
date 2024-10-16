@@ -375,7 +375,7 @@ export default function Users() {
                   <div class="col-md-4">
                     <a>{spoolSum}</a>
                   </div>
-                  <div class="col-md43">ลูก</div>
+                  <div class="col-md4">ลูก</div>
                 </div>
 
                 <div class="row align-items-center mb-2">
@@ -409,8 +409,11 @@ export default function Users() {
                 </div>
               </div>
             </div>
-            <div class="col-md-4"></div>
-            <div class="col-md-1">
+            
+           
+          </div> 
+          <div class="col-md-4"></div>
+          <div class="col-md-1">
               <select
                 value={filterOption}
                 onChange={(e) => setFilterOption(e.target.value)}
@@ -419,7 +422,6 @@ export default function Users() {
                 <option value="lastMonth">เดือนล่าสุด</option>
               </select>
             </div>
-          </div>
         </section>
         <br />
         <section class="Frame">
@@ -435,13 +437,13 @@ export default function Users() {
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12"> กล่อง</div>
+                <div class="col-md-2"> กล่อง</div>
                 <div class="col-md-2">
                   <a> {totalBox} </a>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12"> กระสอบ</div>
+                <div class="col-md-2"> กระสอบ</div>
                 <div class="col-md-2">
                   <a> {totalSack} </a>
                 </div>
