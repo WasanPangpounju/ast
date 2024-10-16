@@ -376,17 +376,6 @@ export default function Users() {
                 <option value="lastMonth">เดือนล่าสุด</option>
               </select>
             </div>
-
-            <div class="col-md-2 ms-2">
-              <select
-                class="form-select"
-                value={filterOption}
-                onChange={(e) => setFilterOption(e.target.value)}
-              >
-                <option value="lastYear">ปีล่าสุด</option>
-                <option value="lastMonth">เดือนล่าสุด</option>
-              </select>
-            </div>
           </div>
           <br />
           <div class="row">
