@@ -365,6 +365,29 @@ export default function Users() {
         </div> */}
         <section class="Frame">
           <h2>ตรวจสอบวัตถุดิบ น้ำหนักสุทธิ</h2>
+          <div class="d-flex justify-content-end">
+            <div class="col-md-2">
+              <select
+                class="form-select"
+                value={filterOption}
+                onChange={(e) => setFilterOption(e.target.value)}
+              >
+                <option value="lastYear">ปีล่าสุด</option>
+                <option value="lastMonth">เดือนล่าสุด</option>
+              </select>
+            </div>
+
+            <div class="col-md-2 ms-2">
+              <select
+                class="form-select"
+                value={filterOption}
+                onChange={(e) => setFilterOption(e.target.value)}
+              >
+                <option value="lastYear">ปีล่าสุด</option>
+                <option value="lastMonth">เดือนล่าสุด</option>
+              </select>
+            </div>
+          </div>
           <br />
           <div class="row">
             <div class="col-md-3"></div>
@@ -375,7 +398,7 @@ export default function Users() {
                   <div class="col-md-4">
                     <a>{spoolSum}</a>
                   </div>
-                  <div class="col-md4">ลูก</div>
+                  <div class="col-md-3">ลูก</div>
                 </div>
 
                 <div class="row align-items-center mb-2">
@@ -409,19 +432,7 @@ export default function Users() {
                 </div>
               </div>
             </div>
-            
-           
-          </div> 
-          <div class="col-md-4"></div>
-          <div class="col-md-1">
-              <select
-                value={filterOption}
-                onChange={(e) => setFilterOption(e.target.value)}
-              >
-                <option value="lastYear">ปีล่าสุด</option>
-                <option value="lastMonth">เดือนล่าสุด</option>
-              </select>
-            </div>
+          </div>
         </section>
         <br />
         <section class="Frame">
