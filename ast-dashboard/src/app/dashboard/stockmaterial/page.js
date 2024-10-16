@@ -30,6 +30,7 @@ export default function Users() {
   const [totalWeightPNet, setTotalWeightPNet] = useState(0);
   const [totalWeightKgNet, setTotalWeightKgNet] = useState(0);
   const [filterOption, setFilterOption] = useState("lastYear");
+  const [filterOptionSec2, setFilterOptionSec2] = useState("lastYear");
 
   // Fetch materials from the API on component mount
   // useEffect(() => {
@@ -50,7 +51,18 @@ export default function Users() {
 
   //   fetchMaterials();
   // }, []);
-  useEffect(() => {
+
+  const getFilterDate = (filterOption) => {
+    const now = new Date();
+    if (filterOption === "lastYear") {
+      return new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+    } else if (filterOption === "lastMonth") {
+      return new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+    }
+    return null;
+  };
+
+  ususeEffect(() => {
     const fetchMaterials = async () => {
       try {
         const response = await fetch("/api/materials");
@@ -59,24 +71,7 @@ export default function Users() {
         }
         const data = await response.json();
         setMaterials(data);
-
-        // Sum pallet, box, and sack
-        const palletSum = data.reduce(
-          (acc, material) => acc + (Number(material.pallet) || 0),
-          0
-        );
-        const boxSum = data.reduce(
-          (acc, material) => acc + (Number(material.box) || 0),
-          0
-        );
-        const sackSum = data.reduce(
-          (acc, material) => acc + (Number(material.sack) || 0),
-          0
-        );
-
-        setTotalPallet(palletSum);
-        setTotalBox(boxSum);
-        setTotalSack(sackSum);
+        filterAndSumMaterials(data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -84,9 +79,38 @@ export default function Users() {
       }
     };
 
+    const filterAndSumMaterials = (data) => {
+      const filterDate = getFilterDate(filterOptionSec2);
+
+      // Filter materials based on the selected date range
+      const filteredMaterials = data.filter((item) => {
+        const [day, month, year] = item.createDate.split("/");
+        const createDate = new Date(`${year}-${month}-${day}`);
+        return createDate >= filterDate && createDate <= new Date();
+      });
+
+      // Sum pallet, box, and sack for filtered materials
+      const palletSum = filteredMaterials.reduce(
+        (acc, material) => acc + (Number(material.pallet) || 0),
+        0
+      );
+      const boxSum = filteredMaterials.reduce(
+        (acc, material) => acc + (Number(material.box) || 0),
+        0
+      );
+      const sackSum = filteredMaterials.reduce(
+        (acc, material) => acc + (Number(material.sack) || 0),
+        0
+      );
+
+      setTotalPallet(palletSum);
+      setTotalBox(boxSum);
+      setTotalSack(sackSum);
+    };
+
     fetchMaterials();
-  }, []);
-  console.log("materials", materials);
+  }, [filterOptionSec2]);
+  // console.log("materials", materials);
   useEffect(() => {
     const fetchMaterialOutsides = async () => {
       try {
@@ -242,6 +266,27 @@ export default function Users() {
 
     // Filter the materials based on the selected filter (last year or last month)
     const filteredMaterials = materials.filter((item) => {
+      const [day, month, year] = item.createDate.split("/");
+      const createDate = new Date(`${year}-${month}-${day}`); // Create a Date object from the string
+    
+      // Get the current date
+      const now = new Date();
+    
+      // Calculate the dates for one month ago and one year ago
+      const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+      const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+    
+      // Filter based on the selected filter option
+      if (filterOption === "lastYear") {
+        return createDate >= oneYearAgo && createDate <= now;
+      } else if (filterOption === "lastMonth") {
+        return createDate >= oneMonthAgo && createDate <= now;
+      }
+    
+      return false; // Default case if no filter option matches
+    });
+
+    const filteredMaterialsSec2 = materials.filter((item) => {
       const [day, month, year] = item.createDate.split("/");
       const createDate = new Date(`${year}-${month}-${day}`); // Create a Date object from the string
     
@@ -428,6 +473,18 @@ export default function Users() {
         <br />
         <section class="Frame">
           <h2>ตรวจสอบบรรจุภัณต์</h2>
+          <div class="d-flex justify-content-end">
+            <div class="col-md-2">
+              <select
+                class="form-select"
+                value={filterOptionSec2}
+                onChange={(e) => setFilterOptionSec2(e.target.value)}
+              >
+                <option value="lastYear">ปีล่าสุด</option>
+                <option value="lastMonth">เดือนล่าสุด</option>
+              </select>
+            </div>
+          </div>
           <br />
           <div class="row">
             <div class="col-md-3"></div>
