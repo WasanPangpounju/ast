@@ -30,6 +30,8 @@ export default function Users() {
   const [totalWeightPNet, setTotalWeightPNet] = useState(0);
   const [totalWeightKgNet, setTotalWeightKgNet] = useState(0);
   const [filterOption, setFilterOption] = useState("lastYear");
+  const [startDate, setStartDate] = useState(""); // For custom date filter
+  const [endDate, setEndDate] = useState(""); // For custom date filter
   const [filterOptionSec2, setFilterOptionSec2] = useState("lastYear");
 
   // Fetch materials from the API on component mount
@@ -52,14 +54,27 @@ export default function Users() {
   //   fetchMaterials();
   // }, []);
 
-  const getFilterDate = (filterOption) => {
+  const getFilterDate = (filterOptionSec2) => {
     const now = new Date();
-    if (filterOption === "lastYear") {
+    if (filterOptionSec2 === "lastYear") {
       return new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-    } else if (filterOption === "lastMonth") {
+    } else if (filterOptionSec2 === "lastMonth") {
       return new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
     }
     return null;
+  };
+
+
+  const isDateInRange = (createDate) => {
+    const [day, month, year] = createDate.split("/");
+    const date = new Date(`${year}-${month}-${day}`);
+    if (filterOptionSec2 === "selectDate" && startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      return date >= start && date <= end;
+    }
+    const filterDate = getFilterDate(filterOptionSec2);
+    return filterDate ? date >= filterDate : true;
   };
 
   useEffect(() => {
@@ -80,16 +95,10 @@ export default function Users() {
     };
 
     const filterAndSumMaterials = (data) => {
-      const filterDate = getFilterDate(filterOptionSec2);
+      const filteredMaterials = data.filter((item) =>
+        isDateInRange(item.createDate)
+      );
 
-      // Filter materials based on the selected date range
-      const filteredMaterials = data.filter((item) => {
-        const [day, month, year] = item.createDate.split("/");
-        const createDate = new Date(`${year}-${month}-${day}`);
-        return createDate >= filterDate && createDate <= new Date();
-      });
-
-      // Sum pallet, box, and sack for filtered materials
       const palletSum = filteredMaterials.reduce(
         (acc, material) => acc + (Number(material.pallet) || 0),
         0
@@ -109,7 +118,8 @@ export default function Users() {
     };
 
     fetchMaterials();
-  }, [filterOptionSec2]);
+  }, [filterOptionSec2, startDate, endDate]);
+
   // if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error}</p>;
   // console.log("materials", materials);
@@ -253,79 +263,39 @@ export default function Users() {
   console.log("stockList", stockList);
 
   useEffect(() => {
-    const yarnType = "C 10 OE";
-    const supplierName = "บริษัท กังวาลเท็กซ์ไทล์ จำกัด";
-
     // Get the current date
     const currentDate = new Date();
-
+  
     // Calculate dates for last year and last month
     const oneYearAgo = new Date();
     oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
-
+  
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(currentDate.getMonth() - 1);
-
-    // Filter the materials based on the selected filter (last year or last month)
+  
+    // Filter the materials based on the selected filter
     const filteredMaterials = materials.filter((item) => {
       const [day, month, year] = item.createDate.split("/");
       const createDate = new Date(`${year}-${month}-${day}`); // Create a Date object from the string
-
+  
       // Get the current date
       const now = new Date();
-
-      // Calculate the dates for one month ago and one year ago
-      const oneMonthAgo = new Date(
-        now.getFullYear(),
-        now.getMonth() - 1,
-        now.getDate()
-      );
-      const oneYearAgo = new Date(
-        now.getFullYear() - 1,
-        now.getMonth(),
-        now.getDate()
-      );
-
-      // Filter based on the selected filter option
+  
+      // Determine the filter based on selected option
       if (filterOption === "lastYear") {
         return createDate >= oneYearAgo && createDate <= now;
       } else if (filterOption === "lastMonth") {
         return createDate >= oneMonthAgo && createDate <= now;
+      } else if (filterOption === "selectDate" && startDate && endDate) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        return createDate >= start && createDate <= end;
       }
-
+  
       return false; // Default case if no filter option matches
     });
-
-    const filteredMaterialsSec2 = materials.filter((item) => {
-      const [day, month, year] = item.createDate.split("/");
-      const createDate = new Date(`${year}-${month}-${day}`); // Create a Date object from the string
-
-      // Get the current date
-      const now = new Date();
-
-      // Calculate the dates for one month ago and one year ago
-      const oneMonthAgo = new Date(
-        now.getFullYear(),
-        now.getMonth() - 1,
-        now.getDate()
-      );
-      const oneYearAgo = new Date(
-        now.getFullYear() - 1,
-        now.getMonth(),
-        now.getDate()
-      );
-
-      // Filter based on the selected filter option
-      if (filterOption === "lastYear") {
-        return createDate >= oneYearAgo && createDate <= now;
-      } else if (filterOption === "lastMonth") {
-        return createDate >= oneMonthAgo && createDate <= now;
-      }
-
-      return false; // Default case if no filter option matches
-    });
-
-    // Sum the spools and weights
+  
+    // Sum the spools and weights for the filtered materials
     const materialsSpoolSum = filteredMaterials.reduce(
       (sum, item) => sum + Number(item.spool || 0),
       0
@@ -338,17 +308,17 @@ export default function Users() {
       (sum, item) => sum + Number(item.weight_kg_net || 0),
       0
     );
-
+  
     // Update the state with the sums
     setSpoolSum(materialsSpoolSum);
     setTotalWeightPNet(weightPNetSum);
     setTotalWeightKgNet(weightKgNetSum);
-
+  
     console.log("Filtered materials:", filteredMaterials);
     console.log("Spool Sum:", materialsSpoolSum);
     console.log("Weight P Net Sum:", weightPNetSum);
     console.log("Weight Kg Net Sum:", weightKgNetSum);
-  }, [materials, filterOption]);
+  }, [materials, filterOption, startDate, endDate]);
   return (
     <div>
       {/* <h1>User Management</h1>
@@ -438,8 +408,32 @@ export default function Users() {
               >
                 <option value="lastYear">ปีล่าสุด</option>
                 <option value="lastMonth">เดือนล่าสุด</option>
+                <option value="selectDate">เลือกวันที่</option>
+
               </select>
             </div>
+            {filterOption === "selectDate" && (
+        <div className="row mt-3">
+          <div className="col-md-3">
+            <label>เริ่มวันที่:</label>
+            <input
+              type="date"
+              className="form-control"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </div>
+          <div className="col-md-3">
+            <label>สิ้นสุดวันที่:</label>
+            <input
+              type="date"
+              className="form-control"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </div>
+        </div>
+      )}
           </div>
           <br />
           <div class="row">
