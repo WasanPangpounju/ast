@@ -399,21 +399,32 @@ export default function Users() {
 
 
     // Helper function to filter and sum an individual array
-  const filterAndSum = (data) => {
-    const filtered = data.filter(item => item.name.includes('C 10 OE'));
-
-    const totalWeightPNet = filtered.reduce(
-      (sum, item) => sum + (item.weight_p_net || 0),
-      0
-    );
-
-    const totalWeightKgNet = filtered.reduce(
-      (sum, item) => sum + (item.weight_kg_net || 0),
-      0
-    );
-
-    return { totalWeightPNet, totalWeightKgNet };
-  };
+    const filterAndSum = (data) => {
+      const now = new Date(); // Current date
+      const fiveMonthsAgo = new Date(); 
+      fiveMonthsAgo.setMonth(now.getMonth() - 5); // 5 months ago
+    
+      const filtered = data.filter(item => {
+        const itemDate = new Date(item.createDate); // Parse createDate
+        return (
+          item.yarnType.includes('C 10 OE') && 
+          itemDate >= fiveMonthsAgo // Check if within the last 5 months
+        );
+      });
+    
+      const totalWeightPNet = filtered.reduce(
+        (sum, item) => sum + (item.weight_p_net || 0),
+        0
+      );
+    
+      const totalWeightKgNet = filtered.reduce(
+        (sum, item) => sum + (item.weight_kg_net || 0),
+        0
+      );
+    
+      return { totalWeightPNet, totalWeightKgNet };
+    };
+    
 
   // Separate calculations for materials, materialOutsides, and materialstore
   useEffect(() => {
