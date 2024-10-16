@@ -407,7 +407,7 @@ export default function Users() {
       const filtered = data.filter(item => {
         const itemDate = new Date(item.createDate); // Parse createDate
         return (
-          item.yarnType.includes('C 10 OE') && 
+          item.yarnType.includes('C 10/2 OE') && 
           itemDate >= fiveMonthsAgo // Check if within the last 5 months
         );
       });
