@@ -399,37 +399,48 @@ export default function Users() {
         <section class="Frame">
           <h2>ตรวจสอบวัตถุดิบ น้ำหนักสุทธิ</h2>
           <div class="d-flex justify-content-end">
-            <div class="col-md-2">
-              <select
-                class="form-select"
-                value={filterOption}
-                onChange={(e) => setFilterOption(e.target.value)}
-              >
-                <option value="lastYear">ปีล่าสุด</option>
-                <option value="lastMonth">เดือนล่าสุด</option>
-                <option value="selectDate">เลือกวันที่</option>
-              </select>
+            <div className="row">
+              <div class="col-md-12">
+                <select
+                  value={filterOption}
+                  class="form-select"
+                  onChange={(e) => setFilterOption(e.target.value)}
+                >
+                  <option value="lastYear">ปีล่าสุด</option>
+                  <option value="lastMonth">เดือนล่าสุด</option>
+                  <option value="selectDate">เลือกวันที่</option>
+                </select>
+              </div>
+            </div>
             </div>
             <br />
-            {filterOption === "selectDate" && (
+            
+            <div class="d-flex justify-content-end">
+            {filterOptionSec2 === "selectDate" && (
               <div className="row">
-                <div className="col-md-3">
-                  <label>เริ่มวันที่:</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                  />
-                </div>
-                <div className="col-md-3">
-                  <label>สิ้นสุดวันที่:</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                  />
+                <div className="col-md-12">
+                  <div className="row">
+                    <div className="col-md-12">
+                      <label>เริ่มวันที่:</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <label>สิ้นสุดวันที่:</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
