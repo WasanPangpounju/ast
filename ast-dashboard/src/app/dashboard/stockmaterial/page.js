@@ -64,7 +64,6 @@ export default function Users() {
     return null;
   };
 
-
   const isDateInRange = (createDate) => {
     const [day, month, year] = createDate.split("/");
     const date = new Date(`${year}-${month}-${day}`);
@@ -265,22 +264,22 @@ export default function Users() {
   useEffect(() => {
     // Get the current date
     const currentDate = new Date();
-  
+
     // Calculate dates for last year and last month
     const oneYearAgo = new Date();
     oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
-  
+
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(currentDate.getMonth() - 1);
-  
+
     // Filter the materials based on the selected filter
     const filteredMaterials = materials.filter((item) => {
       const [day, month, year] = item.createDate.split("/");
       const createDate = new Date(`${year}-${month}-${day}`); // Create a Date object from the string
-  
+
       // Get the current date
       const now = new Date();
-  
+
       // Determine the filter based on selected option
       if (filterOption === "lastYear") {
         return createDate >= oneYearAgo && createDate <= now;
@@ -291,10 +290,10 @@ export default function Users() {
         const end = new Date(endDate);
         return createDate >= start && createDate <= end;
       }
-  
+
       return false; // Default case if no filter option matches
     });
-  
+
     // Sum the spools and weights for the filtered materials
     const materialsSpoolSum = filteredMaterials.reduce(
       (sum, item) => sum + Number(item.spool || 0),
@@ -308,12 +307,12 @@ export default function Users() {
       (sum, item) => sum + Number(item.weight_kg_net || 0),
       0
     );
-  
+
     // Update the state with the sums
     setSpoolSum(materialsSpoolSum);
     setTotalWeightPNet(weightPNetSum);
     setTotalWeightKgNet(weightKgNetSum);
-  
+
     console.log("Filtered materials:", filteredMaterials);
     console.log("Spool Sum:", materialsSpoolSum);
     console.log("Weight P Net Sum:", weightPNetSum);
@@ -409,31 +408,31 @@ export default function Users() {
                 <option value="lastYear">ปีล่าสุด</option>
                 <option value="lastMonth">เดือนล่าสุด</option>
                 <option value="selectDate">เลือกวันที่</option>
-
               </select>
             </div>
+            <br/>
             {filterOption === "selectDate" && (
-        <div className="row mt-3">
-          <div className="col-md-3">
-            <label>เริ่มวันที่:</label>
-            <input
-              type="date"
-              className="form-control"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-            />
-          </div>
-          <div className="col-md-3">
-            <label>สิ้นสุดวันที่:</label>
-            <input
-              type="date"
-              className="form-control"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-            />
-          </div>
-        </div>
-      )}
+              <div className="row">
+                <div className="col-md-3">
+                  <label>เริ่มวันที่:</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <label>สิ้นสุดวันที่:</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
           </div>
           <br />
           <div class="row">
@@ -492,8 +491,32 @@ export default function Users() {
               >
                 <option value="lastYear">ปีล่าสุด</option>
                 <option value="lastMonth">เดือนล่าสุด</option>
+                <option value="selectDate">เลือกวันที่</option>
               </select>
             </div>
+            <br/>
+            {filterOption === "selectDate" && (
+              <div className="row">
+                <div className="col-md-3">
+                  <label>เริ่มวันที่:</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <label>สิ้นสุดวันที่:</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
           </div>
           <br />
           <div class="row">
