@@ -416,7 +416,7 @@ export default function Users() {
             <br />
             
             <div class="d-flex justify-content-end">
-            {filterOptionSec2 === "selectDate" && (
+            {filterOption === "selectDate" && (
               <div className="row">
                 <div className="col-md-12">
                   <div className="row">
