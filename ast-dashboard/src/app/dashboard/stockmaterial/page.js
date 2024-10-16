@@ -369,17 +369,33 @@ export default function Users() {
           <div class="row">
             <div class="col-md-5"></div>
             <div class="col-md-2">
-              <div class="row">
-                <div class="col-md-12">
-                  ด้าย<a> {spoolSum} </a>ลูก
-                  <br />
-                  ปอนด์<a> {totalWeightPNet.toFixed(2)} </a>
-                  <br />
-                  กิโลกรัม<a> {totalWeightKgNet.toFixed(2)} </a>
-                  <br />
+              <div class="container">
+                <div class="row align-items-center mb-2">
+                  <div class="col-md-3">ด้าย</div>
+                  <div class="col-md-4">
+                    <a>{spoolSum}</a>
+                  </div>
+                  <div class="col-md-3">ลูก</div>
+                </div>
+
+                <div class="row align-items-center mb-2">
+                  <div class="col-md-3">ปอนด์</div>
+                  <div class="col-md-4">
+                    <a>{totalWeightPNet.toFixed(2)}</a>
+                  </div>
+                  <div class="col-md-3"></div>
+                </div>
+
+                <div class="row align-items-center mb-2">
+                  <div class="col-md-3">กิโลกรัม</div>
+                  <div class="col-md-4">
+                    <a>{totalWeightKgNet.toFixed(2)}</a>
+                  </div>
+                  <div class="col-md-3"></div>
                 </div>
               </div>
               <br />
+
               <div class="row">
                 <div class="col-md-12">
                   {/* <button class="btn b_save">
@@ -415,11 +431,18 @@ export default function Users() {
               <div class="row">
                 <div class="col-md-12">
                   พาเลท<a> {totalPallet} </a>
-                  <br />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  {" "}
                   กล่อง<a> {totalBox} </a>
-                  <br />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  {" "}
                   กระสอบ<a> {totalSack} </a>
-                  <br />
                 </div>
               </div>
               <br />

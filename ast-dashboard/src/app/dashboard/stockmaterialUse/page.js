@@ -314,21 +314,27 @@ export default function Users() {
   // Group data by yarnType and sum relevant fields
   useEffect(() => {
     // Apply date filter to all datasets
-    const filteredMaterials = materials.filter(item => isDateInRange(item.createDate, filterOption));
-    const filteredMaterialOutsides = materialOutsides.filter(item => isDateInRange(item.createDate, filterOption));
-    const filteredMaterialStore = materialstore.filter(item => isDateInRange(item.createDate, filterOption));
-  
-    console.log('Filtered Materials:', filteredMaterials);
-    console.log('Filtered Material Outsides:', filteredMaterialOutsides);
-    console.log('Filtered Material Store:', filteredMaterialStore);
-  
+    const filteredMaterials = materials.filter((item) =>
+      isDateInRange(item.createDate, filterOption)
+    );
+    const filteredMaterialOutsides = materialOutsides.filter((item) =>
+      isDateInRange(item.createDate, filterOption)
+    );
+    const filteredMaterialStore = materialstore.filter((item) =>
+      isDateInRange(item.createDate, filterOption)
+    );
+
+    console.log("Filtered Materials:", filteredMaterials);
+    console.log("Filtered Material Outsides:", filteredMaterialOutsides);
+    console.log("Filtered Material Store:", filteredMaterialStore);
+
     // Initialize an accumulator to hold combined results
     const combinedData = {};
-  
+
     // Combine and sum materials
-    filteredMaterials.forEach(item => {
+    filteredMaterials.forEach((item) => {
       const { yarnType, spool = 0, weight_p_net = 0, weight_kg_net = 0 } = item;
-  
+
       // Initialize the yarnType entry if it doesn't exist
       if (!combinedData[yarnType]) {
         combinedData[yarnType] = {
@@ -342,17 +348,17 @@ export default function Users() {
           materialOutsidesWeightKgNetSum: 0,
         };
       }
-  
+
       // Sum for materials
       combinedData[yarnType].spoolSum += Number(spool);
       combinedData[yarnType].materialsWeightPNetSum += Number(weight_p_net);
       combinedData[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
     });
-  
+
     // Combine and sum material store
-    filteredMaterialStore.forEach(item => {
+    filteredMaterialStore.forEach((item) => {
       const { yarnType, weight_p_net = 0, weight_kg_net = 0 } = item;
-  
+
       if (!combinedData[yarnType]) {
         combinedData[yarnType] = {
           yarnType,
@@ -365,16 +371,17 @@ export default function Users() {
           materialOutsidesWeightKgNetSum: 0,
         };
       }
-  
+
       // Sum for material store
       combinedData[yarnType].materialstoreWeightPNetSum += Number(weight_p_net);
-      combinedData[yarnType].materialstoreWeightKgNetSum += Number(weight_kg_net);
+      combinedData[yarnType].materialstoreWeightKgNetSum +=
+        Number(weight_kg_net);
     });
-  
+
     // Combine and sum material outsides
-    filteredMaterialOutsides.forEach(item => {
+    filteredMaterialOutsides.forEach((item) => {
       const { yarnType, weight_p_net = 0, weight_kg_net = 0 } = item;
-  
+
       if (!combinedData[yarnType]) {
         combinedData[yarnType] = {
           yarnType,
@@ -387,23 +394,23 @@ export default function Users() {
           materialOutsidesWeightKgNetSum: 0,
         };
       }
-  
+
       // Sum for material outsides
-      combinedData[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
-      combinedData[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
+      combinedData[yarnType].materialOutsidesWeightPNetSum +=
+        Number(weight_p_net);
+      combinedData[yarnType].materialOutsidesWeightKgNetSum +=
+        Number(weight_kg_net);
     });
-  
+
     // Convert the combined data object to an array
     const groupedDataArray = Object.values(combinedData);
-  
+
     // Sort by yarnType
     groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
-  
+
     // Store the grouped data in state
     setGroupedData(groupedDataArray);
   }, [materials, materialOutsides, materialstore, filterOption]);
-  
-  
 
   const groupedDataArray = Object.values(groupedData);
 
@@ -429,34 +436,31 @@ export default function Users() {
   // console.log("uniqueYarnTypes", uniqueYarnTypes);
   // console.log("uniqueSuppliers", uniqueSuppliers);
 
+  // Helper function to filter and sum an individual array
+  const filterAndSum = (data) => {
+    const now = new Date(); // Current date
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(now.getFullYear() - 1); // Set to one year ago
 
-    // Helper function to filter and sum an individual array
-    const filterAndSum = (data) => {
-      const now = new Date(); // Current date
-      const oneYearAgo = new Date(); 
-      oneYearAgo.setFullYear(now.getFullYear() - 1); // Set to one year ago
-      
-      const filtered = data.filter(item => {
-        const itemDate = new Date(item.createDate); // Parse createDate
-        return (
-          item.yarnType.includes('C 12 OE') && 
-          itemDate >= oneYearAgo // Check if within the last year
-        );
-      });
-    
-      const totalWeightPNet = filtered.reduce(
-        (sum, item) => sum + Number(item.weight_p_net || 0),
-        0
+    const filtered = data.filter((item) => {
+      const itemDate = new Date(item.createDate); // Parse createDate
+      return (
+        item.yarnType.includes("C 12 OE") && itemDate >= oneYearAgo // Check if within the last year
       );
-    
-      const totalWeightKgNet = filtered.reduce(
-        (sum, item) => sum + Number(item.weight_kg_net || 0),
-        0
-      );
-    
-      return { totalWeightPNet, totalWeightKgNet };
-    };
-    
+    });
+
+    const totalWeightPNet = filtered.reduce(
+      (sum, item) => sum + Number(item.weight_p_net || 0),
+      0
+    );
+
+    const totalWeightKgNet = filtered.reduce(
+      (sum, item) => sum + Number(item.weight_kg_net || 0),
+      0
+    );
+
+    return { totalWeightPNet, totalWeightKgNet };
+  };
 
   // Separate calculations for materials, materialOutsides, and materialstore
   useEffect(() => {
@@ -464,17 +468,33 @@ export default function Users() {
     const materialOutsidesSum = filterAndSum(materialOutsides);
     const materialstoreSum = filterAndSum(materialstore);
 
-    console.log('Materials - Total weight_p_net:', materialsSum.totalWeightPNet);
-    console.log('Materials - Total weight_kg_net:', materialsSum.totalWeightKgNet);
+    console.log(
+      "Materials - Total weight_p_net:",
+      materialsSum.totalWeightPNet
+    );
+    console.log(
+      "Materials - Total weight_kg_net:",
+      materialsSum.totalWeightKgNet
+    );
 
-    console.log('MaterialOutsides - Total weight_p_net:', materialOutsidesSum.totalWeightPNet);
-    console.log('MaterialOutsides - Total weight_kg_net:', materialOutsidesSum.totalWeightKgNet);
+    console.log(
+      "MaterialOutsides - Total weight_p_net:",
+      materialOutsidesSum.totalWeightPNet
+    );
+    console.log(
+      "MaterialOutsides - Total weight_kg_net:",
+      materialOutsidesSum.totalWeightKgNet
+    );
 
-    console.log('Materialstore - Total weight_p_net:', materialstoreSum.totalWeightPNet);
-    console.log('Materialstore - Total weight_kg_net:', materialstoreSum.totalWeightKgNet);
+    console.log(
+      "Materialstore - Total weight_p_net:",
+      materialstoreSum.totalWeightPNet
+    );
+    console.log(
+      "Materialstore - Total weight_kg_net:",
+      materialstoreSum.totalWeightKgNet
+    );
   }, [materials, materialOutsides, materialstore]); // Re-run when any data changes
-
-
 
   return (
     <div>
@@ -594,7 +614,7 @@ export default function Users() {
                     <th rowspan="2">จำนวนลูก</th>
                     <th colspan="2">นำเข้า </th>
                     <th colspan="2">เบิกออก </th>
-                    <th colspan="2">ทดสอบ </th>
+                    {/* <th colspan="2">ทดสอบ </th> */}
                     <th colspan="2">คงเหลือ </th>
                   </tr>
                   <tr>
@@ -604,8 +624,8 @@ export default function Users() {
                     <th>กิโลกรัม</th>
                     <th>ปอนด์</th>
                     <th>กิโลกรัม</th>
-                    <th>ปอนด์</th>
-                    <th>กิโลกรัม</th>
+                    {/* <th>ปอนด์</th>
+                    <th>กิโลกรัม</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -641,8 +661,8 @@ export default function Users() {
                       <td>{item.materialsWeightKgNetSum.toFixed(2)}</td>
                       <td>{item.materialstoreWeightPNetSum.toFixed(2)}</td>
                       <td>{item.materialstoreWeightKgNetSum.toFixed(2)}</td>
-                      <td>{item.materialOutsidesWeightPNetSum.toFixed(2)}</td>
-                      <td>{item.materialOutsidesWeightKgNetSum.toFixed(2)}</td>
+                      {/* <td>{item.materialOutsidesWeightPNetSum.toFixed(2)}</td>
+                      <td>{item.materialOutsidesWeightKgNetSum.toFixed(2)}</td> */}
                       <td>
                         {(
                           item.materialsWeightPNetSum -
