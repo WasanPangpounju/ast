@@ -313,10 +313,14 @@ export default function Users() {
 
   // Group data by yarnType and sum relevant fields
   useEffect(() => {
-    // Combine all materials into one array and apply date filter
-    const filteredData = materials
-      .concat(materialOutsides, materialstore)
-      .filter((item) => isDateInRange(item.createDate, filterOption)) // Filter by date range
+    // Apply date filter to all datasets
+    const filteredMaterials = materials.filter(item => isDateInRange(item.createDate, filterOption));
+    const filteredMaterialOutsides = materialOutsides.filter(item => isDateInRange(item.createDate, filterOption));
+    const filteredMaterialStore = materialstore.filter(item => isDateInRange(item.createDate, filterOption));
+
+    // Combine all filtered materials into one array
+    const combinedFilteredData = filteredMaterials
+      .concat(filteredMaterialOutsides, filteredMaterialStore)
       .reduce((acc, item) => {
         const {
           yarnType,
@@ -339,19 +343,21 @@ export default function Users() {
           };
         }
 
-        // Check which dataset the item belongs to and update the sums accordingly
-        if (materials.some((materialItem) => materialItem.yarnType === yarnType)) {
+        // Sum for materials
+        if (filteredMaterials.some((materialItem) => materialItem.yarnType === yarnType)) {
           acc[yarnType].spoolSum += Number(spool);
           acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
           acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
         }
 
-        if (materialOutsides.some((outsideItem) => outsideItem.yarnType === yarnType)) {
+        // Sum for materialOutsides
+        if (filteredMaterialOutsides.some((outsideItem) => outsideItem.yarnType === yarnType)) {
           acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
           acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
         }
 
-        if (materialstore.some((storeItem) => storeItem.yarnType === yarnType)) {
+        // Sum for materialstore
+        if (filteredMaterialStore.some((storeItem) => storeItem.yarnType === yarnType)) {
           acc[yarnType].materialstoreWeightPNetSum += Number(weight_p_net);
           acc[yarnType].materialstoreWeightKgNetSum += Number(weight_kg_net);
         }
@@ -359,7 +365,7 @@ export default function Users() {
         return acc;
       }, {});
 
-    const groupedDataArray = Object.values(filteredData);
+    const groupedDataArray = Object.values(combinedFilteredData);
 
     // Sort by yarnType
     groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
@@ -399,8 +405,8 @@ export default function Users() {
       const fiveMonthsAgo = new Date(); 
       
       fiveMonthsAgo.setMonth(now.getMonth() - 1); // 5 months ago
-    console.log('now',now);
-    console.log('fiveMonthsAgo',fiveMonthsAgo.setMonth(now.getMonth() - 1));
+    // console.log('now',now);
+    // console.log('fiveMonthsAgo',fiveMonthsAgo.setMonth(now.getMonth() - 1));
       const filtered = data.filter(item => {
         const itemDate = new Date(item.createDate); // Parse createDate
         return (
