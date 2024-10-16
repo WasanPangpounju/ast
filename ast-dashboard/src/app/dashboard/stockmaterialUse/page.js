@@ -91,7 +91,8 @@ export default function Users() {
 
     fetchMaterials();
   }, []);
-  console.log("materials", materials);
+  // console.log("materials", materials);
+
   useEffect(() => {
     const fetchMaterialOutsides = async () => {
       try {
@@ -110,7 +111,7 @@ export default function Users() {
 
     fetchMaterialOutsides();
   }, []);
-  console.log("material_outsides", materialOutsides);
+  // console.log("material_outsides", materialOutsides);
 
   useEffect(() => {
     const fetchMaterialstore = async () => {
@@ -130,7 +131,7 @@ export default function Users() {
 
     fetchMaterialstore();
   }, []);
-  console.log("materialstore", materialstore);
+  // console.log("materialstore", materialstore);
 
   useEffect(() => {
     if (materials.length > 0) {
@@ -229,7 +230,7 @@ export default function Users() {
     }
   }, [materials, materialstore, materialOutsides]);
 
-  console.log("stockList", stockList);
+  // console.log("stockList", stockList);
 
   useEffect(() => {
     // Get the current date
@@ -396,8 +397,10 @@ export default function Users() {
     const filterAndSum = (data) => {
       const now = new Date(); // Current date
       const fiveMonthsAgo = new Date(); 
+      
       fiveMonthsAgo.setMonth(now.getMonth() - 1); // 5 months ago
-    
+    console.log('now',now);
+    console.log('fiveMonthsAgo',fiveMonthsAgo.setMonth(now.getMonth() - 1));
       const filtered = data.filter(item => {
         const itemDate = new Date(item.createDate); // Parse createDate
         return (
