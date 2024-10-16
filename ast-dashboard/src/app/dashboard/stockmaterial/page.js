@@ -484,16 +484,18 @@ export default function Users() {
         <section class="Frame">
           <h2>ตรวจสอบบรรจุภัณต์</h2>
           <div class="d-flex justify-content-end">
-            <div class="col-md-2">
-              <select
-                value={filterOptionSec2}
-                class="form-select"
-                onChange={(e) => setFilterOptionSec2(e.target.value)}
-              >
-                <option value="lastYear">ปีล่าสุด</option>
-                <option value="lastMonth">เดือนล่าสุด</option>
-                <option value="selectDate">เลือกวันที่</option>
-              </select>
+            <div className="row">
+              <div class="col-md-2">
+                <select
+                  value={filterOptionSec2}
+                  class="form-select"
+                  onChange={(e) => setFilterOptionSec2(e.target.value)}
+                >
+                  <option value="lastYear">ปีล่าสุด</option>
+                  <option value="lastMonth">เดือนล่าสุด</option>
+                  <option value="selectDate">เลือกวันที่</option>
+                </select>
+              </div>
             </div>
             <br />
             {filterOptionSec2 === "selectDate" && (
