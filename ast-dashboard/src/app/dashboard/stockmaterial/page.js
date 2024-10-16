@@ -487,6 +487,7 @@ export default function Users() {
             <div class="col-md-2">
               <select
                 value={filterOptionSec2}
+                class="form-select"
                 onChange={(e) => setFilterOptionSec2(e.target.value)}
               >
                 <option value="lastYear">ปีล่าสุด</option>
@@ -499,7 +500,7 @@ export default function Users() {
               <div className="row">
                 <div className="col-md-12">
                   <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                       <label>เริ่มวันที่:</label>
                       <input
                         type="date"
@@ -510,7 +511,7 @@ export default function Users() {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                       <label>สิ้นสุดวันที่:</label>
                       <input
                         type="date"
