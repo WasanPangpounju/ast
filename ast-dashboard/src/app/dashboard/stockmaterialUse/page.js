@@ -413,12 +413,12 @@ export default function Users() {
       });
     
       const totalWeightPNet = filtered.reduce(
-        (sum, item) => sum + (item.weight_p_net || 0),
+        (sum, item) => sum + Number(item.weight_p_net || 0),
         0
       );
     
       const totalWeightKgNet = filtered.reduce(
-        (sum, item) => sum + (item.weight_kg_net || 0),
+        (sum, item) => sum + Number(item.weight_kg_net || 0),
         0
       );
     
