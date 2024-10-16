@@ -485,7 +485,7 @@ export default function Users() {
           <h2>ตรวจสอบบรรจุภัณต์</h2>
           <div class="d-flex justify-content-end">
             <div className="row">
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <select
                   value={filterOptionSec2}
                   class="form-select"
