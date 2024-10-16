@@ -268,45 +268,60 @@ export default function Users() {
     const filteredMaterials = materials.filter((item) => {
       const [day, month, year] = item.createDate.split("/");
       const createDate = new Date(`${year}-${month}-${day}`); // Create a Date object from the string
-    
+
       // Get the current date
       const now = new Date();
-    
+
       // Calculate the dates for one month ago and one year ago
-      const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-      const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-    
+      const oneMonthAgo = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      );
+      const oneYearAgo = new Date(
+        now.getFullYear() - 1,
+        now.getMonth(),
+        now.getDate()
+      );
+
       // Filter based on the selected filter option
       if (filterOption === "lastYear") {
         return createDate >= oneYearAgo && createDate <= now;
       } else if (filterOption === "lastMonth") {
         return createDate >= oneMonthAgo && createDate <= now;
       }
-    
+
       return false; // Default case if no filter option matches
     });
 
     const filteredMaterialsSec2 = materials.filter((item) => {
       const [day, month, year] = item.createDate.split("/");
       const createDate = new Date(`${year}-${month}-${day}`); // Create a Date object from the string
-    
+
       // Get the current date
       const now = new Date();
-    
+
       // Calculate the dates for one month ago and one year ago
-      const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-      const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-    
+      const oneMonthAgo = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      );
+      const oneYearAgo = new Date(
+        now.getFullYear() - 1,
+        now.getMonth(),
+        now.getDate()
+      );
+
       // Filter based on the selected filter option
       if (filterOption === "lastYear") {
         return createDate >= oneYearAgo && createDate <= now;
       } else if (filterOption === "lastMonth") {
         return createDate >= oneMonthAgo && createDate <= now;
       }
-    
+
       return false; // Default case if no filter option matches
     });
-    
 
     // Sum the spools and weights
     const materialsSpoolSum = filteredMaterials.reduce(
@@ -476,7 +491,6 @@ export default function Users() {
           <div class="d-flex justify-content-end">
             <div class="col-md-2">
               <select
-                class="form-select"
                 value={filterOptionSec2}
                 onChange={(e) => setFilterOptionSec2(e.target.value)}
               >
