@@ -367,8 +367,8 @@ export default function Users() {
           <h2>ตรวจสอบวัตถุดิบ น้ำหนักสุทธิ</h2>
           <br />
           <div class="row">
-            <div class="col-md-5"></div>
-            <div class="col-md-2">
+            {/* <div class="col-md-5"></div> */}
+            <div class="col-md-12">
               <div class="container">
                 <div class="row align-items-center mb-2">
                   <div class="col-md-4">ด้าย</div>
@@ -391,7 +391,7 @@ export default function Users() {
                   <div class="col-md-4">
                     <a>{totalWeightKgNet.toFixed(2)}</a>
                   </div>
-                  <div class="col-md-4"></div>
+                  {/* <div class="col-md-4"></div> */}
                 </div>
               </div>
               <br />
@@ -426,8 +426,8 @@ export default function Users() {
           <h2>ตรวจสอบบรรจุภัณต์</h2>
           <br />
           <div class="row">
-            <div class="col-md-5"></div>
-            <div class="col-md-2">
+            {/* <div class="col-md-5"></div> */}
+            <div class="col-md-12">
               <div class="row">
                 <div class="col-md-2">พาเลท</div>
                 <div class="col-md-2">
@@ -455,7 +455,7 @@ export default function Users() {
                 </div>
               </div>
             </div>
-            <div class="col-md-5"></div>
+            {/* <div class="col-md-5"></div> */}
           </div>
         </section>
       </div>
