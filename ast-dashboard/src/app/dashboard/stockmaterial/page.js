@@ -410,7 +410,7 @@ export default function Users() {
                 <option value="selectDate">เลือกวันที่</option>
               </select>
             </div>
-            <br/>
+            <br />
             {filterOption === "selectDate" && (
               <div className="row">
                 <div className="col-md-3">
@@ -494,26 +494,32 @@ export default function Users() {
                 <option value="selectDate">เลือกวันที่</option>
               </select>
             </div>
-            <br/>
-            {filterOption === "selectDate" && (
+            <br />
+            {filterOptionSec2 === "selectDate" && (
               <div className="row">
-                <div className="col-md-3">
-                  <label>เริ่มวันที่:</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                  />
-                </div>
-                <div className="col-md-3">
-                  <label>สิ้นสุดวันที่:</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                  />
+                <div className="col-md-12">
+                  <div className="row">
+                    <div className="col-md-6">
+                      <label>เริ่มวันที่:</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <label>สิ้นสุดวันที่:</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
