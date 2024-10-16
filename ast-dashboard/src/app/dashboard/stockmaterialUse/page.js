@@ -404,13 +404,13 @@ export default function Users() {
       const now = new Date(); // Current date
       const fiveMonthsAgo = new Date(); 
       
-      fiveMonthsAgo.setMonth(now.getMonth() - 1); // 5 months ago
+      fiveMonthsAgo.setYear(now.getYear() - 1); // 5 months ago
     // console.log('now',now);
     // console.log('fiveMonthsAgo',fiveMonthsAgo.setMonth(now.getMonth() - 1));
       const filtered = data.filter(item => {
         const itemDate = new Date(item.createDate); // Parse createDate
         return (
-          item.yarnType.includes('TC 45 COMPACK (65:35)') && 
+          item.yarnType.includes('C 12 OE') && 
           itemDate >= fiveMonthsAgo // Check if within the last 5 months
         );
       });
