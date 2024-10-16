@@ -397,6 +397,42 @@ export default function Users() {
   console.log("uniqueYarnTypes", uniqueYarnTypes);
   console.log("uniqueSuppliers", uniqueSuppliers);
 
+
+    // Helper function to filter and sum an individual array
+  const filterAndSum = (data) => {
+    const filtered = data.filter(item => item.name.includes('C 10 OE'));
+
+    const totalWeightPNet = filtered.reduce(
+      (sum, item) => sum + (item.weight_p_net || 0),
+      0
+    );
+
+    const totalWeightKgNet = filtered.reduce(
+      (sum, item) => sum + (item.weight_kg_net || 0),
+      0
+    );
+
+    return { totalWeightPNet, totalWeightKgNet };
+  };
+
+  // Separate calculations for materials, materialOutsides, and materialstore
+  useEffect(() => {
+    const materialsSum = filterAndSum(materials);
+    const materialOutsidesSum = filterAndSum(materialOutsides);
+    const materialstoreSum = filterAndSum(materialstore);
+
+    console.log('Materials - Total weight_p_net:', materialsSum.totalWeightPNet);
+    console.log('Materials - Total weight_kg_net:', materialsSum.totalWeightKgNet);
+
+    console.log('MaterialOutsides - Total weight_p_net:', materialOutsidesSum.totalWeightPNet);
+    console.log('MaterialOutsides - Total weight_kg_net:', materialOutsidesSum.totalWeightKgNet);
+
+    console.log('Materialstore - Total weight_p_net:', materialstoreSum.totalWeightPNet);
+    console.log('Materialstore - Total weight_kg_net:', materialstoreSum.totalWeightKgNet);
+  }, [materials, materialOutsides, materialstore]); // Re-run when any data changes
+
+
+
   return (
     <div>
       {/* <h1>User Management</h1>
