@@ -110,8 +110,8 @@ export default function Users() {
 
     fetchMaterials();
   }, [filterOptionSec2]);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error}</p>;
   // console.log("materials", materials);
   useEffect(() => {
     const fetchMaterialOutsides = async () => {
