@@ -485,7 +485,7 @@ export default function Users() {
           <h2>ตรวจสอบบรรจุภัณต์</h2>
           <div class="d-flex justify-content-end">
             <div className="row">
-              <div class="col-md-2">
+              <div class="col-md-6">
                 <select
                   value={filterOptionSec2}
                   class="form-select"
@@ -497,7 +497,10 @@ export default function Users() {
                 </select>
               </div>
             </div>
+            </div>
             <br />
+            
+            <div class="d-flex justify-content-end">
             {filterOptionSec2 === "selectDate" && (
               <div className="row">
                 <div className="col-md-12">
