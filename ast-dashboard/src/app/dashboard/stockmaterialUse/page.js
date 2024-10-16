@@ -317,63 +317,92 @@ export default function Users() {
     const filteredMaterials = materials.filter(item => isDateInRange(item.createDate, filterOption));
     const filteredMaterialOutsides = materialOutsides.filter(item => isDateInRange(item.createDate, filterOption));
     const filteredMaterialStore = materialstore.filter(item => isDateInRange(item.createDate, filterOption));
+  
     console.log('Filtered Materials:', filteredMaterials);
     console.log('Filtered Material Outsides:', filteredMaterialOutsides);
     console.log('Filtered Material Store:', filteredMaterialStore);
-    // Combine all filtered materials into one array
-    const combinedFilteredData = filteredMaterials
-      .concat(filteredMaterialOutsides, filteredMaterialStore)
-      .reduce((acc, item) => {
-        const {
+  
+    // Initialize an accumulator to hold combined results
+    const combinedData = {};
+  
+    // Combine and sum materials
+    filteredMaterials.forEach(item => {
+      const { yarnType, spool = 0, weight_p_net = 0, weight_kg_net = 0 } = item;
+  
+      // Initialize the yarnType entry if it doesn't exist
+      if (!combinedData[yarnType]) {
+        combinedData[yarnType] = {
           yarnType,
-          spool = 0,
-          weight_p_net = 0,
-          weight_kg_net = 0,
-        } = item;
-
-        // Initialize the yarnType entry if it doesn't exist
-        if (!acc[yarnType]) {
-          acc[yarnType] = {
-            yarnType,
-            spoolSum: 0,
-            materialsWeightPNetSum: 0,
-            materialsWeightKgNetSum: 0,
-            materialOutsidesWeightPNetSum: 0,
-            materialOutsidesWeightKgNetSum: 0,
-            materialstoreWeightPNetSum: 0,
-            materialstoreWeightKgNetSum: 0,
-          };
-        }
-
-        // Sum for materials
-        if (filteredMaterials.some((materialItem) => materialItem.yarnType === yarnType)) {
-          acc[yarnType].spoolSum += Number(spool);
-          acc[yarnType].materialsWeightPNetSum += Number(weight_p_net);
-          acc[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
-        }
-
-        // Sum for materialOutsides
-        if (filteredMaterialOutsides.some((outsideItem) => outsideItem.yarnType === yarnType)) {
-          acc[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
-          acc[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
-        }
-
-        // Sum for materialstore
-        if (filteredMaterialStore.some((storeItem) => storeItem.yarnType === yarnType)) {
-          acc[yarnType].materialstoreWeightPNetSum += Number(weight_p_net);
-          acc[yarnType].materialstoreWeightKgNetSum += Number(weight_kg_net);
-        }
-
-        return acc;
-      }, {});
-
-    const groupedDataArray = Object.values(combinedFilteredData);
-
+          spoolSum: 0,
+          materialsWeightPNetSum: 0,
+          materialsWeightKgNetSum: 0,
+          materialstoreWeightPNetSum: 0,
+          materialstoreWeightKgNetSum: 0,
+          materialOutsidesWeightPNetSum: 0,
+          materialOutsidesWeightKgNetSum: 0,
+        };
+      }
+  
+      // Sum for materials
+      combinedData[yarnType].spoolSum += Number(spool);
+      combinedData[yarnType].materialsWeightPNetSum += Number(weight_p_net);
+      combinedData[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
+    });
+  
+    // Combine and sum material store
+    filteredMaterialStore.forEach(item => {
+      const { yarnType, weight_p_net = 0, weight_kg_net = 0 } = item;
+  
+      if (!combinedData[yarnType]) {
+        combinedData[yarnType] = {
+          yarnType,
+          spoolSum: 0,
+          materialsWeightPNetSum: 0,
+          materialsWeightKgNetSum: 0,
+          materialstoreWeightPNetSum: 0,
+          materialstoreWeightKgNetSum: 0,
+          materialOutsidesWeightPNetSum: 0,
+          materialOutsidesWeightKgNetSum: 0,
+        };
+      }
+  
+      // Sum for material store
+      combinedData[yarnType].materialstoreWeightPNetSum += Number(weight_p_net);
+      combinedData[yarnType].materialstoreWeightKgNetSum += Number(weight_kg_net);
+    });
+  
+    // Combine and sum material outsides
+    filteredMaterialOutsides.forEach(item => {
+      const { yarnType, weight_p_net = 0, weight_kg_net = 0 } = item;
+  
+      if (!combinedData[yarnType]) {
+        combinedData[yarnType] = {
+          yarnType,
+          spoolSum: 0,
+          materialsWeightPNetSum: 0,
+          materialsWeightKgNetSum: 0,
+          materialstoreWeightPNetSum: 0,
+          materialstoreWeightKgNetSum: 0,
+          materialOutsidesWeightPNetSum: 0,
+          materialOutsidesWeightKgNetSum: 0,
+        };
+      }
+  
+      // Sum for material outsides
+      combinedData[yarnType].materialOutsidesWeightPNetSum += Number(weight_p_net);
+      combinedData[yarnType].materialOutsidesWeightKgNetSum += Number(weight_kg_net);
+    });
+  
+    // Convert the combined data object to an array
+    const groupedDataArray = Object.values(combinedData);
+  
     // Sort by yarnType
     groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
-
-    setGroupedData(groupedDataArray); // Store the grouped data in state
+  
+    // Store the grouped data in state
+    setGroupedData(groupedDataArray);
   }, [materials, materialOutsides, materialstore, filterOption]);
+  
   
 
   const groupedDataArray = Object.values(groupedData);
