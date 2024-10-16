@@ -402,16 +402,14 @@ export default function Users() {
     // Helper function to filter and sum an individual array
     const filterAndSum = (data) => {
       const now = new Date(); // Current date
-      const fiveMonthsAgo = new Date(); 
+      const oneYearAgo = new Date(); 
+      oneYearAgo.setFullYear(now.getFullYear() - 1); // Set to one year ago
       
-      fiveMonthsAgo.setYear(now.getYear() - 1); // 5 months ago
-    // console.log('now',now);
-    // console.log('fiveMonthsAgo',fiveMonthsAgo.setMonth(now.getMonth() - 1));
       const filtered = data.filter(item => {
         const itemDate = new Date(item.createDate); // Parse createDate
         return (
           item.yarnType.includes('C 12 OE') && 
-          itemDate >= fiveMonthsAgo // Check if within the last 5 months
+          itemDate >= oneYearAgo // Check if within the last year
         );
       });
     
