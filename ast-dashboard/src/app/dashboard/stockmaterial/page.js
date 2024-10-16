@@ -62,7 +62,7 @@ export default function Users() {
     return null;
   };
 
-  ususeEffect(() => {
+  useEffect(() => {
     const fetchMaterials = async () => {
       try {
         const response = await fetch("/api/materials");
