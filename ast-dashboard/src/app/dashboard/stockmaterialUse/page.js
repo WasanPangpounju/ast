@@ -528,9 +528,7 @@ export default function Users() {
         </div>
 
         <div class="content">
-          <div class="box-from">
-            <div class="">
-              <form method="post">
+          <form method="post">
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
@@ -599,6 +597,9 @@ export default function Users() {
                   </div>
                 </div>
               </form>
+          <div class="box-from">
+            <div class="">
+              
             </div>
           </div>
         </div>
