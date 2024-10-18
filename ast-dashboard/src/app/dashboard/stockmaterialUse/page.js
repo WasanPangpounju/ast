@@ -36,7 +36,7 @@ export default function Users() {
   const [totalWeightKgNet, setTotalWeightKgNet] = useState(0);
   const [filterOption, setFilterOption] = useState("all");
   const [startDate, setStartDate] = useState("");
-const [endDate, setEndDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   // Fetch materials from the API on component mount
   // useEffect(() => {
@@ -283,33 +283,45 @@ const [endDate, setEndDate] = useState("");
     console.log("Weight Kg Net Sum:", weightKgNetSum);
   }, [materials, filterOption]);
 
-  const isDateInRange = (createDate, range, startDate = null, endDate = null) => {
+  const isDateInRange = (
+    createDate,
+    range,
+    startDate = null,
+    endDate = null
+  ) => {
     const now = new Date();
     const date = new Date(createDate);
 
     if (range === "all") {
-        return true; // Include all records
+      return true; // Include all records
     }
 
     if (range === "lastYear") {
-        const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-        return date >= oneYearAgo && date <= now;
+      const oneYearAgo = new Date(
+        now.getFullYear() - 1,
+        now.getMonth(),
+        now.getDate()
+      );
+      return date >= oneYearAgo && date <= now;
     }
 
     if (range === "lastMonth") {
-        const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-        return date >= oneMonthAgo && date <= now;
+      const oneMonthAgo = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      );
+      return date >= oneMonthAgo && date <= now;
     }
 
     if (range === "selectDate" && startDate && endDate) {
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-        return date >= start && date <= end;
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      return date >= start && date <= end;
     }
 
     return false; // Default to false if no valid range or date
-};
-
+  };
 
   // Group data by yarnType and sum relevant fields
   useEffect(() => {
@@ -325,15 +337,15 @@ const [endDate, setEndDate] = useState("");
     // );
     const filteredMaterials = materials.filter((item) =>
       isDateInRange(item.createDate, filterOption, startDate, endDate)
-  );
+    );
 
-  const filteredMaterialOutsides = materialOutsides.filter((item) =>
+    const filteredMaterialOutsides = materialOutsides.filter((item) =>
       isDateInRange(item.createDate, filterOption, startDate, endDate)
-  );
+    );
 
-  const filteredMaterialStore = materialstore.filter((item) =>
+    const filteredMaterialStore = materialstore.filter((item) =>
       isDateInRange(item.createDate, filterOption, startDate, endDate)
-  );
+    );
 
     console.log("Filtered Materials:", filteredMaterials);
     console.log("Filtered Material Outsides:", filteredMaterialOutsides);
@@ -611,7 +623,8 @@ const [endDate, setEndDate] = useState("");
                 </div>
                 {filterOption === "selectDate" && (
                   <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-8"></div>
+                    <div className="col-md-4">
                       <div className="row">
                         <div className="col-md-12">
                           <label>เริ่มวันที่:</label>
