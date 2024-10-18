@@ -527,8 +527,10 @@ export default function Users() {
           </div>
         </div>
 
-        <div class="content">
-          <form method="post">
+        {/* <div class="content"> */}
+          <div class="box-from">
+            <div class="">
+              <form method="post">
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
@@ -597,12 +599,9 @@ export default function Users() {
                   </div>
                 </div>
               </form>
-          <div class="box-from">
-            <div class="">
-              
             </div>
           </div>
-        </div>
+        {/* </div> */}
         <section class="Frame">
           <h2>ตรวจสอบวัตถุดิบ น้ำหนักสุทธิ</h2>
           <br />
