@@ -607,7 +607,7 @@ export default function Users() {
           <br />
           <div class="row">
             <div class="col-md-12">
-              <table className="table table-bordered table-a">
+              <table className="">
                 <thead className="sticky-header">
                   <tr>
                     <th rowspan="2">ชนิดด้าย</th>
