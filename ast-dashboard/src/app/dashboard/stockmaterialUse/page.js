@@ -603,9 +603,17 @@ export default function Users() {
           </div>
         </div>
         <section class="Frame">
-          <h2>ตรวจสอบวัตถุดิบ น้ำหนักสุทธิ</h2>
+          <h2
+            style={{
+              top: 0,
+              backgroundColor: "#BCCCDC",
+              zIndex: 1,
+            }}
+          >
+            ตรวจสอบวัตถุดิบ น้ำหนักสุทธิ
+          </h2>
           <br />
-          <div class="row" style={{ overflow: "auto", maxHeight: "400px" }}>
+          <div class="row">
             <div class="col-md-12">
               <table className="table table-bordered table-a">
                 <thead
