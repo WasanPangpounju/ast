@@ -73,3 +73,16 @@
     border-radius: 8px; 
   } */
   .Frame{padding: 30px 20px 20px;margin-bottom: 30px; border-radius: 10px;border:1px Solid #DCDBDB;}
+
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: #bcccdc;
+    z-index: 1;
+  }
+  
+  .sticky-header th {
+    vertical-align: middle; /* Vertical centering */
+    text-align: center; /* Horizontal centering for <th> */
+    padding: 10px; /* Optional padding for better appearance */
+  }
