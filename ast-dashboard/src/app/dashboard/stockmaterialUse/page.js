@@ -283,44 +283,36 @@ export default function Users() {
     console.log("Weight Kg Net Sum:", weightKgNetSum);
   }, [materials, filterOption]);
 
-  const isDateInRange = (
-    createDate,
-    range,
-    startDate = null,
-    endDate = null
-  ) => {
+  console.log(startDate);
+  console.log(endDate);
+  const isDateInRange = (createDate, range, startDate, endDate) => {
     const now = new Date();
     const date = new Date(createDate);
-
+  
     if (range === "all") {
       return true; // Include all records
     }
-
+  
     if (range === "lastYear") {
-      const oneYearAgo = new Date(
-        now.getFullYear() - 1,
-        now.getMonth(),
-        now.getDate()
-      );
+      const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
       return date >= oneYearAgo && date <= now;
     }
-
+  
     if (range === "lastMonth") {
-      const oneMonthAgo = new Date(
-        now.getFullYear(),
-        now.getMonth() - 1,
-        now.getDate()
-      );
+      const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
       return date >= oneMonthAgo && date <= now;
     }
-
-    if (range === "selectDate" && startDate && endDate) {
+  
+    if (range === "selectDate") {
+      if (!startDate || !endDate) return false; // Ensure both dates are selected
+  
       const start = new Date(startDate);
       const end = new Date(endDate);
+  
       return date >= start && date <= end;
     }
-
-    return false; // Default to false if no valid range or date
+  
+    return false; // Default to false if no valid range is provided
   };
 
   // Group data by yarnType and sum relevant fields
@@ -338,11 +330,11 @@ export default function Users() {
     const filteredMaterials = materials.filter((item) =>
       isDateInRange(item.createDate, filterOption, startDate, endDate)
     );
-
+  
     const filteredMaterialOutsides = materialOutsides.filter((item) =>
       isDateInRange(item.createDate, filterOption, startDate, endDate)
     );
-
+  
     const filteredMaterialStore = materialstore.filter((item) =>
       isDateInRange(item.createDate, filterOption, startDate, endDate)
     );
@@ -433,7 +425,7 @@ export default function Users() {
 
     // Store the grouped data in state
     setGroupedData(groupedDataArray);
-  }, [materials, materialOutsides, materialstore, filterOption]);
+  }, [materials, materialOutsides, materialstore, filterOption, startDate, endDate]);
 
   const groupedDataArray = Object.values(groupedData);
 
