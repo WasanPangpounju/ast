@@ -99,19 +99,3 @@
     text-align: center;
   }
   
-  .sticky-header {
-    position: sticky;
-    top: 0;
-    background-color: #bcccdc; /* Background color */
-    z-index: 1;
-  }
-  
-  .table-a {
-    background-color: #f8f9fa; /* Optional background color for the table */
-    color: #333; /* Text color */
-  }
-  
-  .table-a tr:nth-child(even) {
-    background-color: #e9ecef; /* Alternate row background */
-  }
-  
