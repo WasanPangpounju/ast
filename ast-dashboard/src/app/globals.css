@@ -87,15 +87,15 @@
     padding: 10px; /* Optional padding for better appearance */
   }
 
-  .table {
+  .custom-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: collapse; /* Remove gaps between cells */
   }
   
-  .table-bordered th,
-  .table-bordered td {
-    border: 1px solid #dee2e6;
-    padding: 8px;
-    text-align: center;
-  }
+  .custom-table th,
+.custom-table td {
+  border: 1px solid #ddd; /* Cell border */
+  padding: 8px;
+  text-align: center; /* Center text */
+}
   
