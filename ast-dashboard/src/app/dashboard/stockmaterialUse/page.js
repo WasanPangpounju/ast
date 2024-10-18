@@ -605,10 +605,17 @@ export default function Users() {
         <section class="Frame">
           <h2>ตรวจสอบวัตถุดิบ น้ำหนักสุทธิ</h2>
           <br />
-          <div class="row">
+          <div class="row" style={{ overflow: "auto", maxHeight: "400px" }}>
             <div class="col-md-12">
-            <table className="table table-bordered table-a">
-            <thead style={{ position: 'sticky', top: 0, backgroundColor: '#BCCCDC', zIndex: 1 }}>
+              <table className="table table-bordered table-a">
+                <thead
+                  style={{
+                    position: "sticky",
+                    top: 0,
+                    backgroundColor: "#BCCCDC",
+                    zIndex: 1,
+                  }}
+                >
                   <tr>
                     <th rowspan="2">ชนิดด้าย</th>
                     <th rowspan="2">จำนวนลูก</th>
