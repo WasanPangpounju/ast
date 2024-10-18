@@ -532,7 +532,7 @@ export default function Users() {
             <div class="">
               <form method="post">
                 <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-2">
                     <div class="form-group">
                       <label for="yarntype">ชนิดด้าย</label>
                       <input
@@ -556,7 +556,7 @@ export default function Users() {
                       </datalist> */}
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-2">
                     <div class="form-group">
                       <label for="supplier">บริษัท</label>
 
@@ -580,7 +580,7 @@ export default function Users() {
                       </datalist> */}
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-2">
                     <label for=""></label>
                     <div class="form-group">
                       {/* <button class="btn b_save">
@@ -602,6 +602,7 @@ export default function Users() {
             </div>
           </div>
         {/* </div> */}
+        <br/>
         <section class="Frame">
           <h2>ตรวจสอบวัตถุดิบ น้ำหนักสุทธิ</h2>
           <br />
