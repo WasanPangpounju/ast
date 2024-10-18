@@ -608,7 +608,7 @@ export default function Users() {
           <div class="row">
             <div class="col-md-12">
             <table className="table table-bordered table-a">
-            <thead style={{ position: 'sticky', top: 0, backgroundColor: '#fff', zIndex: 1 }}>
+            <thead style={{ position: 'sticky', top: 0, backgroundColor: '#BCCCDC', zIndex: 1 }}>
                   <tr>
                     <th rowspan="2">ชนิดด้าย</th>
                     <th rowspan="2">จำนวนลูก</th>
