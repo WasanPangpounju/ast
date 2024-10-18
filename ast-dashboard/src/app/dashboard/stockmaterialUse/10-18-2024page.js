@@ -283,57 +283,48 @@ const [endDate, setEndDate] = useState("");
     console.log("Weight Kg Net Sum:", weightKgNetSum);
   }, [materials, filterOption]);
 
-  const isDateInRange = (createDate, range, startDate = null, endDate = null) => {
+  const isDateInRange = (createDate, range) => {
     const now = new Date();
     const date = new Date(createDate);
 
+    // Return true for the "all" option to include all records
     if (range === "all") {
-        return true; // Include all records
+      return true;
     }
 
     if (range === "lastYear") {
-        const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-        return date >= oneYearAgo && date <= now;
+      const oneYearAgo = new Date(
+        now.getFullYear() - 1,
+        now.getMonth(),
+        now.getDate()
+      );
+      return date >= oneYearAgo && date <= now;
     }
 
     if (range === "lastMonth") {
-        const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-        return date >= oneMonthAgo && date <= now;
+      const oneMonthAgo = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      );
+      return date >= oneMonthAgo && date <= now;
     }
 
-    if (range === "selectDate" && startDate && endDate) {
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-        return date >= start && date <= end;
-    }
-
-    return false; // Default to false if no valid range or date
-};
-
+    return false; // Default to false if no valid range is provided
+  };
 
   // Group data by yarnType and sum relevant fields
   useEffect(() => {
     // Apply date filter to all datasets
-    // const filteredMaterials = materials.filter((item) =>
-    //   isDateInRange(item.createDate, filterOption)
-    // );
-    // const filteredMaterialOutsides = materialOutsides.filter((item) =>
-    //   isDateInRange(item.createDate, filterOption)
-    // );
-    // const filteredMaterialStore = materialstore.filter((item) =>
-    //   isDateInRange(item.createDate, filterOption)
-    // );
     const filteredMaterials = materials.filter((item) =>
-      isDateInRange(item.createDate, filterOption, startDate, endDate)
-  );
-
-  const filteredMaterialOutsides = materialOutsides.filter((item) =>
-      isDateInRange(item.createDate, filterOption, startDate, endDate)
-  );
-
-  const filteredMaterialStore = materialstore.filter((item) =>
-      isDateInRange(item.createDate, filterOption, startDate, endDate)
-  );
+      isDateInRange(item.createDate, filterOption)
+    );
+    const filteredMaterialOutsides = materialOutsides.filter((item) =>
+      isDateInRange(item.createDate, filterOption)
+    );
+    const filteredMaterialStore = materialstore.filter((item) =>
+      isDateInRange(item.createDate, filterOption)
+    );
 
     console.log("Filtered Materials:", filteredMaterials);
     console.log("Filtered Material Outsides:", filteredMaterialOutsides);
