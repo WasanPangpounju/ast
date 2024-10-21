@@ -444,6 +444,7 @@ export default function Users() {
       );
     return yarnTypeMatches && supplierMatches;
   });
+  console.log('filteredData',filteredData);
   const uniqueYarnTypes = [...new Set(materials.map((item) => item.yarnType))];
   const uniqueSuppliers = [
     ...new Set(materials.map((item) => item.supplierName)),
@@ -482,33 +483,6 @@ export default function Users() {
     const materialsSum = filterAndSum(materials);
     const materialOutsidesSum = filterAndSum(materialOutsides);
     const materialstoreSum = filterAndSum(materialstore);
-
-    console.log(
-      "Materials - Total weight_p_net:",
-      materialsSum.totalWeightPNet
-    );
-    console.log(
-      "Materials - Total weight_kg_net:",
-      materialsSum.totalWeightKgNet
-    );
-
-    console.log(
-      "MaterialOutsides - Total weight_p_net:",
-      materialOutsidesSum.totalWeightPNet
-    );
-    console.log(
-      "MaterialOutsides - Total weight_kg_net:",
-      materialOutsidesSum.totalWeightKgNet
-    );
-
-    console.log(
-      "Materialstore - Total weight_p_net:",
-      materialstoreSum.totalWeightPNet
-    );
-    console.log(
-      "Materialstore - Total weight_kg_net:",
-      materialstoreSum.totalWeightKgNet
-    );
   }, [materials, materialOutsides, materialstore]); // Re-run when any data changes
 
   return (
