@@ -653,7 +653,7 @@ export default function Users() {
                 <thead className="sticky-header">
                   <tr>
                     <th rowspan="2">ชนิดด้าย</th>
-                    <th rowspan="2">จำนวนลูก</th>
+                    <th rowspan="2">จำนวนด้าย(ลูก)</th>
                     <th colspan="2">นำเข้า </th>
                     <th colspan="2">เบิกออก </th>
                     {/* <th colspan="2">ทดสอบ </th> */}

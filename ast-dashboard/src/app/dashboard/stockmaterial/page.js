@@ -412,10 +412,10 @@ export default function Users() {
                 </select>
               </div>
             </div>
-            </div>
-            <br />
-            
-            <div class="d-flex justify-content-end">
+          </div>
+          <br />
+
+          <div class="d-flex justify-content-end">
             {filterOption === "selectDate" && (
               <div className="row">
                 <div className="col-md-12">
@@ -475,20 +475,21 @@ export default function Users() {
                 </div>
               </div>
               <br />
-
-              <div class="row">
-                <div class="col-md-12">
-                  {/* <button class="btn b_save">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              {/* <button class="btn b_save">
                     <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
                   </button> */}
-                  <Link href="/dashboard/stockmaterialUse">
-                    <button type="button" className="btn btn-primary">
-                      Go to Stock Material Use
-                    </button>
-                  </Link>
-                </div>
-              </div>
+              <Link href="/dashboard/stockmaterialUse">
+                <button type="button" className="btn btn-primary">
+                  ดูรายละเอียด
+                </button>
+              </Link>
             </div>
+            <div class="col-md-3"></div>
           </div>
         </section>
         <br />
@@ -508,10 +509,10 @@ export default function Users() {
                 </select>
               </div>
             </div>
-            </div>
-            <br />
-            
-            <div class="d-flex justify-content-end">
+          </div>
+          <br />
+
+          <div class="d-flex justify-content-end">
             {filterOptionSec2 === "selectDate" && (
               <div className="row">
                 <div className="col-md-12">
@@ -571,6 +572,20 @@ export default function Users() {
                   </button>
                 </div>
               </div>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              {/* <button class="btn b_save">
+                    <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
+                  </button> */}
+              <Link href="/dashboard/stockmaterialUse">
+                <button type="button" className="btn btn-primary">
+                  ดูรายละเอียด
+                </button>
+              </Link>
             </div>
             <div class="col-md-3"></div>
           </div>
