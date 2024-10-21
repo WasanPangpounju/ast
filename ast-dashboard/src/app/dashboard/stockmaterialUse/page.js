@@ -433,8 +433,11 @@ export default function Users() {
   groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
 
   const filteredData = groupedDataArray.filter((item) => {
+    const isValidYarnType = item.yarnType != null && item.yarnType !== ""; // Skip null/undefined yarnTypes
+  
     const yarnTypeMatches =
       selectedYarnType === "" || item.yarnType === selectedYarnType;
+  
     const supplierMatches =
       selectedSupplier === "" ||
       materials.some(
@@ -442,8 +445,10 @@ export default function Users() {
           material.yarnType === item.yarnType &&
           material.supplierName === selectedSupplier
       );
-    return yarnTypeMatches && supplierMatches;
+  
+    return isValidYarnType && yarnTypeMatches && supplierMatches;
   });
+  
   console.log('filteredData',filteredData);
   const uniqueYarnTypes = [...new Set(materials.map((item) => item.yarnType))];
   const uniqueSuppliers = [
