@@ -432,9 +432,22 @@ export default function Users() {
   // Sort by yarnType
   groupedDataArray.sort((a, b) => a.yarnType.localeCompare(b.yarnType));
 
+  // const filteredData = groupedDataArray.filter((item) => {
+  //   const yarnTypeMatches =
+  //     selectedYarnType === "" || item.yarnType === selectedYarnType;
+  //   const supplierMatches =
+  //     selectedSupplier === "" ||
+  //     materials.some(
+  //       (material) =>
+  //         material.yarnType === item.yarnType &&
+  //         material.supplierName === selectedSupplier
+  //     );
+  //   return yarnTypeMatches && supplierMatches;
+  // });
+
   const filteredData = groupedDataArray.filter((item) => {
     const isValidYarnType = item.yarnType != null && item.yarnType !== ""; // Skip null/undefined yarnTypes
-  
+    
     const yarnTypeMatches =
       selectedYarnType === "" || item.yarnType === selectedYarnType;
   
@@ -446,8 +459,11 @@ export default function Users() {
           material.supplierName === selectedSupplier
       );
   
-    return isValidYarnType && yarnTypeMatches && supplierMatches;
+    const hasValidSpoolSum = item.spoolSum > 0; // Ensure spoolSum is greater than 0
+  
+    return isValidYarnType && yarnTypeMatches && supplierMatches && hasValidSpoolSum;
   });
+
   
   console.log('filteredData',filteredData);
   const uniqueYarnTypes = [...new Set(materials.map((item) => item.yarnType))];
