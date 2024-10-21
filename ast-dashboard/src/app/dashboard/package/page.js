@@ -60,7 +60,7 @@ export default function Package() {
   useEffect(() => {
     const fetchPackageasts = async () => {
       try {
-        const response = await fetch("/api/packageasts");
+        const response = await fetch("/api/package");
         if (!response.ok) {
           throw new Error(`Failed to fetch materials: ${response.status}`);
         }
