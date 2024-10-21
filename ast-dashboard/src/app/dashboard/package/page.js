@@ -168,11 +168,11 @@ export default function Package() {
                       onChange={(e) => setSelectedYarnType(e.target.value)}
                       placeholder="เลือกชนิดด้าย"
                     />
-                    <datalist id="yarnTypeList">
+                    {/* <datalist id="yarnTypeList">
                       {uniqueYarnTypes.map((item, index) => (
                         <option key={index} value={item} />
                       ))}
-                    </datalist>
+                    </datalist> */}
 
                     {/* <datalist id="yarnTypeList">
                         {uniqueYarnTypes.map((yarnType, index) => (
@@ -193,11 +193,11 @@ export default function Package() {
                       onChange={(e) => setSelectedSupplier(e.target.value)}
                       placeholder="เลือกบริษัท"
                     />
-                    <datalist id="supplierList">
+                    {/* <datalist id="supplierList">
                       {uniqueSuppliers.map((item, index) => (
                         <option key={index} value={item} />
                       ))}
-                    </datalist>
+                    </datalist> */}
                     {/* <datalist id="supplierList">
                         {uniqueSuppliers.map((supplier, index) => (
                           <option key={index} value={supplier} />
