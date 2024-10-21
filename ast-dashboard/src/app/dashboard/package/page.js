@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import "../../globals.css";
 import Link from "next/link";
 
-export default function StockmaterialUse() {
+export default function Package() {
   useEffect(() => {
     // Dynamically import Bootstrap JS from the public folder
     const bootstrapScript = document.createElement("script");
@@ -14,7 +14,7 @@ export default function StockmaterialUse() {
     bootstrapScript.async = true;
     document.body.appendChild(bootstrapScript);
   }, []);
-  const [materials, setMaterials] = useState([]);
+  const [packageasts, setPackageasts] = useState([]);
   const [materialOutsides, setMaterialOutsides] = useState([]);
   const [materialstore, setMaterialstore] = useState([]);
   const [groupedData, setGroupedData] = useState([]);
@@ -58,14 +58,14 @@ export default function StockmaterialUse() {
   //   fetchMaterials();
   // }, []);
   useEffect(() => {
-    const fetchMaterials = async () => {
+    const fetchPackageasts = async () => {
       try {
-        const response = await fetch("/api/materials");
+        const response = await fetch("/api/packageasts");
         if (!response.ok) {
           throw new Error(`Failed to fetch materials: ${response.status}`);
         }
         const data = await response.json();
-        setMaterials(data);
+        setPackageasts(data);
 
         // Sum pallet, box, and sack
         const palletSum = data.reduce(
@@ -91,9 +91,9 @@ export default function StockmaterialUse() {
       }
     };
 
-    fetchMaterials();
+    fetchPackageasts();
   }, []);
-  // console.log("materials", materials);
+  console.log("packageasts", packageasts);
 
   useEffect(() => {
     const fetchMaterialOutsides = async () => {
