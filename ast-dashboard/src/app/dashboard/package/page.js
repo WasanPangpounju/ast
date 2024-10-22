@@ -59,25 +59,25 @@ export default function Package() {
 
   //   fetchMaterials();
   // }, []);
-//   useEffect(() => {
-//     const fetchPackageasts = async () => {
-//       try {
-//         const response = await fetch("/api/package");
-//         if (!response.ok) {
-//           throw new Error(`Failed to fetch materials: ${response.status}`);
-//         }
-//         const data = await response.json();
-//         setPackageasts(data);
-//       } catch (error) {
-//         setError(error.message);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
+  useEffect(() => {
+    const fetchPackageasts = async () => {
+      try {
+        const response = await fetch("/api/package");
+        if (!response.ok) {
+          throw new Error(`Failed to fetch materials: ${response.status}`);
+        }
+        const data = await response.json();
+        setPackageasts(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-//     fetchPackageasts();
-//   }, []);
-//   console.log("packageasts", packageasts);
+    fetchPackageasts();
+  }, []);
+  console.log("packageasts", packageasts);
 
   useEffect(() => {
     const fetchPackageHtr = async () => {
