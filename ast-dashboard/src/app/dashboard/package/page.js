@@ -97,7 +97,7 @@ export default function Package() {
 
     fetchPackageHtr();
   }, []);
-  console.log("packageasts", packageasts);
+  console.log("packageHtr", packageHtr);
   
   return (
     <div>
