@@ -17,6 +17,15 @@ export default function Package() {
   const [packageasts, setPackageasts] = useState([]);
   const [packageHtr, setPackageHtr] = useState([]);
 
+  const [materials, setMaterials] = useState([]);
+
+  const [totals, setTotals] = useState({
+    boxSum: 0,
+    spoolSum: 0,
+    sackSum: 0,
+    palletSum: 0,
+  });
+
   const [materialOutsides, setMaterialOutsides] = useState([]);
   const [materialstore, setMaterialstore] = useState([]);
   const [groupedData, setGroupedData] = useState([]);
@@ -41,24 +50,34 @@ export default function Package() {
   const [endDate, setEndDate] = useState("");
 
   // Fetch materials from the API on component mount
-  // useEffect(() => {
-  //   const fetchMaterials = async () => {
-  //     try {
-  //       const response = await fetch("../api/materials");
-  //       if (!response.ok) {
-  //         throw new Error(`Failed to fetch materials: ${response.status}`);
-  //       }
-  //       const data = await response.json();
-  //       setMaterials(data);
-  //     } catch (error) {
-  //       setError(error.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchMaterials = async () => {
+      try {
+        const response = await fetch('/api/materials'); // Adjust if using external API
+        const data = await response.json();
+        setMaterials(data);
 
-  //   fetchMaterials();
-  // }, []);
+        // Sum the values for box, spool, sack, and pallet
+        const sums = data.reduce(
+          (acc, item) => {
+            acc.boxSum += Number(item.box || 0);
+            acc.spoolSum += Number(item.spool || 0);
+            acc.sackSum += Number(item.sack || 0);
+            acc.palletSum += Number(item.pallet || 0);
+            return acc;
+          },
+          { boxSum: 0, spoolSum: 0, sackSum: 0, palletSum: 0 }
+        );
+
+        setTotals(sums);
+      } catch (error) {
+        console.error('Error fetching materials:', error);
+      }
+    };
+
+    fetchMaterials();
+  }, []);
+
   useEffect(() => {
     const fetchPackageasts = async () => {
       try {
@@ -98,7 +117,73 @@ export default function Package() {
     fetchPackageHtr();
   }, []);
   console.log("packageHtr", packageHtr);
+
+  const spoolSums = packageasts.reduce(
+    (acc, item) => {
+      // Ensure we're processing only "packageImport" items
+      if (item.package_status === "packageImport") {
+        // Handle spool sums
+        switch (item.spool_type) {
+          case "spool_plastic":
+            acc.spoolPlasticSum += Number(item.spool || 0);
+            break;
+          case "spool_paper":
+            acc.spoolPaperSum += Number(item.spool || 0);
+            break;
+          case "spoolC_plastic":
+            acc.spoolCPlasticSum += Number(item.spool || 0);
+            break;
+          case "spoolC_paper":
+            acc.spoolCPaperSum += Number(item.spool || 0);
+            break;
+          default:
+            break; // Handle unknown spool types if needed
+        }
   
+        // Handle pallet sums
+        switch (item.pallet_type) {
+          case "wood":
+            acc.palletWoodImp += Number(item.pallet || 0);
+            break;
+          case "steel":
+            acc.palletSteelImp += Number(item.pallet || 0);
+            break;
+          default:
+            break; // Handle unknown pallet types if needed
+        }
+  
+        // Sum partitions
+        acc.partitionSum += Number(item.partition || 0);
+      }
+  
+      return acc; // Return the accumulator
+    },
+    // Initialize accumulator with all required fields
+    {
+      spoolPlasticSum: 0,
+      spoolPaperSum: 0,
+      spoolCPlasticSum: 0,
+      spoolCPaperSum: 0,
+      palletWoodImp: 0,
+      palletSteelImp: 0,
+      partitionSum: 0,
+    }
+  );
+  
+  // Destructure the sums for easier access
+  const {
+    spoolPlasticSum,
+    spoolPaperSum,
+    spoolCPlasticSum,
+    spoolCPaperSum,
+    palletWoodImp,
+    palletSteelImp,
+    partitionSum,
+  } = spoolSums;
+  
+  console.log("Sums:", spoolSums);
+  
+
   return (
     <div>
       {/* <h1>User Management</h1>
@@ -123,7 +208,7 @@ export default function Package() {
               <div class="col">
                 <h1 class="m-0">
                   <i class="nav-icon fas fa fa-arrow-circle-right"></i>{" "}
-                  สต๊อกวัตถุดิบ
+                  ตรวจสอบวัตถุดิบวัตถุดิบ
                 </h1>
               </div>
             </div>
@@ -237,7 +322,7 @@ export default function Package() {
         {/* </div> */}
         <br />
         <section class="Frame">
-          <h2>ตรวจสอบวัตถุดิบ น้ำหนักสุทธิ</h2>
+          <h2>ตรวจสอบวัตถุดิบ</h2>
           <br />
           <div class="row">
             <div class="col-md-12">
@@ -245,25 +330,55 @@ export default function Package() {
               <table className="custom-table">
                 <thead className="sticky-header">
                   <tr>
-                    <th rowspan="2">ชนิดด้าย</th>
-                    <th rowspan="2">จำนวนด้าย(ลูก)</th>
+                    <th rowspan="2">ชนิด</th>
+                    <th rowspan="2">จำนวน(ลูก)</th>
                     <th colspan="2">นำเข้า </th>
-                    <th colspan="2">เบิกออก </th>
-                    {/* <th colspan="2">ทดสอบ </th> */}
+                    <th colspan="2">ต้องส่งคืน </th>
+                    <th colspan="2">ส่งคืนแล้ว </th>
                     <th colspan="2">คงเหลือ </th>
-                  </tr>
-                  <tr>
-                    <th>ปอนด์</th>
-                    <th>กิโลกรัม</th>
-                    <th>ปอนด์</th>
-                    <th>กิโลกรัม</th>
-                    <th>ปอนด์</th>
-                    <th>กิโลกรัม</th>
-                    {/* <th>ปอนด์</th>
-                    <th>กิโลกรัม</th> */}
+
+                    <th colspan="2">ยืมไป </th>
+                    <th colspan="2">รับกลับแล้ว </th>
+                    <th colspan="2">คงค้าง </th>
                   </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <td>พาเลทเหล็ก</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>พาเลทไม้</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>กรวยกระดาษ</td>
+                    <td>{spoolPaperSum}</td>
+                  </tr>
+                  <tr>
+                    <td>กรวยพลาสิก</td>
+                    <td>{spoolPlasticSum}</td>
+                  </tr>
+                  <tr>
+                    <td>กระบอกกระดาษ</td>
+                    <td>{spoolCPaperSum}</td>
+                  </tr>
+                  <tr>
+                    <td>กระบอกพลาสิก</td>
+                    <td>{spoolCPlasticSum}</td>
+                  </tr>
+                  <tr>
+                    <td>กระสอบพลาสิก</td>
+                    <td>{totals.sackSum}</td>
+                  </tr>
+                  <tr>
+                    <td>กล่อง</td>
+                    <td>{totals.boxSum}</td>
+                  </tr>
+                  <tr>
+                    <td>กระดาษกั้น</td>
+                    <td>{partitionSum}</td>
+                  </tr>
                   {/* {groupedDataArray.map((item) => (
                     <tr key={item.yarnType}>
                       <td>{item.yarnType}</td>
