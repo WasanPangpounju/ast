@@ -382,14 +382,14 @@ export default function Package() {
                   <tr>
                     <th rowspan="2">ชนิด</th>
                     <th rowspan="2">จำนวน(ลูก)</th>
-                    <th colspan="2">นำเข้า </th>
-                    <th colspan="2">ต้องส่งคืน </th>
-                    <th colspan="2">ส่งคืนแล้ว </th>
-                    <th colspan="2">คงเหลือ </th>
+                    <th rowspan="2">นำเข้า </th>
+                    <th rowspan="2">ต้องส่งคืน </th>
+                    <th rowspan="2">ส่งคืนแล้ว </th>
+                    <th rowspan="2">คงเหลือ </th>
 
-                    <th colspan="2">ยืมไป </th>
-                    <th colspan="2">รับกลับแล้ว </th>
-                    <th colspan="2">คงค้าง </th>
+                    <th rowspan="2">ยืมไป </th>
+                    <th rowspan="2">รับกลับแล้ว </th>
+                    <th rowspan="2">คงค้าง </th>
                   </tr>
                 </thead>
                 <tbody>
