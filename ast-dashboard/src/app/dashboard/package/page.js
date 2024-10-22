@@ -15,6 +15,8 @@ export default function Package() {
     document.body.appendChild(bootstrapScript);
   }, []);
   const [packageasts, setPackageasts] = useState([]);
+  const [packageHtr, setPackageHtr] = useState([]);
+
   const [materialOutsides, setMaterialOutsides] = useState([]);
   const [materialstore, setMaterialstore] = useState([]);
   const [groupedData, setGroupedData] = useState([]);
@@ -57,15 +59,35 @@ export default function Package() {
 
   //   fetchMaterials();
   // }, []);
+//   useEffect(() => {
+//     const fetchPackageasts = async () => {
+//       try {
+//         const response = await fetch("/api/package");
+//         if (!response.ok) {
+//           throw new Error(`Failed to fetch materials: ${response.status}`);
+//         }
+//         const data = await response.json();
+//         setPackageasts(data);
+//       } catch (error) {
+//         setError(error.message);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchPackageasts();
+//   }, []);
+//   console.log("packageasts", packageasts);
+
   useEffect(() => {
-    const fetchPackageasts = async () => {
+    const fetchPackageHtr = async () => {
       try {
-        const response = await fetch("/api/package");
+        const response = await fetch("/api/packageHtr");
         if (!response.ok) {
           throw new Error(`Failed to fetch materials: ${response.status}`);
         }
         const data = await response.json();
-        setPackageasts(data);
+        setPackageHtr(data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -73,53 +95,9 @@ export default function Package() {
       }
     };
 
-    fetchPackageasts();
+    fetchPackageHtr();
   }, []);
   console.log("packageasts", packageasts);
-
-  useEffect(() => {
-    const fetchMaterialOutsides = async () => {
-      try {
-        const response = await fetch("/api/material_outsides");
-        if (!response.ok) {
-          throw new Error(`Failed to fetch materials: ${response.status}`);
-        }
-        const data = await response.json();
-        setMaterialOutsides(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMaterialOutsides();
-  }, []);
-  // console.log("material_outsides", materialOutsides);
-
-  useEffect(() => {
-    const fetchMaterialstore = async () => {
-      try {
-        const response = await fetch("/api/materialstore");
-        if (!response.ok) {
-          throw new Error(`Failed to fetch materials: ${response.status}`);
-        }
-        const data = await response.json();
-        setMaterialstore(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMaterialstore();
-  }, []);
-  // console.log("materialstore", materialstore);
-
-  
-  // console.log("stockList", stockList);
-
   
   return (
     <div>
