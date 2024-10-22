@@ -155,6 +155,40 @@ export default function Package() {
         // Sum partitions
         acc.partitionSum += Number(item.partition || 0);
       }
+      if (item.package_status === "packageReturn") {
+        // Handle spool sums
+        switch (item.spool_type) {
+          case "spool_plastic":
+            acc.spoolPlasticRetSum += Number(item.spool || 0);
+            break;
+          case "spool_paper":
+            acc.spoolPaperRetSum += Number(item.spool || 0);
+            break;
+          case "spoolC_plastic":
+            acc.spoolCPlasticRetSum += Number(item.spool || 0);
+            break;
+          case "spoolC_paper":
+            acc.spoolCPaperRetSum += Number(item.spool || 0);
+            break;
+          default:
+            break; // Handle unknown spool types if needed
+        }
+  
+        // Handle pallet sums
+        switch (item.pallet_type) {
+          case "wood":
+            acc.palletWoodImpRet += Number(item.pallet || 0);
+            break;
+          case "steel":
+            acc.palletSteelImpRet += Number(item.pallet || 0);
+            break;
+          default:
+            break; // Handle unknown pallet types if needed
+        }
+  
+        // Sum partitions
+        acc.partitionRetSum += Number(item.partition || 0);
+      }
   
       return acc; // Return the accumulator
     },
@@ -167,6 +201,14 @@ export default function Package() {
       palletWoodImp: 0,
       palletSteelImp: 0,
       partitionSum: 0,
+
+      spoolPlasticRetSum: 0,
+      spoolPaperRetSum: 0,
+      spoolCPlasticRetSum: 0,
+      spoolCPaperRetSum: 0,
+      palletWoodImpRet: 0,
+      palletSteelImpRet: 0,
+      partitionRetSum: 0,
     }
   );
   
@@ -179,9 +221,17 @@ export default function Package() {
     palletWoodImp,
     palletSteelImp,
     partitionSum,
+
+    spoolPlasticRetSum,
+    spoolPaperRetSum,
+    spoolCPlasticRetSum,
+    spoolCPaperRetSum,
+    palletWoodImpRet,
+    palletSteelImpRet,
+    partitionRetSum,
   } = spoolSums;
   
-  console.log("Sums:", spoolSums);
+//   console.log("Sums:", spoolSums);
   
 
   return (
@@ -346,38 +396,61 @@ export default function Package() {
                   <tr>
                     <td>พาเลทเหล็ก</td>
                     <td></td>
+                    <td>{palletSteelImp}</td>
+                    <td>{palletSteelImpRet}</td>
+
                   </tr>
                   <tr>
                     <td>พาเลทไม้</td>
                     <td></td>
+                    <td>{palletWoodImp}</td>
+                    <td>{palletWoodImpRet}</td>
+
                   </tr>
                   <tr>
                     <td>กรวยกระดาษ</td>
+                    <td></td>
                     <td>{spoolPaperSum}</td>
+                    <td>{spoolPaperRetSum}</td>
                   </tr>
                   <tr>
                     <td>กรวยพลาสิก</td>
+                    <td></td>
                     <td>{spoolPlasticSum}</td>
+                    <td>{spoolPlasticRetSum}</td>
                   </tr>
                   <tr>
                     <td>กระบอกกระดาษ</td>
+                    <td></td>
                     <td>{spoolCPaperSum}</td>
+                    <td>{spoolCPaperRetSum}</td>
+
                   </tr>
                   <tr>
                     <td>กระบอกพลาสิก</td>
+                    <td></td>
                     <td>{spoolCPlasticSum}</td>
+                    <td>{spoolCPlasticRetSum}</td>
+
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <td>กระสอบพลาสิก</td>
+                    <td></td>
                     <td>{totals.sackSum}</td>
-                  </tr>
-                  <tr>
+                    <td>{totals.sackSum}</td>
+
+                  </tr> */}
+                  {/* <tr>
                     <td>กล่อง</td>
+                    <td></td>
                     <td>{totals.boxSum}</td>
-                  </tr>
+                  </tr> */}
                   <tr>
                     <td>กระดาษกั้น</td>
+                    <td></td>
                     <td>{partitionSum}</td>
+                    <td>{partitionRetSum}</td>
+
                   </tr>
                   {/* {groupedDataArray.map((item) => (
                     <tr key={item.yarnType}>
