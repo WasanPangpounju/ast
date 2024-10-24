@@ -16,7 +16,19 @@ export default function Package() {
   }, []);
   const [packageasts, setPackageasts] = useState([]);
   const [packageHtr, setPackageHtr] = useState([]);
-
+  const [totalPackageHtr, setTotalPackageHtr] = useState({
+    boxSum: 0,
+    spoolSum: 0,
+    sackSum: 0,
+    palletSum: 0,
+    partitionSum: 0,
+    spoolPaperSum: 0,
+    spoolPlasticSum: 0,
+    spoolCPlasticSum: 0,
+    spoolCPaperSum: 0,
+    palletWoodSum: 0,
+    palletSteelSum: 0,
+  });
   const [materials, setMaterials] = useState([]);
 
   const [totals, setTotals] = useState({
@@ -107,6 +119,39 @@ export default function Package() {
         }
         const data = await response.json();
         setPackageHtr(data);
+
+        const sums = data.reduce(
+          (acc, item) => {
+            acc.boxSum += Number(item.box || 0);
+            acc.spoolSum += Number(item.spool || 0);
+            acc.sackSum += Number(item.sack || 0);
+            acc.palletSum += Number(item.pallet || 0);
+            acc.partitionSum += Number(item.partition || 0);
+            acc.spoolPaperSum += Number(item.spool_paper || 0);
+            acc.spoolPlasticSum += Number(item.spool_plastic || 0);
+            acc.spoolCPlasticSum += Number(item.spoolC_plastic || 0);
+            acc.spoolCPaperSum += Number(item.spoolC_paper || 0);
+            acc.palletWoodSum += Number(item.pallet_wood || 0);
+            acc.palletSteelSum += Number(item.pallet_steel || 0);
+            return acc;
+          },
+          {
+            boxSum: 0,
+            spoolSum: 0,
+            sackSum: 0,
+            palletSum: 0,
+            partitionSum: 0,
+            spoolPaperSum: 0,
+            spoolPlasticSum: 0,
+            spoolCPlasticSum: 0,
+            spoolCPaperSum: 0,
+            palletWoodSum: 0,
+            palletSteelSum: 0,
+          }
+        );
+
+        setTotalPackageHtr(sums);
+
       } catch (error) {
         setError(error.message);
       } finally {
@@ -398,6 +443,7 @@ export default function Package() {
                     <td></td>
                     <td>{palletSteelImp}</td>
                     <td>{palletSteelImpRet}</td>
+                    <td>{totalPackageHtr.palletSteelSum}</td>
 
                   </tr>
                   <tr>
@@ -405,6 +451,7 @@ export default function Package() {
                     <td></td>
                     <td>{palletWoodImp}</td>
                     <td>{palletWoodImpRet}</td>
+                    <td>{totalPackageHtr.palletWoodSum}</td>
 
                   </tr>
                   <tr>
@@ -412,18 +459,23 @@ export default function Package() {
                     <td></td>
                     <td>{spoolPaperSum}</td>
                     <td>{spoolPaperRetSum}</td>
+                    <td>{totalPackageHtr.spoolPaperSum}</td>
+
                   </tr>
                   <tr>
                     <td>กรวยพลาสิก</td>
                     <td></td>
                     <td>{spoolPlasticSum}</td>
                     <td>{spoolPlasticRetSum}</td>
+                    <td>{totalPackageHtr.spoolPlasticSum}</td>
+
                   </tr>
                   <tr>
                     <td>กระบอกกระดาษ</td>
                     <td></td>
                     <td>{spoolCPaperSum}</td>
                     <td>{spoolCPaperRetSum}</td>
+                    <td>{totalPackageHtr.spoolCPaperSum}</td>
 
                   </tr>
                   <tr>
@@ -431,6 +483,7 @@ export default function Package() {
                     <td></td>
                     <td>{spoolCPlasticSum}</td>
                     <td>{spoolCPlasticRetSum}</td>
+                    <td>{totalPackageHtr.spoolCPlasticSum}</td>
 
                   </tr>
                   {/* <tr>
@@ -450,6 +503,7 @@ export default function Package() {
                     <td></td>
                     <td>{partitionSum}</td>
                     <td>{partitionRetSum}</td>
+                    <td>{totalPackageHtr.partitionSum}</td>
 
                   </tr>
                   {/* {groupedDataArray.map((item) => (
