@@ -252,7 +252,7 @@ export default function Package() {
       palletSteelImp: 0,
       partitionSum: 0,
       sackSum: 0,
-      box: 0,
+      boxSum: 0,
 
       spoolPlasticRetSum: 0,
       spoolPaperRetSum: 0,
