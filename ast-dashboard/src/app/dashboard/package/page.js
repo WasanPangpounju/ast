@@ -478,7 +478,7 @@ export default function Package() {
 
                   </tr>
                   <tr>
-                    <td>กรวยพลาสิก</td>
+                    <td>กรวยพลาสติก</td>
                     <td></td>
                     <td>{spoolPlasticSum}</td>
                     <td>{spoolPlasticRetSum}</td>
@@ -496,7 +496,7 @@ export default function Package() {
 
                   </tr>
                   <tr>
-                    <td>กระบอกพลาสิก</td>
+                    <td>กระบอกพลาสติก</td>
                     <td></td>
                     <td>{spoolCPlasticSum}</td>
                     <td>{spoolCPlasticRetSum}</td>
@@ -505,7 +505,7 @@ export default function Package() {
 
                   </tr>
                   {/* <tr>
-                    <td>กระสอบพลาสิก</td>
+                    <td>กระสอบพลาสติก</td>
                     <td></td>
                     <td>{totals.sackSum}</td>
                     <td>{totals.sackSum}</td>
