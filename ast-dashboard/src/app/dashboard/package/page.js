@@ -161,7 +161,7 @@ export default function Package() {
 
     fetchPackageHtr();
   }, []);
-  console.log("packageHtr", packageHtr);
+  console.log("totalPackageHtr", totalPackageHtr);
 
   const spoolSums = packageasts.reduce(
     (acc, item) => {
