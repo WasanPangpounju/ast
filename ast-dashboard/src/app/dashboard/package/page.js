@@ -526,7 +526,7 @@ export default function Package() {
 
                   </tr>
 
-                  <tr>
+                  {/* <tr>
                     <td>กระสอบ</td>
                     <td></td>
                     <td>{partitionSum}</td>
@@ -543,7 +543,7 @@ export default function Package() {
                     <td>{totalPackageHtr.boxSum}</td>
                     <td>{boxRetSum - totalPackageHtr.boxSum}</td>
 
-                  </tr>
+                  </tr> */}
                   {/* {groupedDataArray.map((item) => (
                     <tr key={item.yarnType}>
                       <td>{item.yarnType}</td>
