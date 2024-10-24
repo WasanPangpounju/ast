@@ -519,8 +519,8 @@ export default function Package() {
                   <tr>
                     <td>กระดาษกั้น</td>
                     <td></td>
-                    <td>{sackSum}</td>
-                    <td>{sackRetSum}</td>
+                    <td>{partitionSum}</td>
+                    <td>{partitionRetSum}</td>
                     <td>{totalPackageHtr.partitionSum}</td>
                     <td>{partitionRetSum - totalPackageHtr.partitionSum}</td>
 
@@ -529,10 +529,10 @@ export default function Package() {
                   <tr>
                     <td>กระสอบ</td>
                     <td></td>
-                    <td>{partitionSum}</td>
-                    <td>{partitionRetSum}</td>
-                    {/* <td>{totalPackageHtr.sackSum}</td>
-                    <td>{partitionRetSum - totalPackageHtr.sackSum}</td> */}
+                    <td>{sackSum}</td>
+                    <td>{sackRetSum}</td>
+                    <td>{totalPackageHtr.sackSum}</td>
+                    <td>{sackRetSum - totalPackageHtr.sackSum}</td>
 
                   </tr>
                   <tr>
@@ -540,8 +540,8 @@ export default function Package() {
                     <td></td>
                     <td>{boxSum}</td>
                     <td>{boxRetSum}</td>
-                    {/* <td>{totalPackageHtr.boxSum}</td>
-                    <td>{boxRetSum - totalPackageHtr.boxSum}</td> */}
+                    <td>{totalPackageHtr.boxSum}</td>
+                    <td>{boxRetSum - totalPackageHtr.boxSum}</td>
 
                   </tr>
                   {/* {groupedDataArray.map((item) => (
