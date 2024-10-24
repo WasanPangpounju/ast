@@ -199,6 +199,9 @@ export default function Package() {
   
         // Sum partitions
         acc.partitionSum += Number(item.partition || 0);
+        acc.sackSum += Number(item.sack || 0);
+        acc.boxSum += Number(item.box || 0);
+
       }
       if (item.package_status === "packageReturn") {
         // Handle spool sums
@@ -233,6 +236,8 @@ export default function Package() {
   
         // Sum partitions
         acc.partitionRetSum += Number(item.partition || 0);
+        acc.sackRetSum += Number(item.sack || 0);
+        acc.boxRetSum += Number(item.box || 0);
       }
   
       return acc; // Return the accumulator
@@ -246,6 +251,8 @@ export default function Package() {
       palletWoodImp: 0,
       palletSteelImp: 0,
       partitionSum: 0,
+      sackSum: 0,
+      box: 0,
 
       spoolPlasticRetSum: 0,
       spoolPaperRetSum: 0,
@@ -254,6 +261,8 @@ export default function Package() {
       palletWoodImpRet: 0,
       palletSteelImpRet: 0,
       partitionRetSum: 0,
+      sackRetSum: 0,
+      boxRetSum: 0,
     }
   );
   
@@ -266,6 +275,8 @@ export default function Package() {
     palletWoodImp,
     palletSteelImp,
     partitionSum,
+    sackSum,
+    box,
 
     spoolPlasticRetSum,
     spoolPaperRetSum,
@@ -274,6 +285,8 @@ export default function Package() {
     palletWoodImpRet,
     palletSteelImpRet,
     partitionRetSum,
+    sackRetSum,
+    boxRetSum,
   } = spoolSums;
   
 //   console.log("Sums:", spoolSums);
@@ -303,7 +316,7 @@ export default function Package() {
               <div class="col">
                 <h1 class="m-0">
                   <i class="nav-icon fas fa fa-arrow-circle-right"></i>{" "}
-                  ตรวจสอบวัตถุดิบวัตถุดิบ
+                  ตรวจสอบวัตถุดิบ
                 </h1>
               </div>
             </div>
@@ -506,10 +519,29 @@ export default function Package() {
                   <tr>
                     <td>กระดาษกั้น</td>
                     <td></td>
+                    <td>{sackSum}</td>
+                    <td>{sackRetSum}</td>
+                    <td>{totalPackageHtr.sack}</td>
+                    <td>{partitionRetSum - totalPackageHtr.partitionSum}</td>
+
+                  </tr>
+
+                  <tr>
+                    <td>กระสอบ</td>
+                    <td></td>
                     <td>{partitionSum}</td>
                     <td>{partitionRetSum}</td>
-                    <td>{totalPackageHtr.partitionSum}</td>
-                    <td>{partitionRetSum - totalPackageHtr.partitionSum}</td>
+                    <td>{totalPackageHtr.sackSum}</td>
+                    <td>{partitionRetSum - totalPackageHtr.sackSum}</td>
+
+                  </tr>
+                  <tr>
+                    <td>กล่อง</td>
+                    <td></td>
+                    <td>{boxSum}</td>
+                    <td>{boxRetSum}</td>
+                    <td>{totalPackageHtr.boxSum}</td>
+                    <td>{boxRetSum - totalPackageHtr.boxSum}</td>
 
                   </tr>
                   {/* {groupedDataArray.map((item) => (
