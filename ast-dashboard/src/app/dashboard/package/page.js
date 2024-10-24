@@ -444,7 +444,7 @@ export default function Package() {
                     <td>{palletSteelImp}</td>
                     <td>{palletSteelImpRet}</td>
                     <td>{totalPackageHtr.palletSteelSum}</td>
-
+                    <td>{palletSteelImpRet - totalPackageHtr.palletSteelSum}</td>
                   </tr>
                   <tr>
                     <td>พาเลทไม้</td>
@@ -452,6 +452,7 @@ export default function Package() {
                     <td>{palletWoodImp}</td>
                     <td>{palletWoodImpRet}</td>
                     <td>{totalPackageHtr.palletWoodSum}</td>
+                    <td>{palletWoodImpRet - totalPackageHtr.palletWoodSum}</td>
 
                   </tr>
                   <tr>
@@ -460,6 +461,7 @@ export default function Package() {
                     <td>{spoolPaperSum}</td>
                     <td>{spoolPaperRetSum}</td>
                     <td>{totalPackageHtr.spoolPaperSum}</td>
+                    <td>{spoolPaperRetSum - totalPackageHtr.spoolPaperSum}</td>
 
                   </tr>
                   <tr>
@@ -468,6 +470,7 @@ export default function Package() {
                     <td>{spoolPlasticSum}</td>
                     <td>{spoolPlasticRetSum}</td>
                     <td>{totalPackageHtr.spoolPlasticSum}</td>
+                    <td>{spoolPlasticRetSum - totalPackageHtr.spoolPlasticSum}</td>
 
                   </tr>
                   <tr>
@@ -476,6 +479,7 @@ export default function Package() {
                     <td>{spoolCPaperSum}</td>
                     <td>{spoolCPaperRetSum}</td>
                     <td>{totalPackageHtr.spoolCPaperSum}</td>
+                    <td>{spoolCPaperRetSum - totalPackageHtr.spoolCPaperSum}</td>
 
                   </tr>
                   <tr>
@@ -484,6 +488,7 @@ export default function Package() {
                     <td>{spoolCPlasticSum}</td>
                     <td>{spoolCPlasticRetSum}</td>
                     <td>{totalPackageHtr.spoolCPlasticSum}</td>
+                    <td>{spoolCPlasticRetSum - totalPackageHtr.spoolCPlasticSum}</td>
 
                   </tr>
                   {/* <tr>
@@ -504,6 +509,7 @@ export default function Package() {
                     <td>{partitionSum}</td>
                     <td>{partitionRetSum}</td>
                     <td>{totalPackageHtr.partitionSum}</td>
+                    <td>{partitionRetSum - totalPackageHtr.partitionSum}</td>
 
                   </tr>
                   {/* {groupedDataArray.map((item) => (
