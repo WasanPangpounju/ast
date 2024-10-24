@@ -276,7 +276,7 @@ export default function Package() {
     palletSteelImp,
     partitionSum,
     sackSum,
-    box,
+    boxSum,
 
     spoolPlasticRetSum,
     spoolPaperRetSum,
