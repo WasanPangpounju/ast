@@ -200,7 +200,7 @@ export default function Package() {
         // Sum partitions
         acc.partitionSum += Number(item.partition || 0);
         acc.sackSum += Number(item.sack || 0);
-        acc.boxSum += Number(item.box || 0);
+        acc.boxImpSum += Number(item.box || 0);
 
       }
       if (item.package_status === "packageReturn") {
@@ -252,7 +252,7 @@ export default function Package() {
       palletSteelImp: 0,
       partitionSum: 0,
       sackSum: 0,
-      boxSum: 0,
+      boxImpSum: 0,
 
       spoolPlasticRetSum: 0,
       spoolPaperRetSum: 0,
@@ -276,7 +276,7 @@ export default function Package() {
     palletSteelImp,
     partitionSum,
     sackSum,
-    boxSum,
+    boxImpSum,
 
     spoolPlasticRetSum,
     spoolPaperRetSum,
@@ -538,7 +538,7 @@ export default function Package() {
                   <tr>
                     <td>กล่อง</td>
                     <td></td>
-                    <td>{boxSum}</td>
+                    <td>{boxImpSum}</td>
                     <td>{boxRetSum}</td>
                     <td>{totalPackageHtr.boxSum}</td>
                     <td>{boxRetSum - totalPackageHtr.boxSum}</td>
