@@ -122,37 +122,7 @@ export default function AstPurchaseorder() {
             )}
           </div>
           <br />
-          <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-              <div class="container">
-                <div class="row align-items-center mb-2">
-                  <div class="col-md-4">ด้าย</div>
-                  <div class="col-md-4">
-                    <a>{spoolSum}</a>
-                  </div>
-                  <div class="col-md-3">ลูก</div>
-                </div>
-
-                <div class="row align-items-center mb-2">
-                  <div class="col-md-4">ปอนด์</div>
-                  <div class="col-md-4">
-                    <a>{totalWeightPNet.toFixed(2)}</a>
-                  </div>
-                  <div class="col-md-4"></div>
-                </div>
-
-                <div class="row align-items-center mb-2">
-                  <div class="col-md-4">กิโลกรัม</div>
-                  <div class="col-md-4">
-                    <a>{totalWeightKgNet.toFixed(2)}</a>
-                  </div>
-                  <div class="col-md-3"></div>
-                </div>
-              </div>
-              <br />
-            </div>
-          </div>
+         
           <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
