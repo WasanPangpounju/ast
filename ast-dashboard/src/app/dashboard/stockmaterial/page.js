@@ -565,13 +565,13 @@ export default function Users() {
                 </div>
               </div>
               <br />
-              <div class="row">
+              {/* <div class="row">
                 <div class="col-md-12">
                   <button class="btn b_save">
                     <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div class="col-md-3"></div>
           </div>
