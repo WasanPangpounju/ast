@@ -77,13 +77,13 @@
 // }
 
 
-// components/CustomerPieChart.js
 import { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels'; // Import the plugin
 
-// Register Chart.js components
-Chart.register(ArcElement, Tooltip, Legend);
+// Register Chart.js components and the plugin
+Chart.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 export default function CustomerPieChart({ astPurchaseorder }) {
   const [chartData, setChartData] = useState({
@@ -136,7 +136,24 @@ export default function CustomerPieChart({ astPurchaseorder }) {
   return (
     <div style={{ width: '50%', margin: '0 auto' }}>
       <h2>Top 5 Customers</h2>
-      <Pie data={chartData} />
+      <Pie 
+        data={chartData} 
+        options={{
+          plugins: {
+            legend: {
+              display: true,
+            },
+            datalabels: {
+              color: '#fff',
+              formatter: (value, context) => {
+                const total = context.chart.data.datasets[0].data.reduce((acc, val) => acc + val, 0);
+                const percentage = ((value / total) * 100).toFixed(1) + '%';
+                return `${value} (${percentage})`; // Show value and percentage
+              },
+            },
+          },
+        }} 
+      />
     </div>
   );
 }
