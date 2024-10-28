@@ -7,14 +7,14 @@ import Link from "next/link";
 import CustomerPieChart from "./CustomerPieChart.js";
 
 
-export default function Users() {
+export default function AstPurchaseorder() {
 
     const [astPurchaseorder, setAstPurchaseorder] = useState([]);
 
     useEffect(() => {
       const fetchAstPurchaseorder = async () => {
         try {
-          const response = await fetch("/api/material_outsides");
+          const response = await fetch("/api/astPurchaseorder");
           if (!response.ok) {
             throw new Error(`Failed to fetch materials: ${response.status}`);
           }
