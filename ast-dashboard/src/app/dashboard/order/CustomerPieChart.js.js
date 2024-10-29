@@ -135,7 +135,7 @@ export default function CustomerPieChart({ astPurchaseorder }) {
 
   return (
     <div style={{ width: '50%', margin: '0 auto' }}>
-      <h2>Top 5 Customers</h2>
+      <h2>ใบสั่งขาย 5 บริษัทที่มากที่สุด</h2>
       <Pie 
         data={chartData} 
         options={{

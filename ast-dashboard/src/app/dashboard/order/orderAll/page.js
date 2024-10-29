@@ -89,6 +89,23 @@ export default function AstPurchaseorder() {
     setStatusCounts(counts);
   }, [filteredPurchaseorders]);
 
+  const [customerCounts, setCustomerCounts] = useState([]);
+
+  useEffect(() => {
+    // Count occurrences of each customerName
+    const counts = filteredPurchaseorders.reduce((acc, order) => {
+      const name = order.customerName || 'no data';
+      acc[name] = (acc[name] || 0) + 1;
+      return acc;
+    }, {});
+
+    // Convert the counts object into an array and sort by count (descending)
+    const sortedCustomers = Object.entries(counts)
+      .sort((a, b) => b[1] - a[1]);
+
+    setCustomerCounts(sortedCustomers); // Set sorted customers to state
+  }, [filteredPurchaseorders]);
+
   return (
     <div>
       {/* <h1>User Management</h1>
@@ -155,7 +172,13 @@ export default function AstPurchaseorder() {
             </div>
             <div class="col-md-3"></div>
           </div> */}
-        <CustomerPieChart astPurchaseorder={filteredPurchaseorders} />
+        {/* <CustomerPieChart astPurchaseorder={filteredPurchaseorders} /> */}
+        {customerCounts.map(([name, count]) => (
+          <li key={name}>
+            {name}: {count}
+          </li>
+        ))}
+        
         <br />
         <div class="d-flex justify-content-end">
           <div class="col-md-4">อนุมัติให้ผลิต: {statusCounts.approved}</div>
@@ -169,7 +192,7 @@ export default function AstPurchaseorder() {
         <div class="row">
           <div class="col-md-3"></div>
           <div class="col-md-6">
-            <Link href="/dashboard/order/orderAll">
+            <Link href="/dashboard/stockmaterialUse">
               <button type="button" className="btn btn-primary">
                 ดูรายละเอียด
               </button>
