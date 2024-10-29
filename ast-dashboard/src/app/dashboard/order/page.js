@@ -14,7 +14,11 @@ export default function AstPurchaseorder() {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [filteredPurchaseorders, setFilteredPurchaseorders] = useState(astPurchaseorder);
-  
+    const [statusCounts, setStatusCounts] = useState({
+      approved: 0, // อนุมัติให้ผลิต
+      returned: 0, // กลับสร้างใบสั่งซื้อ
+      noData: 0,   // no data
+    });
 
     useEffect(() => {
       const fetchAstPurchaseorder = async () => {
@@ -67,6 +71,22 @@ export default function AstPurchaseorder() {
   
       filterOrders();
     }, [filterOption, startDate, endDate, astPurchaseorder]);
+
+    useEffect(() => {
+      // Count the statuses in the filtered purchase orders
+      const counts = filteredPurchaseorders.reduce(
+        (acc, order) => {
+          const status = order.status || 'no data';
+          if (status === 'อนุมัติให้ผลิต') acc.approved++;
+          else if (status === 'กลับสร้างใบสั่งซื้อ') acc.returned++;
+          else if (status === 'no data') acc.noData++;
+          return acc;
+        },
+        { approved: 0, returned: 0, noData: 0 }
+      );
+  
+      setStatusCounts(counts);
+    }, [filteredPurchaseorders]);
 
   return (
       <div>
@@ -135,7 +155,14 @@ export default function AstPurchaseorder() {
             <div class="col-md-3"></div>
           </div> */} 
                    <CustomerPieChart astPurchaseorder={filteredPurchaseorders} />
-
+                   <div class="d-flex justify-content-end">
+                   <h2>Purchase Order Status Counts</h2>
+      <ul>
+        <li>อนุมัติให้ผลิต: {statusCounts.approved}</li>
+        <li>กลับสร้างใบสั่งซื้อ: {statusCounts.returned}</li>
+        <li>No Data: {statusCounts.noData}</li>
+      </ul>
+          </div>
         </section>
 
       </div>
