@@ -94,14 +94,13 @@ export default function AstPurchaseorder() {
   useEffect(() => {
     // Count occurrences of each customerName
     const counts = filteredPurchaseorders.reduce((acc, order) => {
-      const name = order.customerName || 'no data';
+      const name = order.customerName || "no data";
       acc[name] = (acc[name] || 0) + 1;
       return acc;
     }, {});
 
     // Convert the counts object into an array and sort by count (descending)
-    const sortedCustomers = Object.entries(counts)
-      .sort((a, b) => b[1] - a[1]);
+    const sortedCustomers = Object.entries(counts).sort((a, b) => b[1] - a[1]);
 
     setCustomerCounts(sortedCustomers); // Set sorted customers to state
   }, [filteredPurchaseorders]);
@@ -174,9 +173,19 @@ export default function AstPurchaseorder() {
           </div> */}
         {/* <CustomerPieChart astPurchaseorder={filteredPurchaseorders} /> */}
         {customerCounts.map(([name, count]) => (
-          <li key={name}>
-            {name}: {count}
-          </li>
+          // <li key={name}>
+          //   {name}: {count}
+          // </li>
+          <div key={name}>
+            <div class="row">
+              <div class="col-md-6">บริษัท</div>
+              <div class="col-md-3">จำนวน</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">{name}</div>
+              <div class="col-md-3">{count}</div>
+            </div>
+          </div>
         ))}
 
         <br />
