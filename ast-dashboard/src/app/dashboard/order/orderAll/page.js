@@ -2,9 +2,9 @@
 "use client"; // For client-side behavior
 
 import { useState, useEffect } from "react";
-import "../../globals.css";
+import "../../../globals.css";
 import Link from "next/link";
-import CustomerPieChart from "./CustomerPieChart.js";
+import CustomerPieChart from "../CustomerPieChart.js";
 
 export default function AstPurchaseorder() {
   const [astPurchaseorder, setAstPurchaseorder] = useState([]);
@@ -178,7 +178,7 @@ export default function AstPurchaseorder() {
             {name}: {count}
           </li>
         ))}
-        
+
         <br />
         <div class="d-flex justify-content-end">
           <div class="col-md-4">อนุมัติให้ผลิต: {statusCounts.approved}</div>
