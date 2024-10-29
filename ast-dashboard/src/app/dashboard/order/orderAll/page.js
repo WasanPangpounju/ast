@@ -172,15 +172,16 @@ export default function AstPurchaseorder() {
             <div class="col-md-3"></div>
           </div> */}
         {/* <CustomerPieChart astPurchaseorder={filteredPurchaseorders} /> */}
+
+        <div class="row">
+          <div class="col-md-6">บริษัท</div>
+          <div class="col-md-3">จำนวน</div>
+        </div>
         {customerCounts.map(([name, count]) => (
           // <li key={name}>
           //   {name}: {count}
           // </li>
           <div key={name}>
-            <div class="row">
-              <div class="col-md-6">บริษัท</div>
-              <div class="col-md-3">จำนวน</div>
-            </div>
             <div class="row">
               <div class="col-md-6">{name}</div>
               <div class="col-md-3">{count}</div>
