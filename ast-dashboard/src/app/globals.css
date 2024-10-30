@@ -6,6 +6,9 @@
     display: flex;
     min-height: 100vh;
 }
+html {
+  font-size: 17px; /* Default is usually 16px */
+}
 
 .sidebar {
     width: 250px;

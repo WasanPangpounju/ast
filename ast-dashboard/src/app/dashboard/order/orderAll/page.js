@@ -110,7 +110,7 @@ export default function AstPurchaseorder() {
       {/* <h1>User Management</h1>
       <p>Manage all users from this section.</p> */}
       <section class="Frame">
-        <h2>ตรวจสอบวัตถุดิบ น้ำหนักสุทธิ</h2>
+        <h2>บริษัทที่มีการออกใบสั่งขาย</h2>
         <div class="d-flex justify-content-end">
           <div className="row">
             <div class="col-md-12">
