@@ -167,15 +167,17 @@ export default function AstPurchaseorder() {
         <br />
 
         <div class="row">
-          <div class="col-md-3"></div>
-          <div class="col-md-6">
-            <Link href="/dashboard/order/orderAll">
+          {/* <div class="col-md-3"></div>
+          <div class="col-md-6"> */}
+          <div style={{ width: '50%', margin: '0 auto' }}>
+             <Link href="/dashboard/order/orderAll">
               <button type="button" className="btn btn-primary">
                 ดูรายละเอียด
               </button>
             </Link>
           </div>
-          <div class="col-md-3"></div>
+          {/* </div>
+          <div class="col-md-3"></div> */}
         </div>
       </section>
     </div>
