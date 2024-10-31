@@ -134,9 +134,9 @@ export default function CustomerPieChart({ astPurchaseorder }) {
   }, [astPurchaseorder]);
 
   return (
-    <div style={{ width: '75%', margin: '0 auto' }}>
+    <div style={{ width: '50%', margin: '0 auto' }}>
       <h2>ใบสั่งขาย 5 บริษัทที่มากที่สุด</h2>
-      <div style={{ width: '300px', height: '300px' }}> {/* Set desired width and height */}
+      <div style={{ width: '400px', height: '400px' }}> {/* Set desired width and height */}
 
       <Pie 
         data={chartData} 
