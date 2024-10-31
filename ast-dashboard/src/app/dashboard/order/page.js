@@ -166,7 +166,7 @@ export default function AstPurchaseorder() {
         </div>
         <br />
 
-        <div class="row">
+        {/* <div class="row"> */}
           {/* <div class="col-md-3"></div>
           <div class="col-md-6"> */}
           <div style={{ width: '50%', margin: '0 auto' }}>
@@ -178,7 +178,7 @@ export default function AstPurchaseorder() {
           </div>
           {/* </div>
           <div class="col-md-3"></div> */}
-        </div>
+        {/* </div> */}
       </section>
     </div>
   );
