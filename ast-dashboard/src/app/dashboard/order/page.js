@@ -165,20 +165,20 @@ export default function AstPurchaseorder() {
           <div class="col-md-4">No Data: {statusCounts.noData}</div>
         </div>
         <br />
-
-        {/* <div class="row"> */}
-          {/* <div class="col-md-3"></div>
-          <div class="col-md-6"> */}
-          <div style={{ width: '50%', margin: '0 auto' }}>
-             <Link href="/dashboard/order/orderAll">
+        <div class="d-flex justify-content-end">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+          <Link href="/dashboard/order/orderAll">
               <button type="button" className="btn btn-primary">
                 ดูรายละเอียด
               </button>
-            </Link>
+              </Link>
           </div>
-          {/* </div>
-          <div class="col-md-3"></div> */}
-        {/* </div> */}
+          <div class="col-md-4"></div>
+        </div>
+        <br />
+
+      
       </section>
     </div>
   );
