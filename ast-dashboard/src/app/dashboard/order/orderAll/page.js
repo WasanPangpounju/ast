@@ -173,6 +173,15 @@ export default function AstPurchaseorder() {
           </div> */}
         {/* <CustomerPieChart astPurchaseorder={filteredPurchaseorders} /> */}
 
+        <div class="d-flex justify-content-end">
+          <div class="col-md-4">อนุมัติให้ผลิต: {statusCounts.approved}</div>
+          <div class="col-md-4">
+            กลับสร้างใบสั่งซื้อ: {statusCounts.returned}
+          </div>
+          <div class="col-md-4">No Data: {statusCounts.noData}</div>
+        </div>
+        <br />
+        
         <div class="row">
           <div class="col-md-6">บริษัท</div>
           <div class="col-md-3">จำนวน</div>
@@ -189,14 +198,6 @@ export default function AstPurchaseorder() {
           </div>
         ))}
 
-        <br />
-        <div class="d-flex justify-content-end">
-          <div class="col-md-4">อนุมัติให้ผลิต: {statusCounts.approved}</div>
-          <div class="col-md-4">
-            กลับสร้างใบสั่งซื้อ: {statusCounts.returned}
-          </div>
-          <div class="col-md-4">No Data: {statusCounts.noData}</div>
-        </div>
         <br />
       </section>
     </div>
