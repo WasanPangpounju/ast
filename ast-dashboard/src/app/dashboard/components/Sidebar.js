@@ -9,7 +9,7 @@ export default function Sidebar() {
         src="assets/images/logo.png"
         alt="Logo"
         class="brand-image"
-        style={{ width: "50%", height: "50%" }}
+        style={{ width: "30px", height: "100px" }}
       />
 
       <span class="brand-text font-weight-light">ASIA TEXTILE CO., LTD.</span>
