@@ -6,7 +6,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar" style={{ backgroundColor: "#091e91" }}>
       <img
-        src="assets/images/logo.png"
+        src="/assets/images/logo.png"
         alt="Logo"
         class="brand-image"
         style={{ width: "30px", height: "30px" }}
