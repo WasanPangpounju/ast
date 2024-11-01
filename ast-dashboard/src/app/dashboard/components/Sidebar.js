@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Sidebar() {
   return (
     <div className="sidebar" style={{ backgroundColor: "#091e91" }}>
-                      <img src="assets/images/logo.png" alt="Logo" class="brand-image" style=""/>
+                      <img src="assets/images/logo.png" alt="Logo" class="brand-image"/>
 
                 <span class="brand-text font-weight-light">ASIA TEXTILE CO., LTD.</span>
                 <ul>
