@@ -105,17 +105,17 @@ export default function AstPurchaseorder() {
     setCustomerCounts(sortedCustomers); // Set sorted customers to state
   }, [filteredPurchaseorders]);
 
-  const extractedTextArray = filteredPurchaseorders.map(order => {
-    const fabricStructure = order.fabricStructure || ''; // Ensure fabricStructure exists
-    return fabricStructure.split('*')[0].trim(); // Get text before the first '*', remove extra spaces
+  const extractedTextArray = filteredPurchaseorders.map((order) => {
+    const fabricStructure = order.fabricStructure || ""; // Ensure fabricStructure exists
+    return fabricStructure.split("*")[0].trim(); // Get text before the first '*', remove extra spaces
   });
-  
+
   const countMap = extractedTextArray.reduce((acc, text) => {
     acc[text] = (acc[text] || 0) + 1;
     return acc;
   }, {});
 
-  console.log('extractedTextArray',extractedTextArray);
+  console.log("extractedTextArray", extractedTextArray);
 
   return (
     <div>
@@ -230,9 +230,12 @@ export default function AstPurchaseorder() {
           <div class="col-md-3">จำนวน</div>
         </div>
         <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-          {countMap.map(([text, count]) => (
+          {Object.entries(countMap).map(([text, count]) => (
             <div key={text}>
-              <div className="row">
+              <div
+                className="row"
+                style={{ borderBottom: "1px solid black", padding: "8px 0" }}
+              >
                 <div className="col-md-6">{text}</div>
                 <div className="col-md-3">{count}</div>
               </div>
@@ -241,8 +244,6 @@ export default function AstPurchaseorder() {
         </div>
 
         <br />
-
-
       </section>
     </div>
   );
