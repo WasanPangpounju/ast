@@ -105,6 +105,13 @@ export default function AstPurchaseorder() {
     setCustomerCounts(sortedCustomers); // Set sorted customers to state
   }, [filteredPurchaseorders]);
 
+  const extractedTextArray = astPurchaseorder.map(order => {
+    const fabricStructure = order.fabricStructure || ''; // Ensure fabricStructure exists
+    return fabricStructure.split('*')[0].trim(); // Get text before the first '*', remove extra spaces
+  });
+  
+  console.log('extractedTextArray',extractedTextArray);
+
   return (
     <div>
       {/* <h1>User Management</h1>
