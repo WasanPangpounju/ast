@@ -182,11 +182,18 @@ export default function AstPurchaseorder() {
         </div>
         <br />
 
-        <div class="row">
+        <div
+          class="row"
+          style={{
+            borderBottom: "1px solid black",
+            paddingBottom: "8px",
+            marginBottom: "8px",
+          }} // Optional spacing
+        >
           <div class="col-md-6">บริษัท</div>
           <div class="col-md-3">จำนวน</div>
         </div>
-        <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+        <div style={{ maxHeight: "300px", overflowY: "auto" }}>
           {customerCounts.map(([name, count]) => (
             <div key={name}>
               <div className="row">
