@@ -105,11 +105,16 @@ export default function AstPurchaseorder() {
     setCustomerCounts(sortedCustomers); // Set sorted customers to state
   }, [filteredPurchaseorders]);
 
-  const extractedTextArray = astPurchaseorder.map(order => {
+  const extractedTextArray = filteredPurchaseorders.map(order => {
     const fabricStructure = order.fabricStructure || ''; // Ensure fabricStructure exists
     return fabricStructure.split('*')[0].trim(); // Get text before the first '*', remove extra spaces
   });
   
+  const countMap = extractedTextArray.reduce((acc, text) => {
+    acc[text] = (acc[text] || 0) + 1;
+    return acc;
+  }, {});
+
   console.log('extractedTextArray',extractedTextArray);
 
   return (
@@ -212,6 +217,32 @@ export default function AstPurchaseorder() {
         </div>
 
         <br />
+
+        <div
+          class="row"
+          style={{
+            borderBottom: "1px solid black",
+            paddingBottom: "8px",
+            marginBottom: "8px",
+          }} // Optional spacing
+        >
+          <div class="col-md-6">ด้ายยืน</div>
+          <div class="col-md-3">จำนวน</div>
+        </div>
+        <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+          {countMap.map(([text, count]) => (
+            <div key={text}>
+              <div className="row">
+                <div className="col-md-6">{text}</div>
+                <div className="col-md-3">{count}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <br />
+
+
       </section>
     </div>
   );
