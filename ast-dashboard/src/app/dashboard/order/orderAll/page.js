@@ -181,22 +181,21 @@ export default function AstPurchaseorder() {
           <div class="col-md-4">No Data: {statusCounts.noData}</div>
         </div>
         <br />
-        
+
         <div class="row">
           <div class="col-md-6">บริษัท</div>
           <div class="col-md-3">จำนวน</div>
         </div>
-        {customerCounts.map(([name, count]) => (
-          // <li key={name}>
-          //   {name}: {count}
-          // </li>
-          <div key={name}>
-            <div class="row">
-              <div class="col-md-6">{name}</div>
-              <div class="col-md-3">{count}</div>
+        <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+          {customerCounts.map(([name, count]) => (
+            <div key={name}>
+              <div className="row">
+                <div className="col-md-6">{name}</div>
+                <div className="col-md-3">{count}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
 
         <br />
       </section>
