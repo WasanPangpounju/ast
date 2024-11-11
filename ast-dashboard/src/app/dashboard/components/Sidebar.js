@@ -14,7 +14,7 @@ export default function Sidebar() {
 
       <span class="brand-text font-weight-light">ASIA TEXTILE CO., LTD.</span>
       <br/>
-      <span class="brand-text font-weight-light" style={{marginTop:"5px"}}>
+      <div class="brand-text font-weight-light" style={{marginTop:"5px"}}>
         <img
           src="/assets/images/logo.png"
           alt="Logo"
@@ -26,7 +26,7 @@ export default function Sidebar() {
           }}
         />
         User test
-      </span>
+      </div>
       <ul>
         <li>
           <Link href="/dashboard/home">หน้าแรก</Link>
