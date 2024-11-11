@@ -18,6 +18,10 @@ html {
     height: 100vh;
 }
 
+.sarabun-font {
+  font-family: 'Sarabun', sans-serif;
+}
+
 .sidebar h2 {
     margin-top: 0;
 }

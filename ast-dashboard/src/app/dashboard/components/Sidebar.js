@@ -28,7 +28,7 @@ export default function Sidebar() {
         User test
       </div>
       <ul>
-        <li>
+        <li className="sarabun-font">
           <Link href="/dashboard/home">หน้าแรก</Link>
         </li>
         <li>
