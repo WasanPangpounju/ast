@@ -13,8 +13,8 @@ export default function Sidebar() {
       />
 
       <span class="brand-text font-weight-light">ASIA TEXTILE CO., LTD.</span>
-      <br/>
-      <div class="brand-text font-weight-light" style={{marginTop:"5px"}}>
+      <br />
+      <div class="brand-text font-weight-light" style={{ marginTop: "5px" }}>
         <img
           src="/assets/images/logo.png"
           alt="Logo"
@@ -22,7 +22,7 @@ export default function Sidebar() {
           style={{
             width: "20px",
             height: "20px",
-            borderRadius: "50%", 
+            borderRadius: "50%",
           }}
         />
         User test
@@ -31,22 +31,22 @@ export default function Sidebar() {
         <li className="sarabun-font">
           <Link href="/dashboard/home">หน้าแรก</Link>
         </li>
-        <li>
+        <li className="sarabun-font">
           <Link href="/dashboard/users">ผู้ใช้งาน</Link>
         </li>
-        <li>
+        <li className="sarabun-font">
           <Link href="/dashboard/order">ออเดอร์</Link>
         </li>
-        <li>
+        <li className="sarabun-font">
           <Link href="/dashboard/stock">สต๊อกผ้า</Link>
         </li>
-        <li>
+        <li className="sarabun-font">
           <Link href="/dashboard/stockcustomer">สต๊อกผ้าฝากจัดเก็บ</Link>
         </li>
-        <li>
+        <li className="sarabun-font">
           <Link href="/dashboard/stockmaterial">สต๊อกวัตถุดิบ</Link>
         </li>
-        <li>
+        <li className="sarabun-font">
           <Link href="/dashboard/settings">ตั้งค่า</Link>
         </li>
       </ul>
