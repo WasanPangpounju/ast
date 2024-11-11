@@ -13,7 +13,7 @@ export default function CustomerPieChartYarnVertical({ astPurchaseorder }) {
   });
 
   useEffect(() => {
-    const extractedTextArray = filteredPurchaseorders.map((order) => {
+    const extractedTextArray = astPurchaseorder.map((order) => {
       const fabricStructure = order.fabricStructure || ""; // Ensure fabricStructure exists
       return fabricStructure.split(" * ")[0].trim(); // Get text before the first '*', remove extra spaces
     });
