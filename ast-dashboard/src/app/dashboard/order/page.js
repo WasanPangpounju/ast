@@ -189,7 +189,9 @@ export default function AstPurchaseorder() {
             <div class="col-md-3"></div>
           </div> */}
         {/* <div class="d-flex justify-content-end"><h2>ใบสั่งขาย 5 บริษัทที่มากที่สุด</h2></div> */}
-        <CustomerPieChart astPurchaseorder={filteredPurchaseorders} />
+        <div className="d-flex justify-content-center">
+          <CustomerPieChart astPurchaseorder={filteredPurchaseorders} />
+        </div>
         <br />
         <div class="d-flex justify-content-end">
           <div class="col-md-4">อนุมัติให้ผลิต: {statusCounts.approved}</div>
