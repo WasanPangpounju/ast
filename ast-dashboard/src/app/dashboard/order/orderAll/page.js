@@ -263,6 +263,36 @@ export default function AstPurchaseorder() {
         </div>
 
         <br />
+        <br />
+        <br />
+
+        <h2>ใช้ด้ายพุ่ง</h2>
+        <div
+          class="row"
+          style={{
+            borderBottom: "1px solid black",
+            paddingBottom: "8px",
+            marginBottom: "8px",
+          }} // Optional spacing
+        >
+          <div class="col-md-6">ด้ายยืน</div>
+          <div class="col-md-3">จำนวน</div>
+        </div>
+        <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+          {Object.entries(countMapAfter).map(([text, count]) => (
+            <div key={text}>
+              <div
+                className="row"
+                style={{ borderBottom: "1px solid black", padding: "8px 0" }}
+              >
+                <div className="col-md-6">{text}</div>
+                <div className="col-md-3">{count}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <br />
       </section>
     </div>
   );
