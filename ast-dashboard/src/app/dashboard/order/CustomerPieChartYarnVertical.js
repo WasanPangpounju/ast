@@ -13,14 +13,13 @@ export default function CustomerPieChartYarnVertical({ astPurchaseorder }) {
   });
 
   useEffect(() => {
-    const extractedTextArray = astPurchaseorder.map((order) => {
-      const fabricStructure = order.fabricStructure || ''; // Ensure fabricStructure exists
-      return fabricStructure.split(' * ')[1]?.split(' / ')[0]?.trim() || ''; // Get text between '*' and '/' and trim
+    const extractedTextArray = filteredPurchaseorders.map((order) => {
+      const fabricStructure = order.fabricStructure || ""; // Ensure fabricStructure exists
+      return fabricStructure.split(" * ")[0].trim(); // Get text before the first '*', remove extra spaces
     });
-
-    // Count occurrences of each extracted yarn text (e.g., "CP50")
-    const countMap = extractedTextArray.reduce((acc, yarn) => {
-      acc[yarn] = (acc[yarn] || 0) + 1;
+  
+    const countMap = extractedTextArray.reduce((acc, text) => {
+      acc[text] = (acc[text] || 0) + 1;
       return acc;
     }, {});
 
