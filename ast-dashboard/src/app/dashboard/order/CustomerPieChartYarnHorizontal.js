@@ -66,7 +66,7 @@ export default function CustomerPieChartYarnHorizontal({ astPurchaseorder }) {
   return (
     <div style={{ width: '50%', margin: '0 auto' }}>
       <h2>ด้ายพุ่ง 5 ด้ายที่มากที่สุด</h2>
-      <div style={{ width: '400px', height: '400px' }}> {/* Set desired width and height */}
+      <div style={{ width: '300px', height: '300px' }}> {/* Set desired width and height */}
         <Pie 
           data={chartData} 
           options={{
