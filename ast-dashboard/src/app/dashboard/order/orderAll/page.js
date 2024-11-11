@@ -115,6 +115,9 @@ export default function AstPurchaseorder() {
     return acc;
   }, {});
 
+  const sortedCountMap = Object.entries(countMap)
+  .sort((a, b) => b[1] - a[1]);
+
   const extractedAfterTextArray = filteredPurchaseorders.map(order => {
     const fabricStructure = order.fabricStructure || '';
     
@@ -131,6 +134,10 @@ export default function AstPurchaseorder() {
     acc[text] = (acc[text] || 0) + 1;
     return acc;
   }, {});
+
+  const sortedCountMapAfter = Object.entries(countMapAfter)
+  .sort((a, b) => b[1] - a[1]);
+
   console.log('extractedTextArray',extractedTextArray);
 
   console.log('extractedAfterTextArray',extractedAfterTextArray);
@@ -211,7 +218,7 @@ export default function AstPurchaseorder() {
           <div class="col-md-4">No Data: {statusCounts.noData}</div>
         </div>
         <br />
-
+        <h2>จำนวนลูกค้า</h2>
         <div
           class="row"
           style={{
@@ -249,7 +256,7 @@ export default function AstPurchaseorder() {
           <div class="col-md-3">จำนวน</div>
         </div>
         <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-          {Object.entries(countMap).map(([text, count]) => (
+          {Object.entries(sortedCountMap).map(([text, count]) => (
             <div key={text}>
               <div
                 className="row"
@@ -279,7 +286,7 @@ export default function AstPurchaseorder() {
           <div class="col-md-3">จำนวน</div>
         </div>
         <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-          {Object.entries(countMapAfter).map(([text, count]) => (
+          {Object.entries(sortedCountMapAfter).map(([text, count]) => (
             <div key={text}>
               <div
                 className="row"
