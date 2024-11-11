@@ -116,7 +116,8 @@ export default function AstPurchaseorder() {
   }, {});
 
   const sortedCountMap = Object.entries(countMap)
-  .sort((a, b) => b[1] - a[1]);
+  .sort((a, b) => b[1] - a[1]) // Sort by count in descending order
+  .map(([text, count]) => ({ text, count }));
 
   const extractedAfterTextArray = filteredPurchaseorders.map(order => {
     const fabricStructure = order.fabricStructure || '';
@@ -136,7 +137,8 @@ export default function AstPurchaseorder() {
   }, {});
 
   const sortedCountMapAfter = Object.entries(countMapAfter)
-  .sort((a, b) => b[1] - a[1]);
+  .sort((a, b) => b[1] - a[1]) // Sort by count in descending order
+  .map(([text, count]) => ({ text, count }));
 
   console.log('extractedTextArray',extractedTextArray);
 
