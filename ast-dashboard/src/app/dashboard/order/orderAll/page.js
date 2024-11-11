@@ -279,7 +279,13 @@ export default function AstPurchaseorder() {
               <div className="row">
                 <div className="col-md-6">{customer.name}</div>
                 <div className="col-md-3">{customer.count}</div>
-                <div className="col-md-3">  {customer.totalValue.toFixed(2).toLocaleString()} บาท</div>
+                <div className="col-md-3">
+                  {customer.totalValue.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}{" "}
+                  บาท
+                </div>
               </div>
             </div>
           ))}
