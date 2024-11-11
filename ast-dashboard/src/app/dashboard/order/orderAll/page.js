@@ -260,6 +260,7 @@ export default function AstPurchaseorder() {
         >
           <div class="col-md-6">บริษัท</div>
           <div class="col-md-3">จำนวน</div>
+          <div class="col-md-3">ยอดขาย</div>
         </div>
         <div style={{ maxHeight: "300px", overflowY: "auto" }}>
           {/* {customerCounts.map(([name, count]) => (
@@ -275,9 +276,11 @@ export default function AstPurchaseorder() {
               key={customer.name}
               style={{ borderBottom: "1px solid black", padding: "8px 0" }}
             >
-              <div>{customer.name}</div>
-              <div>Orders: {customer.count}</div>
-              <div>Total Value: {customer.totalValue.toFixed(2)}</div>
+              <div className="row">
+                <div className="col-md-6">{customer.name}</div>
+                <div className="col-md-3">{customer.count}</div>
+                <div className="col-md-3">  {customer.totalValue.toFixed(2).toLocaleString()} บาท</div>
+              </div>
             </div>
           ))}
         </div>
