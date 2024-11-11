@@ -109,37 +109,36 @@ export default function AstPurchaseorder() {
   //   setCustomerCounts(sortedCustomers); // Set sorted customers to state
   // }, [filteredPurchaseorders]);
   useEffect(() => {
-    // Initialize variables to store the total counts and calculation
-    let totalOrderSumYard = 0;
-    let totalCalculatedValue = 0;
+    // Filter orders with status 'อนุมัติให้ผลิต'
+    const approvedOrders = filteredPurchaseorders.filter(order => order.status === "อนุมัติให้ผลิต");
   
-    // Count occurrences of each customerName and calculate values
-    const counts = filteredPurchaseorders.reduce((acc, order) => {
+    // Count occurrences of each customerName and calculate individual totals
+    const counts = {};
+  
+    approvedOrders.forEach(order => {
       const name = order.customerName || "no data";
-      
-      if (order.status === 'อนุมัติให้ผลิต') {
-        // Accumulate the orderSumYard and the calculated value
-        totalOrderSumYard += order.orderSumYard || 0;
-        totalCalculatedValue += (order.orderSumYard || 0) * (order.priceYard || 0);
+      const value = order.orderSumYard * order.priceYard; // Calculate value for this order
+  
+      if (!counts[name]) {
+        // Initialize entry for the customer
+        counts[name] = { count: 0, totalValue: 0 };
       }
   
-      // Count customer occurrences
-      acc[name] = (acc[name] || 0) + 1;
-      return acc;
-    }, {});
+      // Increment the count and add to the customer's total value
+      counts[name].count += 1;
+      counts[name].totalValue += value;
+    });
   
     // Convert the counts object into an array and sort by count (descending)
-    const sortedCustomers = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    const sortedCustomers = Object.entries(counts)
+      .map(([name, data]) => ({ name, count: data.count, totalValue: data.totalValue }))
+      .sort((a, b) => b.count - a.count);
   
-    // Set sorted customers and totals to state
-    setCustomerCounts(sortedCustomers); // Update customer counts
-    setTotalOrderSumYard(totalOrderSumYard); // Total orderSumYard for approved orders
-    setTotalCalculatedValue(totalCalculatedValue); // Total value of (orderSumYard * priceYard)
+    // Set sorted customers to state
+    setCustomerCounts(sortedCustomers);
   }, [filteredPurchaseorders]);
 
-  console.log('totalOrderSumYard',totalOrderSumYard);
-  console.log('totalCalculatedValue',totalCalculatedValue);
-
+console.log('customerCounts',customerCounts);
 
   const extractedTextArray = filteredPurchaseorders.map((order) => {
     const fabricStructure = order.fabricStructure || ""; // Ensure fabricStructure exists
