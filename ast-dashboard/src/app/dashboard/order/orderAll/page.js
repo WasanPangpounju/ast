@@ -115,7 +115,24 @@ export default function AstPurchaseorder() {
     return acc;
   }, {});
 
-  console.log("extractedTextArray", extractedTextArray);
+  const extractedAfterTextArray = astPurchaseorder.map(order => {
+    const fabricStructure = order.fabricStructure || '';
+    // Extract text between '*' and '/'
+    const parts = fabricStructure.split('*');
+    if (parts.length > 1) {
+      const textAfterAsterisk = parts[1].split('/')[0].trim(); // Get text between '*' and '/'
+      return textAfterAsterisk;
+    }
+    return ''; // In case there's no '*' or '/'
+  });
+
+  const countMapAfter = extractedAfterTextArray.reduce((acc, text) => {
+    acc[text] = (acc[text] || 0) + 1;
+    return acc;
+  }, {});
+  console.log('extractedTextArray',extractedTextArray);
+
+  console.log('extractedAfterTextArray',extractedAfterTextArray);
 
   return (
     <div>
@@ -215,9 +232,10 @@ export default function AstPurchaseorder() {
             </div>
           ))}
         </div>
-
+        <br />
         <br />
 
+        <h2>ใช้ด้ายยืน</h2>
         <div
           class="row"
           style={{
