@@ -94,8 +94,8 @@ export default function AstPurchaseorder() {
     return fabricStructure.split(" * ")[0].trim(); // Get text before the first '*', remove extra spaces
   });
 
-  const countMap = extractedTextArray.reduce((acc, text) => {
-    acc[text] = (acc[text] || 0) + 1;
+  const countMap = extractedTextArray.reduce((acc, name) => {
+    acc[name] = (acc[name] || 0) + 1;
     return acc;
   }, {});
 
@@ -111,8 +111,8 @@ export default function AstPurchaseorder() {
     return ""; // Return empty string if no '*' found
   });
 
-  const countMapAfter = extractedAfterTextArray.reduce((acc, text) => {
-    acc[text] = (acc[text] || 0) + 1;
+  const countMapAfter = extractedAfterTextArray.reduce((acc, name) => {
+    acc[name] = (acc[name] || 0) + 1;
     return acc;
   }, {});
 
@@ -200,11 +200,11 @@ export default function AstPurchaseorder() {
         <div class="d-flex justify-content-end">
           <div class="col-md-6">
           <h2>ด้ายยืน 5 ด้ายที่มากที่สุด</h2>
-            <CustomerPieChart astPurchaseorder={extractedTextArray} />
+            <CustomerPieChart astPurchaseorder={countMap} />
           </div>
           <div class="col-md-6">
           <h2>ด้ายพุ่ง 5 ด้ายที่มากที่สุด</h2>
-            <CustomerPieChart astPurchaseorder={extractedAfterTextArray} />
+            <CustomerPieChart astPurchaseorder={countMapAfter} />
           </div>
         </div>
         <br />
