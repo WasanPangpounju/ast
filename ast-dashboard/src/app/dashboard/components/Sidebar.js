@@ -13,6 +13,19 @@ export default function Sidebar() {
       />
 
       <span class="brand-text font-weight-light">ASIA TEXTILE CO., LTD.</span>
+      <span class="brand-text font-weight-light">
+        <img
+          src="/assets/images/logo.png"
+          alt="Logo"
+          class="brand-image"
+          style={{
+            width: "20px",
+            height: "20px",
+            borderRadius: "50%", 
+          }}
+        />
+        User test
+      </span>
       <ul>
         <li>
           <Link href="/dashboard/home">หน้าแรก</Link>
