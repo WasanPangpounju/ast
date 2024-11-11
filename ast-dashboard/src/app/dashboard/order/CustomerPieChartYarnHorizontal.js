@@ -13,7 +13,7 @@ export default function CustomerPieChartYarnHorizontal({ astPurchaseorder }) {
   });
 
   useEffect(() => {
-    const extractedAfterTextArray = filteredPurchaseorders.map((order) => {
+    const extractedAfterTextArray = astPurchaseorder.map((order) => {
       const fabricStructure = order.fabricStructure || "";
   
       // Get text between '*' and '/'
