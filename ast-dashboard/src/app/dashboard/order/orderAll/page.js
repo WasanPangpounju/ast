@@ -115,15 +115,16 @@ export default function AstPurchaseorder() {
     return acc;
   }, {});
 
-  const extractedAfterTextArray = astPurchaseorder.map(order => {
+  const extractedAfterTextArray = filteredPurchaseorders.map(order => {
     const fabricStructure = order.fabricStructure || '';
-    // Extract text between '*' and '/'
-    const parts = fabricStructure.split(' * ');
+    
+    // Get text between '*' and '/'
+    const parts = fabricStructure.split('*');
     if (parts.length > 1) {
-      const textAfterAsterisk = parts[1].split(' / ')[0].trim(); // Get text between '*' and '/'
+      const textAfterAsterisk = parts[1].split('/')[0].trim(); // Get the part after '*' and before '/'
       return textAfterAsterisk;
     }
-    return ''; // In case there's no '*' or '/'
+    return ''; // Return empty string if no '*' found
   });
 
   const countMapAfter = extractedAfterTextArray.reduce((acc, text) => {
