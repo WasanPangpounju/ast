@@ -201,26 +201,27 @@ export default function AstPurchaseorder() {
         <br />
         <div class="d-flex justify-content-end">
           <div class="col-md-6">
-          {/* <h2>ด้ายยืน 5 ด้ายที่มากที่สุด</h2> */}
-            <CustomerPieChartYarnVertical astPurchaseorder={filteredPurchaseorders} />
+            {/* <h2>ด้ายยืน 5 ด้ายที่มากที่สุด</h2> */}
+            <CustomerPieChartYarnVertical
+              astPurchaseorder={filteredPurchaseorders}
+            />
           </div>
           <div class="col-md-6">
-          {/* <h2>ด้ายพุ่ง 5 ด้ายที่มากที่สุด</h2> */}
-            <CustomerPieChartYarnHorizontal astPurchaseorder={filteredPurchaseorders} />
+            {/* <h2>ด้ายพุ่ง 5 ด้ายที่มากที่สุด</h2> */}
+            <CustomerPieChartYarnHorizontal
+              astPurchaseorder={filteredPurchaseorders}
+            />
           </div>
         </div>
         <br />
-        <div class="d-flex justify-content-end">
-          <div class="col-md-4"></div>
-          <div class="col-md-4">
-            <Link href="/dashboard/order/orderAll">
-              <button type="button" className="btn btn-primary">
-                ดูรายละเอียด
-              </button>
-            </Link>
-          </div>
-          <div class="col-md-4"></div>
+        <div className="d-flex justify-content-center">
+          <Link href="/dashboard/order/orderAll">
+            <button type="button" className="btn btn-primary">
+              ดูรายละเอียด
+            </button>
+          </Link>
         </div>
+
         <br />
       </section>
     </div>
