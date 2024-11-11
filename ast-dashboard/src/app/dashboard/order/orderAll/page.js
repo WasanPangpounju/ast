@@ -107,7 +107,7 @@ export default function AstPurchaseorder() {
 
   const extractedTextArray = filteredPurchaseorders.map((order) => {
     const fabricStructure = order.fabricStructure || ""; // Ensure fabricStructure exists
-    return fabricStructure.split("*")[0].trim(); // Get text before the first '*', remove extra spaces
+    return fabricStructure.split(" * ")[0].trim(); // Get text before the first '*', remove extra spaces
   });
 
   const countMap = extractedTextArray.reduce((acc, text) => {
@@ -118,9 +118,9 @@ export default function AstPurchaseorder() {
   const extractedAfterTextArray = astPurchaseorder.map(order => {
     const fabricStructure = order.fabricStructure || '';
     // Extract text between '*' and '/'
-    const parts = fabricStructure.split('*');
+    const parts = fabricStructure.split(' * ');
     if (parts.length > 1) {
-      const textAfterAsterisk = parts[1].split('/')[0].trim(); // Get text between '*' and '/'
+      const textAfterAsterisk = parts[1].split(' / ')[0].trim(); // Get text between '*' and '/'
       return textAfterAsterisk;
     }
     return ''; // In case there's no '*' or '/'
