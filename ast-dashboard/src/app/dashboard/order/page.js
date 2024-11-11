@@ -89,6 +89,37 @@ export default function AstPurchaseorder() {
     setStatusCounts(counts);
   }, [filteredPurchaseorders]);
 
+  const extractedTextArray = filteredPurchaseorders.map((order) => {
+    const fabricStructure = order.fabricStructure || ""; // Ensure fabricStructure exists
+    return fabricStructure.split(" * ")[0].trim(); // Get text before the first '*', remove extra spaces
+  });
+
+  const countMap = extractedTextArray.reduce((acc, text) => {
+    acc[text] = (acc[text] || 0) + 1;
+    return acc;
+  }, {});
+
+  const extractedAfterTextArray = filteredPurchaseorders.map((order) => {
+    const fabricStructure = order.fabricStructure || "";
+
+    // Get text between '*' and '/'
+    const parts = fabricStructure.split(" * ");
+    if (parts.length > 1) {
+      const textAfterAsterisk = parts[1].split(" / ")[0].trim(); // Get the part after '*' and before '/'
+      return textAfterAsterisk;
+    }
+    return ""; // Return empty string if no '*' found
+  });
+
+  const countMapAfter = extractedAfterTextArray.reduce((acc, text) => {
+    acc[text] = (acc[text] || 0) + 1;
+    return acc;
+  }, {});
+
+  console.log("extractedTextArray", extractedTextArray);
+
+  console.log("extractedAfterTextArray", extractedAfterTextArray);
+
   return (
     <div>
       {/* <h1>User Management</h1>
@@ -155,6 +186,7 @@ export default function AstPurchaseorder() {
             </div>
             <div class="col-md-3"></div>
           </div> */}
+        <div class="d-flex justify-content-end"><h2>ใบสั่งขาย 5 บริษัทที่มากที่สุด</h2></div>
         <CustomerPieChart astPurchaseorder={filteredPurchaseorders} />
         <br />
         <div class="d-flex justify-content-end">
@@ -166,19 +198,28 @@ export default function AstPurchaseorder() {
         </div>
         <br />
         <div class="d-flex justify-content-end">
+          <div class="col-md-6">
+          <h2>ด้ายยืน 5 ด้ายที่มากที่สุด</h2>
+            <CustomerPieChart astPurchaseorder={extractedTextArray} />
+          </div>
+          <div class="col-md-6">
+          <h2>ด้ายพุ่ง 5 ด้ายที่มากที่สุด</h2>
+            <CustomerPieChart astPurchaseorder={extractedAfterTextArray} />
+          </div>
+        </div>
+        <br />
+        <div class="d-flex justify-content-end">
           <div class="col-md-4"></div>
           <div class="col-md-4">
-          <Link href="/dashboard/order/orderAll">
+            <Link href="/dashboard/order/orderAll">
               <button type="button" className="btn btn-primary">
                 ดูรายละเอียด
               </button>
-              </Link>
+            </Link>
           </div>
           <div class="col-md-4"></div>
         </div>
         <br />
-
-      
       </section>
     </div>
   );
