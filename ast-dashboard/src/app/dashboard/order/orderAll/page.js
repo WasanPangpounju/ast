@@ -90,20 +90,56 @@ export default function AstPurchaseorder() {
   }, [filteredPurchaseorders]);
 
   const [customerCounts, setCustomerCounts] = useState([]);
+  const [totalOrderSumYard, setTotalOrderSumYard] = useState([]);
+  const [totalCalculatedValue, setTotalCalculatedValue] = useState([]);
 
+  setTotalOrderSumYard
+
+  // useEffect(() => {
+  //   // Count occurrences of each customerName
+  //   const counts = filteredPurchaseorders.reduce((acc, order) => {
+  //     const name = order.customerName || "no data";
+  //     acc[name] = (acc[name] || 0) + 1;
+  //     return acc;
+  //   }, {});
+
+  //   // Convert the counts object into an array and sort by count (descending)
+  //   const sortedCustomers = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+  //   setCustomerCounts(sortedCustomers); // Set sorted customers to state
+  // }, [filteredPurchaseorders]);
   useEffect(() => {
-    // Count occurrences of each customerName
+    // Initialize variables to store the total counts and calculation
+    let totalOrderSumYard = 0;
+    let totalCalculatedValue = 0;
+  
+    // Count occurrences of each customerName and calculate values
     const counts = filteredPurchaseorders.reduce((acc, order) => {
       const name = order.customerName || "no data";
+      
+      if (order.status === 'อนุมัติให้ผลิต') {
+        // Accumulate the orderSumYard and the calculated value
+        totalOrderSumYard += order.orderSumYard || 0;
+        totalCalculatedValue += (order.orderSumYard || 0) * (order.priceYard || 0);
+      }
+  
+      // Count customer occurrences
       acc[name] = (acc[name] || 0) + 1;
       return acc;
     }, {});
-
+  
     // Convert the counts object into an array and sort by count (descending)
     const sortedCustomers = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-
-    setCustomerCounts(sortedCustomers); // Set sorted customers to state
+  
+    // Set sorted customers and totals to state
+    setCustomerCounts(sortedCustomers); // Update customer counts
+    setTotalOrderSumYard(totalOrderSumYard); // Total orderSumYard for approved orders
+    setTotalCalculatedValue(totalCalculatedValue); // Total value of (orderSumYard * priceYard)
   }, [filteredPurchaseorders]);
+
+  console.log('totalOrderSumYard',totalOrderSumYard);
+  console.log('totalCalculatedValue',totalCalculatedValue);
+
 
   const extractedTextArray = filteredPurchaseorders.map((order) => {
     const fabricStructure = order.fabricStructure || ""; // Ensure fabricStructure exists
