@@ -93,7 +93,7 @@ export default function AstPurchaseorder() {
   const [totalOrderSumYard, setTotalOrderSumYard] = useState([]);
   const [totalCalculatedValue, setTotalCalculatedValue] = useState([]);
 
-  setTotalOrderSumYard
+  setTotalOrderSumYard;
 
   // useEffect(() => {
   //   // Count occurrences of each customerName
@@ -109,36 +109,38 @@ export default function AstPurchaseorder() {
   //   setCustomerCounts(sortedCustomers); // Set sorted customers to state
   // }, [filteredPurchaseorders]);
   useEffect(() => {
-    // Filter orders with status 'อนุมัติให้ผลิต'
-    const approvedOrders = filteredPurchaseorders.filter(order => order.status === "อนุมัติให้ผลิต");
-  
     // Count occurrences of each customerName and calculate individual totals
     const counts = {};
-  
-    approvedOrders.forEach(order => {
+
+    filteredPurchaseorders.forEach((order) => {
       const name = order.customerName || "no data";
-      const value = order.orderSumYard * order.priceYard; // Calculate value for this order
-  
+      const isApproved = order.status === "อนุมัติให้ผลิต";
+      const value = isApproved ? order.orderSumYard * order.priceYard : 0; // Calculate value if approved, else 0
+
       if (!counts[name]) {
         // Initialize entry for the customer
         counts[name] = { count: 0, totalValue: 0 };
       }
-  
-      // Increment the count and add to the customer's total value
+
+      // Increment count and add to total value if approved
       counts[name].count += 1;
       counts[name].totalValue += value;
     });
-  
+
     // Convert the counts object into an array and sort by count (descending)
     const sortedCustomers = Object.entries(counts)
-      .map(([name, data]) => ({ name, count: data.count, totalValue: data.totalValue }))
+      .map(([name, data]) => ({
+        name,
+        count: data.count,
+        totalValue: data.totalValue,
+      }))
       .sort((a, b) => b.count - a.count);
-  
+
     // Set sorted customers to state
     setCustomerCounts(sortedCustomers);
   }, [filteredPurchaseorders]);
 
-console.log('customerCounts',customerCounts);
+  console.log("customerCounts", customerCounts);
 
   const extractedTextArray = filteredPurchaseorders.map((order) => {
     const fabricStructure = order.fabricStructure || ""; // Ensure fabricStructure exists
@@ -260,12 +262,22 @@ console.log('customerCounts',customerCounts);
           <div class="col-md-3">จำนวน</div>
         </div>
         <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-          {customerCounts.map(([name, count]) => (
+          {/* {customerCounts.map(([name, count]) => (
             <div key={name}>
               <div className="row">
                 <div className="col-md-6">{name}</div>
                 <div className="col-md-3">{count}</div>
               </div>
+            </div>
+          ))} */}
+          {customerCounts.map((customer) => (
+            <div
+              key={customer.name}
+              style={{ borderBottom: "1px solid black", padding: "8px 0" }}
+            >
+              <div>{customer.name}</div>
+              <div>Orders: {customer.count}</div>
+              <div>Total Value: {customer.totalValue.toFixed(2)}</div>
             </div>
           ))}
         </div>
