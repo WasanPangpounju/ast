@@ -188,7 +188,7 @@ export default function AstPurchaseorder() {
             </div>
             <div class="col-md-3"></div>
           </div> */}
-        <div class="d-flex justify-content-end"><h2>ใบสั่งขาย 5 บริษัทที่มากที่สุด</h2></div>
+        {/* <div class="d-flex justify-content-end"><h2>ใบสั่งขาย 5 บริษัทที่มากที่สุด</h2></div> */}
         <CustomerPieChart astPurchaseorder={filteredPurchaseorders} />
         <br />
         <div class="d-flex justify-content-end">
@@ -201,11 +201,11 @@ export default function AstPurchaseorder() {
         <br />
         <div class="d-flex justify-content-end">
           <div class="col-md-6">
-          <h2>ด้ายยืน 5 ด้ายที่มากที่สุด</h2>
+          {/* <h2>ด้ายยืน 5 ด้ายที่มากที่สุด</h2> */}
             <CustomerPieChartYarnVertical astPurchaseorder={filteredPurchaseorders} />
           </div>
           <div class="col-md-6">
-          <h2>ด้ายพุ่ง 5 ด้ายที่มากที่สุด</h2>
+          {/* <h2>ด้ายพุ่ง 5 ด้ายที่มากที่สุด</h2> */}
             <CustomerPieChartYarnHorizontal astPurchaseorder={filteredPurchaseorders} />
           </div>
         </div>
