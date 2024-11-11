@@ -119,9 +119,9 @@ export default function AstPurchaseorder() {
     const fabricStructure = order.fabricStructure || '';
     
     // Get text between '*' and '/'
-    const parts = fabricStructure.split('*');
+    const parts = fabricStructure.split(' * ');
     if (parts.length > 1) {
-      const textAfterAsterisk = parts[1].split('/')[0].trim(); // Get the part after '*' and before '/'
+      const textAfterAsterisk = parts[1].split(' / ')[0].trim(); // Get the part after '*' and before '/'
       return textAfterAsterisk;
     }
     return ''; // Return empty string if no '*' found
