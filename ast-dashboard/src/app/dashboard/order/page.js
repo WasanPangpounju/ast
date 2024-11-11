@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import "../../globals.css";
 import Link from "next/link";
 import CustomerPieChart from "./CustomerPieChart.js";
+import CustomerPieChartYarnVertical from "./CustomerPieChartYarnVertical";
+import CustomerPieChartYarnHorizontal from "./CustomerPieChartYarnHorizontal";
 
 export default function AstPurchaseorder() {
   const [astPurchaseorder, setAstPurchaseorder] = useState([]);
@@ -200,11 +202,11 @@ export default function AstPurchaseorder() {
         <div class="d-flex justify-content-end">
           <div class="col-md-6">
           <h2>ด้ายยืน 5 ด้ายที่มากที่สุด</h2>
-            <CustomerPieChart astPurchaseorder={countMap} />
+            <CustomerPieChartYarnVertical astPurchaseorder={filteredPurchaseorders} />
           </div>
           <div class="col-md-6">
           <h2>ด้ายพุ่ง 5 ด้ายที่มากที่สุด</h2>
-            <CustomerPieChart astPurchaseorder={countMapAfter} />
+            <CustomerPieChartYarnHorizontal astPurchaseorder={filteredPurchaseorders} />
           </div>
         </div>
         <br />
