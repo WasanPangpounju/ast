@@ -13,7 +13,8 @@ export default function Sidebar() {
       />
 
       <span class="brand-text font-weight-light">ASIA TEXTILE CO., LTD.</span>
-      <span class="brand-text font-weight-light">
+      
+      <span class="brand-text font-weight-light" style={{margin:"3px"}}>
         <img
           src="/assets/images/logo.png"
           alt="Logo"
