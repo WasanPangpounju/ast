@@ -115,20 +115,16 @@ export default function AstPurchaseorder() {
     return acc;
   }, {});
 
-  const sortedCountMap = Object.entries(countMap)
-  .sort((a, b) => b[1] - a[1]) // Sort by count in descending order
-  .map(([text, count]) => ({ text, count }));
+  const extractedAfterTextArray = filteredPurchaseorders.map((order) => {
+    const fabricStructure = order.fabricStructure || "";
 
-  const extractedAfterTextArray = filteredPurchaseorders.map(order => {
-    const fabricStructure = order.fabricStructure || '';
-    
     // Get text between '*' and '/'
-    const parts = fabricStructure.split(' * ');
+    const parts = fabricStructure.split(" * ");
     if (parts.length > 1) {
-      const textAfterAsterisk = parts[1].split(' / ')[0].trim(); // Get the part after '*' and before '/'
+      const textAfterAsterisk = parts[1].split(" / ")[0].trim(); // Get the part after '*' and before '/'
       return textAfterAsterisk;
     }
-    return ''; // Return empty string if no '*' found
+    return ""; // Return empty string if no '*' found
   });
 
   const countMapAfter = extractedAfterTextArray.reduce((acc, text) => {
@@ -136,13 +132,9 @@ export default function AstPurchaseorder() {
     return acc;
   }, {});
 
-  const sortedCountMapAfter = Object.entries(countMapAfter)
-  .sort((a, b) => b[1] - a[1]) // Sort by count in descending order
-  .map(([text, count]) => ({ text, count }));
+  console.log("extractedTextArray", extractedTextArray);
 
-  console.log('extractedTextArray',extractedTextArray);
-
-  console.log('extractedAfterTextArray',extractedAfterTextArray);
+  console.log("extractedAfterTextArray", extractedAfterTextArray);
 
   return (
     <div>
@@ -258,17 +250,19 @@ export default function AstPurchaseorder() {
           <div class="col-md-3">จำนวน</div>
         </div>
         <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-          {Object.entries(sortedCountMap).map(([text, count]) => (
-            <div key={text}>
-              <div
-                className="row"
-                style={{ borderBottom: "1px solid black", padding: "8px 0" }}
-              >
-                <div className="col-md-6">{text}</div>
-                <div className="col-md-3">{count}</div>
+          {Object.entries(countMap)
+            .sort((a, b) => b[1] - a[1]) // Sort by count in descending order
+            .map(([text, count]) => (
+              <div key={text}>
+                <div
+                  className="row"
+                  style={{ borderBottom: "1px solid black", padding: "8px 0" }}
+                >
+                  <div className="col-md-6">{text}</div>
+                  <div className="col-md-3">{count}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
 
         <br />
@@ -288,17 +282,19 @@ export default function AstPurchaseorder() {
           <div class="col-md-3">จำนวน</div>
         </div>
         <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-          {Object.entries(sortedCountMapAfter).map(([text, count]) => (
-            <div key={text}>
-              <div
-                className="row"
-                style={{ borderBottom: "1px solid black", padding: "8px 0" }}
-              >
-                <div className="col-md-6">{text}</div>
-                <div className="col-md-3">{count}</div>
+          {Object.entries(countMapAfter)
+            .sort((a, b) => b[1] - a[1]) // Sort by count in descending order
+            .map(([text, count]) => (
+              <div key={text}>
+                <div
+                  className="row"
+                  style={{ borderBottom: "1px solid black", padding: "8px 0" }}
+                >
+                  <div className="col-md-6">{text}</div>
+                  <div className="col-md-3">{count}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
 
         <br />
