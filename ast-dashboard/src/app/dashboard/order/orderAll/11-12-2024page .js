@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import "../../../globals.css";
 import Link from "next/link";
-import CustomerPieChart from "../CustomerPieChart.js";
+import CustomerPieChart from "../CustomerPieChart.js.js";
 
 export default function AstPurchaseorder() {
   const [astPurchaseorder, setAstPurchaseorder] = useState([]);
@@ -108,40 +108,8 @@ export default function AstPurchaseorder() {
 
   //   setCustomerCounts(sortedCustomers); // Set sorted customers to state
   // }, [filteredPurchaseorders]);
-
-  // useEffect(() => {
-  //   // Count occurrences of each customerName and calculate individual totals
-  //   const counts = {};
-
-  //   filteredPurchaseorders.forEach((order) => {
-  //     const name = order.customerName || "no data";
-  //     const isApproved = order.status === "อนุมัติให้ผลิต";
-  //     const value = isApproved ? order.orderSumYard * order.priceYard : 0; // Calculate value if approved, else 0
-
-  //     if (!counts[name]) {
-  //       // Initialize entry for the customer
-  //       counts[name] = { count: 0, totalValue: 0 };
-  //     }
-
-  //     // Increment count and add to total value if approved
-  //     counts[name].count += 1;
-  //     counts[name].totalValue += value;
-  //   });
-
-  //   // Convert the counts object into an array and sort by count (descending)
-  //   const sortedCustomers = Object.entries(counts)
-  //     .map(([name, data]) => ({
-  //       name,
-  //       count: data.count,
-  //       totalValue: data.totalValue,
-  //     }))
-  //     .sort((a, b) => b.count - a.count);
-
-  //   // Set sorted customers to state
-  //   setCustomerCounts(sortedCustomers);
-  // }, [filteredPurchaseorders]);
-
   useEffect(() => {
+    // Count occurrences of each customerName and calculate individual totals
     const counts = {};
 
     filteredPurchaseorders.forEach((order) => {
@@ -150,34 +118,27 @@ export default function AstPurchaseorder() {
       const value = isApproved ? order.orderSumYard * order.priceYard : 0; // Calculate value if approved, else 0
 
       if (!counts[name]) {
-        // Initialize entry for the customer with count, totalValue, and getworkCount
-        counts[name] = { count: 0, totalValue: 0, getworkCount: 0 };
+        // Initialize entry for the customer
+        counts[name] = { count: 0, totalValue: 0 };
       }
 
-      // Increment count, add to total value if approved
+      // Increment count and add to total value if approved
       counts[name].count += 1;
       counts[name].totalValue += value;
-
-      // Increment getworkCount only if the status is "อนุมัติให้ผลิต"
-      if (isApproved) {
-        counts[name].getworkCount += 1;
-      }
     });
 
-    // Convert counts object into an array and sort by count (descending)
+    // Convert the counts object into an array and sort by count (descending)
     const sortedCustomers = Object.entries(counts)
       .map(([name, data]) => ({
         name,
         count: data.count,
         totalValue: data.totalValue,
-        getworkCount: data.getworkCount,
       }))
       .sort((a, b) => b.count - a.count);
 
     // Set sorted customers to state
     setCustomerCounts(sortedCustomers);
   }, [filteredPurchaseorders]);
-
 
   console.log("customerCounts", customerCounts);
 
@@ -297,9 +258,8 @@ export default function AstPurchaseorder() {
             marginBottom: "8px",
           }} // Optional spacing
         >
-          <div class="col-md-5">บริษัท</div>
+          <div class="col-md-6">บริษัท</div>
           <div class="col-md-3">จำนวน</div>
-          <div class="col-md-3">จำนวนอนุมัติ</div>
           <div class="col-md-3">ยอดขาย</div>
         </div>
         <div style={{ maxHeight: "300px", overflowY: "auto" }}>
@@ -317,9 +277,8 @@ export default function AstPurchaseorder() {
               style={{ borderBottom: "1px solid black", padding: "8px 0" }}
             >
               <div className="row">
-                <div className="col-md-5">{customer.name}</div>
+                <div className="col-md-6">{customer.name}</div>
                 <div className="col-md-3">{customer.count}</div>
-                <div className="col-md-3">{customer.getworkCount}</div>
                 <div className="col-md-3">
                   {customer.totalValue.toLocaleString("en-US", {
                     minimumFractionDigits: 2,
