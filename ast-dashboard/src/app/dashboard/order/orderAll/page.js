@@ -297,7 +297,7 @@ export default function AstPurchaseorder() {
             marginBottom: "8px",
           }} // Optional spacing
         >
-          <div class="col-md-5">บริษัท</div>
+          <div class="col-md-3">บริษัท</div>
           <div class="col-md-3">จำนวน</div>
           <div class="col-md-3">จำนวนอนุมัติ</div>
           <div class="col-md-3">ยอดขาย</div>
@@ -317,7 +317,7 @@ export default function AstPurchaseorder() {
               style={{ borderBottom: "1px solid black", padding: "8px 0" }}
             >
               <div className="row">
-                <div className="col-md-5">{customer.name}</div>
+                <div className="col-md-3">{customer.name}</div>
                 <div className="col-md-3">{customer.count}</div>
                 <div className="col-md-3">{customer.getworkCount}</div>
                 <div className="col-md-3">
