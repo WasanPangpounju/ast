@@ -707,8 +707,8 @@ export default function StockmaterialUse() {
                       <td>{item.materialOutsidesWeightKgNetSum.toFixed(2)}</td> */}
                       <td>
                         {(
-                          item.materialsWeightPNetSum -
-                          item.materialstoreWeightPNetSum
+                          parseFloat( item.materialsWeightPNetSum || '0') -
+                          parseFloat(item.materialstoreWeightPNetSum || '0')
                         ).toFixed(2)}
                       </td>
                       <td>
