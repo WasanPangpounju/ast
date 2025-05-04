@@ -49,22 +49,31 @@ const handleExportExcelTest = () => {
   saveAs(blob, "test_export.xlsx");
 };
  
-const handleExportExcelback = () => {
-  alert('hi')
+
+const handleExportExcel = () => {
+  if (!filteredData || filteredData.length === 0) {
+    alert("ไม่มีข้อมูลสำหรับส่งออก Excel");
+    return;
+  }
+
   const exportData = filteredData.map((item) => ({
-    "ชนิดด้าย": 'test',
-    "จำนวนด้าย(ลูก)": 'x',
-    "นำเข้า ปอนด์": 2000,
-    "นำเข้า กิโลกรัม": 3000,
-    "เบิกออก ปอนด์": 4000,
-    "เบิกออก กิโลกรัม": 5000,
-    "คงเหลือ ปอนด์": 7000,
-    "คงเหลือ กิโลกรัม": 9000,
+    "ชนิดด้าย": item.yarnType,
+    "จำนวนด้าย(ลูก)": item.spoolSum,
+    "นำเข้า ปอนด์": item.materialsWeightPNetSum.toFixed(2),
+    "นำเข้า กิโลกรัม": item.materialsWeightKgNetSum.toFixed(2),
+    "เบิกออก ปอนด์": item.materialstoreWeightPNetSum.toFixed(2),
+    "เบิกออก กิโลกรัม": item.materialstoreWeightKgNetSum.toFixed(2),
+    "คงเหลือ ปอนด์": (
+      item.materialsWeightPNetSum - item.materialstoreWeightPNetSum
+    ).toFixed(2),
+    "คงเหลือ กิโลกรัม": (
+      item.materialsWeightKgNetSum - item.materialstoreWeightKgNetSum
+    ).toFixed(2),
   }));
 
   const worksheet = XLSX.utils.json_to_sheet(exportData);
   const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Stock Summary");
+  XLSX.utils.book_append_sheet(workbook, worksheet, "สต๊อกวัตถุดิบ");
 
   const excelBuffer = XLSX.write(workbook, {
     bookType: "xlsx",
@@ -75,9 +84,10 @@ const handleExportExcelback = () => {
     type:
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   });
-  saveAs(blob, "stock_summary.xlsx");
+
+  saveAs(blob, "สรุปสต๊อกวัตถุดิบ.xlsx");
 };
- 
+
 export default function StockmaterialUse() {
   useEffect(() => {
     // Dynamically import Bootstrap JS from the public folder
@@ -429,8 +439,10 @@ export default function StockmaterialUse() {
           spoolSum: 0,
           materialsWeightPNetSum: 0,
           materialsWeightKgNetSum: 0,
+          spoolStoreSum: 0,
           materialstoreWeightPNetSum: 0,
           materialstoreWeightKgNetSum: 0,
+          spoolOutsidesSum: 0,
           materialOutsidesWeightPNetSum: 0,
           materialOutsidesWeightKgNetSum: 0,
         };
@@ -452,12 +464,16 @@ export default function StockmaterialUse() {
           spoolSum: 0,
           materialsWeightPNetSum: 0,
           materialsWeightKgNetSum: 0,
+          spoolStoreSum: 0,
           materialstoreWeightPNetSum: 0,
           materialstoreWeightKgNetSum: 0,
+          spoolOutsidesSum: 0,
           materialOutsidesWeightPNetSum: 0,
           materialOutsidesWeightKgNetSum: 0,
         };
       }
+
+      combinedData[yarnType].spoolStoreSum+= parseFloat(spool || 0);
 
       // Sum for material store
       combinedData[yarnType].materialstoreWeightPNetSum += parseFloat(weight_p_net || 0);
@@ -475,12 +491,17 @@ export default function StockmaterialUse() {
           spoolSum: 0,
           materialsWeightPNetSum: 0,
           materialsWeightKgNetSum: 0,
+          spoolStoreSum: 0,
           materialstoreWeightPNetSum: 0,
           materialstoreWeightKgNetSum: 0,
+          spoolOutsidesSum: 0,
           materialOutsidesWeightPNetSum: 0,
           materialOutsidesWeightKgNetSum: 0,
         };
       }
+
+      combinedData[yarnType].spoolOutsidesSum +=
+      parseFloat(spool || 0);
 
       // Sum for material outsides
       combinedData[yarnType].materialOutsidesWeightPNetSum +=
@@ -767,6 +788,7 @@ export default function StockmaterialUse() {
                       </td>
                     </tr>
                   ))} */}
+                  
                   {filteredData.map((item, index) => (
                     <tr key={index}>
                       <td>{item.yarnType}</td>
@@ -798,7 +820,7 @@ export default function StockmaterialUse() {
         </section>
         <br />
         <div className="text-end mb-3">
-  <button className="btn btn-success" onClick={handleExportExcelTest}>
+  <button className="btn btn-success" onClick={handleExportExcel}>
     <i className="fas fa-file-excel"></i> ดาวน์โหลด Excel
   </button>
 </div>
