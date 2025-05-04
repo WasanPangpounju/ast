@@ -340,7 +340,7 @@ export default function StockmaterialUse() {
     const filteredMaterials = materials.filter((item) => {
       const [day, month, year] = item.createDate.split("/");
       const createDate = new Date(`${year}-${month}-${day}`);
-      alert("createDate raw:", materials.map(i => i.createDate));
+      console.log("createDate raw:", materials.map(i => i.createDate));
       // Check the selected filter option
       if (filterOption === "lastYear") {
         return createDate >= oneYearAgo;
