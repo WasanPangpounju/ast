@@ -50,45 +50,47 @@ const handleExportExcelTest = () => {
 };
  
 
-const handleExportExcel = () => {
-  if (!filteredData || filteredData.length === 0) {
-    alert("ไม่มีข้อมูลสำหรับส่งออก Excel");
-    return;
-  }
-
-  const exportData = filteredData.map((item) => ({
-    "ชนิดด้าย": item.yarnType,
-    "จำนวนด้าย(ลูก)": item.spoolSum,
-    "นำเข้า ปอนด์": item.materialsWeightPNetSum.toFixed(2),
-    "นำเข้า กิโลกรัม": item.materialsWeightKgNetSum.toFixed(2),
-    "เบิกออก ปอนด์": item.materialstoreWeightPNetSum.toFixed(2),
-    "เบิกออก กิโลกรัม": item.materialstoreWeightKgNetSum.toFixed(2),
-    "คงเหลือ ปอนด์": (
-      item.materialsWeightPNetSum - item.materialstoreWeightPNetSum
-    ).toFixed(2),
-    "คงเหลือ กิโลกรัม": (
-      item.materialsWeightKgNetSum - item.materialstoreWeightKgNetSum
-    ).toFixed(2),
-  }));
-
-  const worksheet = XLSX.utils.json_to_sheet(exportData);
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, "สต๊อกวัตถุดิบ");
-
-  const excelBuffer = XLSX.write(workbook, {
-    bookType: "xlsx",
-    type: "array",
-  });
-
-  const blob = new Blob([excelBuffer], {
-    type:
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  });
-
-  saveAs(blob, "สรุปสต๊อกวัตถุดิบ.xlsx");
-};
-
 export default function StockmaterialUse() {
+
+  const handleExportExcel = () => {
+    if (!filteredData || filteredData.length === 0) {
+      alert("ไม่มีข้อมูลสำหรับส่งออก Excel");
+      return;
+    }
+  
+    const exportData = filteredData.map((item) => ({
+      "ชนิดด้าย": item.yarnType,
+      "จำนวนด้าย(ลูก)": item.spoolSum,
+      "นำเข้า ปอนด์": item.materialsWeightPNetSum.toFixed(2),
+      "นำเข้า กิโลกรัม": item.materialsWeightKgNetSum.toFixed(2),
+      "เบิกออก ปอนด์": item.materialstoreWeightPNetSum.toFixed(2),
+      "เบิกออก กิโลกรัม": item.materialstoreWeightKgNetSum.toFixed(2),
+      "คงเหลือ ปอนด์": (
+        item.materialsWeightPNetSum - item.materialstoreWeightPNetSum
+      ).toFixed(2),
+      "คงเหลือ กิโลกรัม": (
+        item.materialsWeightKgNetSum - item.materialstoreWeightKgNetSum
+      ).toFixed(2),
+    }));
+  
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "สต๊อกวัตถุดิบ");
+  
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+  
+    const blob = new Blob([excelBuffer], {
+      type:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+  
+    saveAs(blob, "สรุปสต๊อกวัตถุดิบ.xlsx");
+  };
+  
+  
   useEffect(() => {
     // Dynamically import Bootstrap JS from the public folder
     const bootstrapScript = document.createElement("script");
