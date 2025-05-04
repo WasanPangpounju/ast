@@ -99,15 +99,15 @@ export default function Users() {
       );
 
       const palletSum = filteredMaterials.reduce(
-        (acc, material) => acc + (Number(material.pallet) || 0),
+        (acc, material) => acc + (parseFloat(material.pallet || 0) || 0),
         0
       );
       const boxSum = filteredMaterials.reduce(
-        (acc, material) => acc + (Number(material.box) || 0),
+        (acc, material) => acc + (parseFloat(material.box || 0) || 0),
         0
       );
       const sackSum = filteredMaterials.reduce(
-        (acc, material) => acc + (Number(material.sack) || 0),
+        (acc, material) => acc + (parseFloat(material.sack || 0) || 0),
         0
       );
 
@@ -194,9 +194,9 @@ export default function Users() {
 
             // Ensure the values are treated as numbers
             stockQuery.forEach((item) => {
-              spool += Number(item.spool) || 0; // Convert to number or default to 0
-              weight_p_net += Number(item.weight_p_net) || 0;
-              weight_kg_net += Number(item.weight_kg_net) || 0;
+              spool += parseFloat(item.spool) || 0; // Convert to number or default to 0
+              weight_p_net += parseFloat(item.weight_p_net) || 0;
+              weight_kg_net += parseFloat(item.weight_kg_net) || 0;
             });
 
             const average_p = spool > 0 ? weight_p_net / spool : 0;
@@ -223,7 +223,7 @@ export default function Users() {
             if (stockWithdraws.length > 0) {
               let spoolWithdraw = 0;
               stockWithdraws.forEach((withdraw) => {
-                spoolWithdraw += Number(withdraw.spool) || 0;
+                spoolWithdraw += parseFloat(withdraw.spool) || 0;
               });
 
               stockImport.spool -= spoolWithdraw;
@@ -327,7 +327,7 @@ export default function Users() {
         <div class="">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="index.php">หน้าหลัก</a>
+              <a href="#">หน้าหลัก</a>
             </li>
             <li class="breadcrumb-item">
               <a href="#">วัตถุดิบ</a>

@@ -2,10 +2,82 @@
 
 "use client"; // For client-side behavior
 
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+
 import { useState, useEffect } from "react";
 import "../../globals.css";
 import Link from "next/link";
 
+const handleExportExcelTest = () => {
+  const testData = [
+    {
+      "ชนิดด้าย": "C 12 OE",
+      "จำนวนด้าย(ลูก)": 100,
+      "นำเข้า ปอนด์": 500.5,
+      "นำเข้า กิโลกรัม": 227.3,
+      "เบิกออก ปอนด์": 200.2,
+      "เบิกออก กิโลกรัม": 90.9,
+      "คงเหลือ ปอนด์": 300.3,
+      "คงเหลือ กิโลกรัม": 136.4,
+    },
+    {
+      "ชนิดด้าย": "T 16 OE",
+      "จำนวนด้าย(ลูก)": 50,
+      "นำเข้า ปอนด์": 250.0,
+      "นำเข้า กิโลกรัม": 113.4,
+      "เบิกออก ปอนด์": 100.0,
+      "เบิกออก กิโลกรัม": 45.4,
+      "คงเหลือ ปอนด์": 150.0,
+      "คงเหลือ กิโลกรัม": 68.0,
+    },
+  ];
+
+  const worksheet = XLSX.utils.json_to_sheet(testData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "TestSheet");
+
+  const excelBuffer = XLSX.write(workbook, {
+    bookType: "xlsx",
+    type: "array",
+  });
+
+  const blob = new Blob([excelBuffer], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+
+  saveAs(blob, "test_export.xlsx");
+};
+ 
+const handleExportExcelback = () => {
+  alert('hi')
+  const exportData = filteredData.map((item) => ({
+    "ชนิดด้าย": 'test',
+    "จำนวนด้าย(ลูก)": 'x',
+    "นำเข้า ปอนด์": 2000,
+    "นำเข้า กิโลกรัม": 3000,
+    "เบิกออก ปอนด์": 4000,
+    "เบิกออก กิโลกรัม": 5000,
+    "คงเหลือ ปอนด์": 7000,
+    "คงเหลือ กิโลกรัม": 9000,
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(exportData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Stock Summary");
+
+  const excelBuffer = XLSX.write(workbook, {
+    bookType: "xlsx",
+    type: "array",
+  });
+
+  const blob = new Blob([excelBuffer], {
+    type:
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+  saveAs(blob, "stock_summary.xlsx");
+};
+ 
 export default function StockmaterialUse() {
   useEffect(() => {
     // Dynamically import Bootstrap JS from the public folder
@@ -167,9 +239,9 @@ export default function StockmaterialUse() {
 
             // Ensure the values are treated as numbers
             stockQuery.forEach((item) => {
-              spool += Number(item.spool) || 0; // Convert to number or default to 0
-              weight_p_net += Number(item.weight_p_net) || 0;
-              weight_kg_net += Number(item.weight_kg_net) || 0;
+              spool += parseFloat(item.spool || 0); // Convert to number or default to 0
+              weight_p_net += parseFloat(item.weight_p_net || 0);
+              weight_kg_net += parseFloat(item.weight_kg_net || 0);
             });
 
             const average_p = spool > 0 ? weight_p_net / spool : 0;
@@ -196,7 +268,7 @@ export default function StockmaterialUse() {
             if (stockWithdraws.length > 0) {
               let spoolWithdraw = 0;
               stockWithdraws.forEach((withdraw) => {
-                spoolWithdraw += Number(withdraw.spool) || 0;
+                spoolWithdraw += parseFloat(withdraw.spool || 0);
               });
 
               stockImport.spool -= spoolWithdraw;
@@ -260,15 +332,15 @@ export default function StockmaterialUse() {
 
     // Sum the spools and weights
     const materialsSpoolSum = filteredMaterials.reduce(
-      (sum, item) => sum + Number(item.spool || 0),
+      (sum, item) => sum + parseFloat(item.spool || 0),
       0
     );
     const weightPNetSum = filteredMaterials.reduce(
-      (sum, item) => sum + Number(item.weight_p_net || 0),
+      (sum, item) => sum + parseFloat(item.weight_p_net || 0),
       0
     );
     const weightKgNetSum = filteredMaterials.reduce(
-      (sum, item) => sum + Number(item.weight_kg_net || 0),
+      (sum, item) => sum + parseFloat(item.weight_kg_net || 0),
       0
     );
 
@@ -365,9 +437,9 @@ export default function StockmaterialUse() {
       }
 
       // Sum for materials
-      combinedData[yarnType].spoolSum += Number(spool);
-      combinedData[yarnType].materialsWeightPNetSum += Number(weight_p_net);
-      combinedData[yarnType].materialsWeightKgNetSum += Number(weight_kg_net);
+      combinedData[yarnType].spoolSum += parseFloat(spool || 0);
+      combinedData[yarnType].materialsWeightPNetSum += parseFloat(weight_p_net || 0);
+      combinedData[yarnType].materialsWeightKgNetSum += parseFloat(weight_kg_net || 0);
     });
 
     // Combine and sum material store
@@ -388,9 +460,9 @@ export default function StockmaterialUse() {
       }
 
       // Sum for material store
-      combinedData[yarnType].materialstoreWeightPNetSum += Number(weight_p_net);
+      combinedData[yarnType].materialstoreWeightPNetSum += parseFloat(weight_p_net || 0);
       combinedData[yarnType].materialstoreWeightKgNetSum +=
-        Number(weight_kg_net);
+        parseFloat(weight_kg_net || 0);
     });
 
     // Combine and sum material outsides
@@ -412,9 +484,9 @@ export default function StockmaterialUse() {
 
       // Sum for material outsides
       combinedData[yarnType].materialOutsidesWeightPNetSum +=
-        Number(weight_p_net);
+        parseFloat(weight_p_net || 0);
       combinedData[yarnType].materialOutsidesWeightKgNetSum +=
-        Number(weight_kg_net);
+        parseFloat(weight_kg_net || 0);
     });
 
     // Convert the combined data object to an array
@@ -487,12 +559,12 @@ export default function StockmaterialUse() {
     });
 
     const totalWeightPNet = filtered.reduce(
-      (sum, item) => sum + Number(item.weight_p_net || 0),
+      (sum, item) => sum + parseFloat(item.weight_p_net || 0),
       0
     );
 
     const totalWeightKgNet = filtered.reduce(
-      (sum, item) => sum + Number(item.weight_kg_net || 0),
+      (sum, item) => sum + parseFloat(item.weight_kg_net || 0),
       0
     );
 
@@ -604,7 +676,7 @@ export default function StockmaterialUse() {
                       <option value="all">ทั้งหมด</option>
                       <option value="lastYear">ปีล่าสุด</option>
                       <option value="lastMonth">เดือนล่าสุด</option>
-                      <option value="selectDate">กำหนดเลง</option>
+                      <option value="selectDate">กำหนดเอง</option>
                     </select>
                   </div>
                 </div>
@@ -725,6 +797,11 @@ export default function StockmaterialUse() {
           </div>
         </section>
         <br />
+        <div className="text-end mb-3">
+  <button className="btn btn-success" onClick={handleExportExcelTest}>
+    <i className="fas fa-file-excel"></i> ดาวน์โหลด Excel
+  </button>
+</div>
       </div>
     </div>
   );
