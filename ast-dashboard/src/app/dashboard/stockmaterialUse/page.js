@@ -465,7 +465,7 @@ export default function StockmaterialUse() {
 
     // Combine and sum material store
     filteredMaterialStore.forEach((item) => {
-      const { yarnType, weight_p_net = 0, weight_kg_net = 0 } = item;
+      const { yarnType, spool = 0, weight_p_net = 0, weight_kg_net = 0 } = item;
 
       if (!combinedData[yarnType]) {
         combinedData[yarnType] = {
