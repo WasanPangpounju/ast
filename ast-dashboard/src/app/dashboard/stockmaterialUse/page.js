@@ -91,10 +91,17 @@ export default function StockmaterialUse() {
   };
   
   
+  // useEffect(() => {
+  //   // Dynamically import Bootstrap JS from the public folder
+  //   const bootstrapScript = document.createElement("script");
+  //   bootstrapScript.src = "/bootstrap/js/bootstrap.bundle.min.js";
+  //   bootstrapScript.async = true;
+  //   document.body.appendChild(bootstrapScript);
+  // }, []);
   useEffect(() => {
-    // Dynamically import Bootstrap JS from the public folder
     const bootstrapScript = document.createElement("script");
-    bootstrapScript.src = "/bootstrap/js/bootstrap.bundle.min.js";
+    bootstrapScript.src =
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js";
     bootstrapScript.async = true;
     document.body.appendChild(bootstrapScript);
   }, []);
@@ -333,7 +340,7 @@ export default function StockmaterialUse() {
     const filteredMaterials = materials.filter((item) => {
       const [day, month, year] = item.createDate.split("/");
       const createDate = new Date(`${year}-${month}-${day}`);
-
+      alert("createDate raw:", materials.map(i => i.createDate));
       // Check the selected filter option
       if (filterOption === "lastYear") {
         return createDate >= oneYearAgo;
@@ -485,7 +492,7 @@ export default function StockmaterialUse() {
 
     // Combine and sum material outsides
     filteredMaterialOutsides.forEach((item) => {
-      const { yarnType, weight_p_net = 0, weight_kg_net = 0 } = item;
+      const { yarnType, spool = 0, weight_p_net = 0, weight_kg_net = 0 } = item;
 
       if (!combinedData[yarnType]) {
         combinedData[yarnType] = {
